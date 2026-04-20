@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lechon Hub â POS System</title>
+<title>Lechon Hub — POS System</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -42,7 +42,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .layout{display:flex;height:100vh}
 /* SIDEBAR */
 .sidebar{width:230px;background:#FFFFFF;border-right:2px solid #FFCCCC;display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;box-shadow:2px 0 10px rgba(204,0,0,.06)}
-.sb-logo{padding:22px 16px18px;border-bottom:1px solid var(--bdr);text-align:center;background:linear-gradient(160deg,#CC0000 0%,#990000 100%)}
+.sb-logo{padding:22px 16px 18px;border-bottom:1px solid var(--bdr);text-align:center;background:linear-gradient(160deg,#CC0000 0%,#990000 100%)}
 .sb-logo .flame{font-size:2.4rem;display:block;filter:drop-shadow(0 0 10px rgba(255,255,255,.6))}
 .sb-logo h2{color:#FFFFFF;font-size:1.05rem;font-weight:800;letter-spacing:1.5px;margin-top:6px;text-shadow:0 1px 4px rgba(0,0,0,.3)}
 .sb-logo p{color:rgba(255,200,200,.85);font-size:.62rem;letter-spacing:.8px;margin-top:2px}
@@ -80,7 +80,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 /* RBAC */
 body:not(.is-admin) .admin-only{display:none!important}
 .kpi-lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);margin-bottom:6px}
-.kpi-val{font-size:1.6rem;font-weight:7000;color:var(--tx)}
+.kpi-val{font-size:1.6rem;font-weight:700;color:var(--tx)}
 .kpi-sub{font-size:.7rem;color:var(--tx3);margin-top:3px}
 .kpi-ico{position:absolute;right:14px;top:14px;font-size:1.8rem;opacity:.15}
 /* CARDS */
@@ -222,15 +222,15 @@ select option{background:var(--surf)}
 <div class="login-screen" id="login-screen">
   <div class="login-card">
     <div class="login-brand">
-      <span class="lb-flame">ð¥</span>
+      <span class="lb-flame">🔥</span>
       <h1>LECHON HUB</h1>
       <p>POINT OF SALE SYSTEM</p>
     </div>
     <h2>Sign In to Continue</h2>
-    <div class="login-err" id="login-err">â  Invalid username or password. Please try again.</div>
+    <div class="login-err" id="login-err">⚠ Invalid username or password. Please try again.</div>
     <div class="login-fg"><label>Username</label><input class="login-inp" id="l-user" placeholder="Enter username" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <div class="login-fg"><label>Password</label><input class="login-inp" id="l-pass" type="password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
-    <button class="login-btn" onclick="doLogin()">ð Sign In</button>
+    <button class="login-btn" onclick="doLogin()">🔐 Sign In</button>
 
   </div>
 </div>
@@ -239,30 +239,30 @@ select option{background:var(--surf)}
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sb-logo">
-    <span class="flame">ð¥</span>
+    <span class="flame">🔥</span>
     <h2>LECHON HUB</h2>
     <p>POINT OF SALE SYSTEM</p>
   </div>
   <nav class="sb-nav">
     <div class="nav-section">Main</div>
-    <div class="nav-item active" onclick="nav('dashboard')"><span class="ni">ð</span> Dashboard</div>
-    <div class="nav-item" onclick="nav('pos')"><span class="ni">ð</span> POS Terminal</div>
+    <div class="nav-item active" onclick="nav('dashboard')"><span class="ni">📊</span> Dashboard</div>
+    <div class="nav-item" onclick="nav('pos')"><span class="ni">🛒</span> POS Terminal</div>
     <div class="nav-section">Management</div>
-    <div class="nav-item" onclick="nav('inventory')"><span class="ni">ð¦</span> Inventory</div>
-    <div class="nav-item" onclick="nav('reports')"><span class="ni">ð</span> Reports</div>
-    <div class="nav-item" onclick="nav('teams')"><span class="ni">ð¥</span> Team Sales</div>
-    <div class="nav-item" onclick="nav('compensation')"><span class="ni">ð°</span> Compensation</div>
-    <div class="nav-item" onclick="nav('purchase-orders')"><span class="ni">ð</span> Purchase Orders</div>
-    <div class="nav-item" onclick="nav('incentives')"><span class="ni">ð</span> Incentives</div>
+    <div class="nav-item" onclick="nav('inventory')"><span class="ni">📦</span> Inventory</div>
+    <div class="nav-item" onclick="nav('reports')"><span class="ni">📈</span> Reports</div>
+    <div class="nav-item" onclick="nav('teams')"><span class="ni">👥</span> Team Sales</div>
+    <div class="nav-item" onclick="nav('compensation')"><span class="ni">💰</span> Compensation</div>
+    <div class="nav-item" onclick="nav('purchase-orders')"><span class="ni">📋</span> Purchase Orders</div>
+    <div class="nav-item" onclick="nav('incentives')"><span class="ni">🏆</span> Incentives</div>
     <div class="nav-section admin-only">Settings</div>
-    <div class="nav-item admin-only" onclick="nav('settings')"><span class="ni">âï¸</span> Settings</div>
+    <div class="nav-item admin-only" onclick="nav('settings')"><span class="ni">⚙️</span> Settings</div>
   </nav>
   <div class="sb-foot">
     <div class="sb-user">
       <div class="sb-av" id="sb-av-initials">LH</div>
       <div class="sb-ud"><h4 id="sb-user-name">Admin</h4><p id="sb-user-role">Lechon Hub</p></div>
     </div>
-    <button class="btn btn-out btn-sm" onclick="doLogout()" style="width:100%;margin-top:8px;border-color:#FFCCCC;color:#CC0000;font-size:.75rem">ðª Sign Out</button>
+    <button class="btn btn-out btn-sm" onclick="doLogout()" style="width:100%;margin-top:8px;border-color:#FFCCCC;color:#CC0000;font-size:.75rem">🚪 Sign Out</button>
   </div>
 </aside>
 
@@ -276,8 +276,8 @@ select option{background:var(--surf)}
     </div>
     <div class="tb-right">
       <div class="sync-badge" onclick="nav('settings')" title="Sync status"><span class="sync-dot" id="sync-dot"></span><span id="sync-label">Local</span></div>
-      <div class="tb-clock" id="clock">â</div>
-      <span class="tb-badge" id="low-stock-badge" style="display:none" onclick="nav('inventory')">â  Low Stock</span>
+      <div class="tb-clock" id="clock">—</div>
+      <span class="tb-badge" id="low-stock-badge" style="display:none" onclick="nav('inventory')">⚠ Low Stock</span>
     </div>
   </div>
 
@@ -287,21 +287,21 @@ select option{background:var(--surf)}
       <div class="kpi-grid" id="kpi-grid"></div>
       <div class="g2 mb20">
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">ð Weekly Sales (Last 7 Days)</span></div>
+          <div class="card-hdr"><span class="card-ttl">📅 Weekly Sales (Last 7 Days)</span></div>
           <div class="ch-wrap"><canvas id="ch-weekly"></canvas></div>
         </div>
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">ð¥ Team Performance This Month</span></div>
+          <div class="card-hdr"><span class="card-ttl">👥 Team Performance This Month</span></div>
           <div class="ch-wrap"><canvas id="ch-teams-dash"></canvas></div>
         </div>
       </div>
       <div class="g2">
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">ð§¾ Recent Transactions</span><button class="btn btn-out btn-sm" onclick="nav('reports')">View All</button></div>
+          <div class="card-hdr"><span class="card-ttl">🧾 Recent Transactions</span><button class="btn btn-out btn-sm" onclick="nav('reports')">View All</button></div>
           <div class="tbl-wrap" id="recent-txns"></div>
         </div>
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">â ï¸ Inventory Alerts</span></div>
+          <div class="card-hdr"><span class="card-ttl">⚠️ Inventory Alerts</span></div>
           <div id="inv-alerts"></div>
         </div>
       </div>
@@ -313,13 +313,13 @@ select option{background:var(--surf)}
         <div class="pos-menu-panel">
           <div class="flex-between gap8" style="flex-wrap:wrap">
             <div class="cat-bar" id="cat-bar"></div>
-            <input id="prod-search" style="width:180px;font-size:.78rem;padding:5px 10px" placeholder="ð Search product..." oninput="filterProds()">
+            <input id="prod-search" style="width:180px;font-size:.78rem;padding:5px 10px" placeholder="🔍 Search product..." oninput="filterProds()">
           </div>
           <div class="prod-grid" id="prod-grid"></div>
         </div>
         <div class="pos-cart-panel">
           <div class="cart-hdr">
-            <h3>ð Order</h3>
+            <h3>🛒 Order</h3>
             <div class="cart-meta">
               <input id="cart-customer" placeholder="Customer name" style="flex:1">
               <select id="cart-team" style="flex:1">
@@ -331,14 +331,14 @@ select option{background:var(--surf)}
             </div>
           </div>
           <div class="cart-items" id="cart-items">
-            <div class="empty-cart"><span class="ec-ico">ð</span>Cart is empty.<br>Tap a product to add.</div>
+            <div class="empty-cart"><span class="ec-ico">🛒</span>Cart is empty.<br>Tap a product to add.</div>
           </div>
           <div class="cart-foot">
-            <div class="cart-row"><span>Subtotal</span><span id="cart-sub">â±0</span></div>
-            <div class="cart-row tot"><span>TOTAL</span><span id="cart-tot">â±0</span></div>
+            <div class="cart-row"><span>Subtotal</span><span id="cart-sub">₱0</span></div>
+            <div class="cart-row tot"><span>TOTAL</span><span id="cart-tot">₱0</span></div>
             <div style="display:flex;gap:8px;margin-top:10px">
-              <button class="btn btn-out btn-sm" onclick="clearCart()" style="flex:.4">ð Clear</button>
-              <button class="btn btn-gold btn-lg" onclick="openPayModal()" style="flex:1" id="pay-btn">ð³ Pay</button>
+              <button class="btn btn-out btn-sm" onclick="clearCart()" style="flex:.4">🗑 Clear</button>
+              <button class="btn btn-gold btn-lg" onclick="openPayModal()" style="flex:1" id="pay-btn">💳 Pay</button>
             </div>
           </div>
         </div>
@@ -349,7 +349,7 @@ select option{background:var(--surf)}
     <div class="page" id="page-inventory">
       <div class="flex-between mb20">
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <input id="inv-search" placeholder="ð Search..." style="width:200px" oninput="renderInventory()">
+          <input id="inv-search" placeholder="🔍 Search..." style="width:200px" oninput="renderInventory()">
           <select id="inv-cat-filter" onchange="renderInventory()" style="width:160px">
             <option value="">All Categories</option>
             <option>Whole Lechon</option><option>Lechon Ulo</option><option>Lechon Belly</option>
@@ -380,7 +380,7 @@ select option{background:var(--surf)}
       <div id="rpt-daily">
         <div class="flex-between mb14">
           <input type="date" id="rpt-date" onchange="renderDailyReport()">
-          <button class="btn btn-out btn-sm" onclick="exportReport('daily')">ð¥ Export</button>
+          <button class="btn btn-out btn-sm" onclick="exportReport('daily')">📥 Export</button>
         </div>
         <div class="kpi-grid" id="rpt-d-kpi" style="grid-template-columns:repeat(3,1fr)"></div>
         <div class="card mb14">
@@ -395,11 +395,11 @@ select option{background:var(--surf)}
       <div id="rpt-weekly" style="display:none">
         <div class="flex-between mb14">
           <input type="week" id="rpt-week" onchange="renderWeeklyReport()">
-          <button class="btn btn-out btn-sm" onclick="exportReport('weekly')">ð¥ Export</button>
+          <button class="btn btn-out btn-sm" onclick="exportReport('weekly')">📥 Export</button>
         </div>
         <div class="kpi-grid" id="rpt-w-kpi" style="grid-template-columns:repeat(3,1fr)"></div>
         <div class="card mb14">
-          <div class="card-hdr"><span class="card-ttl">ð Weekly Sales Line Graph</span></div>
+          <div class="card-hdr"><span class="card-ttl">📈 Weekly Sales Line Graph</span></div>
           <div class="ch-wrap"><canvas id="ch-weekly-rpt"></canvas></div>
         </div>
         <div class="card">
@@ -410,11 +410,11 @@ select option{background:var(--surf)}
       <div id="rpt-monthly" style="display:none">
         <div class="flex-between mb14">
           <input type="month" id="rpt-month" onchange="renderMonthlyReport()">
-          <button class="btn btn-out btn-sm" onclick="exportReport('monthly')">ð¥ Export</button>
+          <button class="btn btn-out btn-sm" onclick="exportReport('monthly')">📥 Export</button>
         </div>
         <div class="kpi-grid" id="rpt-m-kpi" style="grid-template-columns:repeat(3,1fr)"></div>
         <div class="card mb14">
-          <div class="card-hdr"><span class="card-ttl">ð Monthly Sales Line Graph</span></div>
+          <div class="card-hdr"><span class="card-ttl">📈 Monthly Sales Line Graph</span></div>
           <div class="ch-wrap"><canvas id="ch-monthly-rpt"></canvas></div>
         </div>
         <div class="card">
@@ -431,16 +431,16 @@ select option{background:var(--surf)}
           <label class="text-muted fs-sm">Period:</label>
           <input type="month" id="team-month" onchange="renderTeams()">
         </div>
-        <button class="btn btn-out btn-sm" onclick="exportReport('teams')">ð¥ Export</button>
+        <button class="btn btn-out btn-sm" onclick="exportReport('teams')">📥 Export</button>
       </div>
       <div class="team-grid" id="team-cards"></div>
       <div class="g2 mb20">
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">ð Team Sales Comparison</span></div>
+          <div class="card-hdr"><span class="card-ttl">📊 Team Sales Comparison</span></div>
           <div class="ch-wrap"><canvas id="ch-team-bar"></canvas></div>
         </div>
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">ð Weekly Trend (All Teams)</span></div>
+          <div class="card-hdr"><span class="card-ttl">📈 Weekly Trend (All Teams)</span></div>
           <div class="ch-wrap"><canvas id="ch-team-line"></canvas></div>
         </div>
       </div>
@@ -469,7 +469,7 @@ select option{background:var(--surf)}
     <div class="page" id="page-purchase-orders">
       <div class="flex-between mb14">
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <input id="po-search" placeholder="ð Search supplier..." style="width:200px" oninput="renderPOs()">
+          <input id="po-search" placeholder="🔍 Search supplier..." style="width:200px" oninput="renderPOs()">
           <select id="po-status-filter" onchange="renderPOs()" style="width:150px">
             <option value="">All Status</option>
             <option value="pending">Pending</option>
@@ -495,18 +495,18 @@ select option{background:var(--surf)}
           <label class="text-muted fs-sm">Month:</label>
           <input type="month" id="inc-month" onchange="renderIncentives()">
         </div>
-        <span style="font-size:.75rem;color:#BB6666">Fixed â± incentive per product sold</span>
+        <span style="font-size:.75rem;color:#BB6666">Fixed ₱ incentive per product sold</span>
       </div>
       <div class="kpi-grid" id="inc-totals" style="grid-template-columns:repeat(3,1fr)"></div>
       <div class="card" style="margin-top:14px">
-        <div class="card-hdr"><span class="card-ttl">ð Team Incentives Breakdown</span></div>
+        <div class="card-hdr"><span class="card-ttl">🏆 Team Incentives Breakdown</span></div>
         <div class="tbl-wrap"><table>
           <thead><tr><th>Team</th><th>Orders</th><th>Qty Sold</th><th>Total Incentive</th></tr></thead>
           <tbody id="inc-body"></tbody>
         </table></div>
       </div>
       <div class="card admin-only" style="margin-top:14px">
-        <div class="card-hdr"><span class="card-ttl">âï¸ Incentive Rates per Product</span><button class="btn btn-pri btn-sm" onclick="saveIncRates()">ð¾ Save Rates</button></div>
+        <div class="card-hdr"><span class="card-ttl">⚙️ Incentive Rates per Product</span><button class="btn btn-pri btn-sm" onclick="saveIncRates()">💾 Save Rates</button></div>
         <div id="inc-rate-editor" style="max-height:400px;overflow-y:auto"></div>
       </div>
     </div>
@@ -515,7 +515,7 @@ select option{background:var(--surf)}
     <div class="page" id="page-settings">
       <div class="g2">
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">ðª Business Info</span></div>
+          <div class="card-hdr"><span class="card-ttl">🏪 Business Info</span></div>
           <div class="fg"><label>Business Name</label><input value="Lechon Hub" style="width:100%"></div>
           <div class="fg"><label>Address</label><input value="Lipa City, Batangas" style="width:100%"></div>
           <div class="fg"><label>Contact</label><input placeholder="Phone number" style="width:100%"></div>
@@ -523,7 +523,7 @@ select option{background:var(--surf)}
           <button class="btn btn-pri admin-only">Save Settings</button>
         </div>
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">ð³ Payment Methods</span></div>
+          <div class="card-hdr"><span class="card-ttl">💳 Payment Methods</span></div>
           <div style="display:flex;flex-direction:column;gap:10px">
             <label style="display:flex;align-items:center;gap:8px;font-size:.85rem"><input type="checkbox" checked> Cash</label>
             <label style="display:flex;align-items:center;gap:8px;font-size:.85rem"><input type="checkbox" checked> GCash</label>
@@ -531,21 +531,21 @@ select option{background:var(--surf)}
             <label style="display:flex;align-items:center;gap:8px;font-size:.85rem"><input type="checkbox"> Bank Transfer</label>
           </div>
           <sep class="sep"></sep>
-          <div class="card-hdr"><span class="card-ttl">ð Data Management</span></div>
+          <div class="card-hdr"><span class="card-ttl">🗑 Data Management</span></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-red btn-sm admin-only" onclick="if(confirm('Clear all transactions? This cannot be undone.')){clearAllTransactions()}">ð Clear All Transactions</button>
+            <button class="btn btn-red btn-sm admin-only" onclick="if(confirm('Clear all transactions? This cannot be undone.')){clearAllTransactions()}">🗑 Clear All Transactions</button>
           </div>
         </div>
       </div>
       <!-- FIREBASE SETUP CARD -->
       <div class="card" style="margin-top:14px;border-color:#FFAAAA">
-        <div class="card-hdr"><span class="card-ttl">ð¥ Firebase Real-Time Sync</span><span id="fb-status-badge" class="st" style="font-size:.7rem">Not Connected</span></div>
-        <div class="alert alert-w" style="margin-bottom:14px">â¡ Connect Firebase so ALL teams share the same live data across devices. Without it, each device has its own local data.</div>
+        <div class="card-hdr"><span class="card-ttl">🔥 Firebase Real-Time Sync</span><span id="fb-status-badge" class="st" style="font-size:.7rem">Not Connected</span></div>
+        <div class="alert alert-w" style="margin-bottom:14px">⚡ Connect Firebase so ALL teams share the same live data across devices. Without it, each device has its own local data.</div>
         <div style="font-size:.78rem;color:#7A0000;margin-bottom:12px;line-height:1.7">
           <strong>5-minute setup:</strong><br>
-          1. Go to <strong>console.firebase.google.com</strong> â Create project (free)<br>
-          2. Build â Realtime Database â Create database â Start in <em>test mode</em><br>
-          3. Project Settings â â Your apps â Add Web App â Copy config<br>
+          1. Go to <strong>console.firebase.google.com</strong> → Create project (free)<br>
+          2. Build → Realtime Database → Create database → Start in <em>test mode</em><br>
+          3. Project Settings ⚙ → Your apps → Add Web App → Copy config<br>
           4. Paste the values below and click Connect
         </div>
         <div class="g2">
@@ -555,18 +555,18 @@ select option{background:var(--surf)}
           <div class="fg"><label>App ID</label><input id="fb-appId" placeholder="1:123456:web:abc..." style="width:100%;font-size:.78rem"></div>
         </div>
         <div style="display:flex;gap:8px;margin-top:4px">
-          <button class="btn btn-pri admin-only" onclick="saveFirebaseConfig()">ð Connect Firebase</button>
+          <button class="btn btn-pri admin-only" onclick="saveFirebaseConfig()">🔗 Connect Firebase</button>
           <button class="btn btn-out btn-sm admin-only" onclick="clearFirebaseConfig()">Disconnect</button>
         </div>
         <sep class="sep"></sep>
-        <div class="card-hdr" style="margin-bottom:8px"><span class="card-ttl">ð Get a Shareable HTTPS Link</span></div>
+        <div class="card-hdr" style="margin-bottom:8px"><span class="card-ttl">🌐 Get a Shareable HTTPS Link</span></div>
         <div style="font-size:.78rem;color:#7A0000;line-height:1.8">
           <strong>Share this app with your teams in 60 seconds:</strong><br>
           1. Save this HTML file to your computer<br>
           2. Go to <strong style="color:#CC0000">drop.netlify.com</strong> in your browser<br>
           3. Drag and drop the <strong>LechonHub_POS.html</strong> file onto the page<br>
           4. Netlify gives you a free <strong>https://yourapp.netlify.app</strong> link instantly<br>
-          5. Share that link with all 4 teams â they open it on any device, any browser<br>
+          5. Share that link with all 4 teams — they open it on any device, any browser<br>
           <em style="color:#BB6666">(Set up Firebase above first so all devices share the same data in real-time)</em>
         </div>
       </div>
@@ -578,22 +578,22 @@ select option{background:var(--surf)}
 <!-- PAYMENT MODAL -->
 <div class="modal-ov" id="pay-modal">
   <div class="modal">
-    <h2>ð³ Payment</h2>
+    <h2>💳 Payment</h2>
     <div id="pay-order-summary" style="background:var(--surf);border-radius:8px;padding:12px;margin-bottom:14px;font-size:.82rem"></div>
     <div class="fg"><label>Payment Method</label>
       <div class="pay-opts">
-        <div class="pay-opt sel" onclick="selPayMethod('cash',this)"><span class="po-ico">ðµ</span><span cl!ss="po-lbl">Cash</span></div>
-        <div class="pay-opt" onclick="selPayMethod('gcash',this)"><span class="po-ico">ð±</span><span class="po-lbl">GCash</span></div>
-        <div class="pay-opt" onclick="selPayMethod('maya',this)"><span class="po-ico">ð³</span><span class="po-lbl">Maya</span></div>
+        <div class="pay-opt sel" onclick="selPayMethod('cash',this)"><span class="po-ico">💵</span><span class="po-lbl">Cash</span></div>
+        <div class="pay-opt" onclick="selPayMethod('gcash',this)"><span class="po-ico">📱</span><span class="po-lbl">GCash</span></div>
+        <div class="pay-opt" onclick="selPayMethod('maya',this)"><span class="po-ico">💳</span><span class="po-lbl">Maya</span></div>
       </div>
     </div>
     <div id="cash-section">
       <div class="fg"><label>Amount Tendered</label><input id="tendered" type="number" placeholder="Enter amount" oninput="calcChange()" style="width:100%"></div>
-      <div class="fg" id="change-row" style="display:none"><label>Change</label><div style="font-size:1.2rem;font-weight:700;color:var(--grn)" id="change-val">â±0</div></div>
+      <div class="fg" id="change-row" style="display:none"><label>Change</label><div style="font-size:1.2rem;font-weight:700;color:var(--grn)" id="change-val">₱0</div></div>
     </div>
     <div class="modal-acts">
       <button class="btn btn-out" onclick="closePayModal()" style="flex:.4">Cancel</button>
-      <button class="btn btn-gold btn-lg" onclick="completeOrder()" style="flex:1">â Confirm Payment</button>
+      <button class="btn btn-gold btn-lg" onclick="completeOrder()" style="flex:1">✅ Confirm Payment</button>
     </div>
   </div>
 </div>
@@ -601,11 +601,11 @@ select option{background:var(--surf)}
 <!-- RECEIPT MODAL -->
 <div class="modal-ov" id="receipt-modal">
   <div class="modal">
-    <h2>ð§¾ Receipt</h2>
+    <h2>🧾 Receipt</h2>
     <div id="receipt-content"></div>
     <div class="modal-acts">
       <button class="btn btn-out" onclick="document.getElementById('receipt-modal').classList.remove('open')">Close</button>
-      <button class="btn btn-pri" onclick="window.print()">ð¨ Print</button>
+      <button class="btn btn-pri" onclick="window.print()">🖨 Print</button>
     </div>
   </div>
 </div>
@@ -622,7 +622,7 @@ select option{background:var(--surf)}
         <option>Lechon Rolls</option><option>Lechon Manok</option><option>Cochinillo</option><option>Sulit Combo</option>
       </select>
     </div>
-    <div class="fg"><label>Price (â±)</label><input id="pm-price" type="number" style="width:100%"></div>
+    <div class="fg"><label>Price (₱)</label><input id="pm-price" type="number" style="width:100%"></div>
     <div class="fg"><label>Description / Size Info</label><input id="pm-desc" style="width:100%"></div>
     <div class="fg"><label>Stock Quantity</label><input id="pm-stock" type="number" style="width:100%"></div>
     <div class="modal-acts">
@@ -647,7 +647,7 @@ select option{background:var(--surf)}
       </select>
     </div>
     <div class="fg"><label>Role</label><input id="em-role" placeholder="e.g. Team Leader, Rider, Cashier" style="width:100%"></div>
-    <div class="fg"><label>Base Pay (â±/month)</label><input id="em-base" type="number" style="width:100%"></div>
+    <div class="fg"><label>Base Pay (₱/month)</label><input id="em-base" type="number" style="width:100%"></div>
     <div class="fg"><label>Commission Rate (%)</label><input id="em-comm" type="number" placeholder="e.g. 2" style="width:100%"></div>
     <div class="modal-acts">
       <button class="btn btn-out" onclick="document.getElementById('emp-modal').classList.remove('open')" style="flex:.4">Cancel</button>
@@ -665,7 +665,7 @@ select option{background:var(--surf)}
     <div class="fg"><label>Items Ordered</label><input id="po-items" style="width:100%" placeholder="e.g. Whole Lechon, Lechon Belly..."></div>
     <div class="g2">
       <div class="fg"><label>Quantity</label><input id="po-qty" type="number" style="width:100%" placeholder="0"></div>
-      <div class="fg"><label>Total Cost (â±)</label><input id="po-cost" type="number" style="width:100%" placeholder="0"></div>
+      <div class="fg"><label>Total Cost (₱)</label><input id="po-cost" type="number" style="width:100%" placeholder="0"></div>
     </div>
     <div class="g2">
       <div class="fg"><label>Order Date</label><input id="po-date" type="date" style="width:100%"></div>
@@ -712,723 +712,654 @@ const TEAMS = [
 
 const MENU_ITEMS = [
   // Whole Lechon
-  {id:'wl-s',   name:'Whole Lechon â Small',      cat:'Whole Lechon', price:10500, desc:'15-18kg | 15-20 pax',  emo:'ð·', stock:10},
-  {id:'wl-m',   name:'Whole Lechon â Medium',     cat:'Whole Lechon', price:11500, desc:'19-21kg | 20-25 pax',  emo:'ð·', stock:8},
-  {id:'wl-l',   name:'Whole Lechon â Large',      cat:'Whole Lechon', price:12500, desc:'22-25kg | 25-30 pax',  emo:'ð·', stock:7},
-  {id:'wl-xl',  name:'Whole Lechon â Extra Large', cat:'Whole Lechon', price:13500, desc:'26-29kg | 30-35 pax', emo:'ð·', stock:6},
-  {id:'wl-j',   name:'Whole Lechon â Jumbo',      cat:'Whole Lechon', price:14500, desc:'30-32kg | 35-40 pax',  emo:'ð·', stock:5},
-  {id:'wl-mg',  name:'Whole Lechon â Mega',       cat:'Whole Lechon', price:15500, desc:'33-35kg | 40-50 pax',  emo:'ð·', stock:4},
-  {id:'wl-xm',  name:'Whole Lechon â Extra Mega', cat:'Whole Lechon', price:16000, desc:'36-37kg | 50-60 pax',  emo:'ð·', stock:3},
-  {id:'wl-q',   name:'Whole Lechon â Queen',      cat:'Whole Lechon', price:17000, desc:'38-40kg | 60-70 pax',  emo:'ð·', stock:2},
-  {id:'wl-k',   name:'Whole Lechon â King',       cat:'Whole Lechon', price:18000, desc:'41-43kg | 70-80 pax',  emo:'ð·', stock:2},
-  {id:'wl-f',   name:'Whole Lechon â Fiesta',     cat:'Whole Lechon', price:19000, desc:'44-45kg | 80-90 pax',  emo:'ð·', stock:1},
+  {id:'wl-s',   name:'Whole Lechon – Small',      cat:'Whole Lechon', price:10500, desc:'15-18kg | 15-20 pax',  emo:'🐷', stock:10},
+  {id:'wl-m',   name:'Whole Lechon – Medium',     cat:'Whole Lechon', price:11500, desc:'19-21kg | 20-25 pax',  emo:'🐷', stock:8},
+  {id:'wl-l',   name:'Whole Lechon – Large',      cat:'Whole Lechon', price:12500, desc:'22-25kg | 25-30 pax',  emo:'🐷', stock:7},
+  {id:'wl-xl',  name:'Whole Lechon – Extra Large', cat:'Whole Lechon', price:13500, desc:'26-29kg | 30-35 pax', emo:'🐷', stock:6},
+  {id:'wl-j',   name:'Whole Lechon – Jumbo',      cat:'Whole Lechon', price:14500, desc:'30-32kg | 35-40 pax',  emo:'🐷', stock:5},
+  {id:'wl-mg',  name:'Whole Lechon – Mega',       cat:'Whole Lechon', price:15500, desc:'33-35kg | 40-50 pax',  emo:'🐷', stock:4},
+  {id:'wl-xm',  name:'Whole Lechon – Extra Mega', cat:'Whole Lechon', price:16000, desc:'36-37kg | 50-60 pax',  emo:'🐷', stock:3},
+  {id:'wl-q',   name:'Whole Lechon – Queen',      cat:'Whole Lechon', price:17000, desc:'38-40kg | 60-70 pax',  emo:'🐷', stock:2},
+  {id:'wl-k',   name:'Whole Lechon – King',       cat:'Whole Lechon', price:18000, desc:'41-43kg | 70-80 pax',  emo:'🐷', stock:2},
+  {id:'wl-f',   name:'Whole Lechon – Fiesta',     cat:'Whole Lechon', price:19000, desc:'44-45kg | 80-90 pax',  emo:'🐷', stock:1},
   // Lechon Ulo
-  {id:'ulo-s',  name:'Lechon Ulo â Small',  cat:'Lechon Ulo', price:1899, desc:'4 kilos + FREE Coke 1.5L', emo:'ð', stock:15},
-  {id:'ulo-m',  name:'Lechon Ulo â Medium', cat:'Lechon Ulo', price:1999, desc:'5 kilos + FREE Coke 1.5L', emo:'ð', stock:12},
-  {id:'ulo-l',  name:'Lechon Ulo â Large',  cat:'Lechon Ulo', price:2199, desc:'6 kilos + FREE Coke 1.5L', emo:'ð', stock:10},
-  {id:'ulo-j',  name:'Lechon Ulo â Jumbo',  cat:'Lechon Ulo', price:2399, desc:'7 kilos + FREE Coke 1.5L', emo:'ð', stock:8},
+  {id:'ulo-s',  name:'Lechon Ulo – Small',  cat:'Lechon Ulo', price:1899, desc:'4 kilos + FREE Coke 1.5L', emo:'🐗', stock:15},
+  {id:'ulo-m',  name:'Lechon Ulo – Medium', cat:'Lechon Ulo', price:1999, desc:'5 kilos + FREE Coke 1.5L', emo:'🐗', stock:12},
+  {id:'ulo-l',  name:'Lechon Ulo – Large',  cat:'Lechon Ulo', price:2199, desc:'6 kilos + FREE Coke 1.5L', emo:'🐗', stock:10},
+  {id:'ulo-j',  name:'Lechon Ulo – Jumbo',  cat:'Lechon Ulo', price:2399, desc:'7 kilos + FREE Coke 1.5L', emo:'🐗', stock:8},
   // Lechon Belly
-  {id:'b-1',   name:'Lechon Belly 1kg',   cat:'Lechon Belly', price:1000, desc:'Per kilo',    emo:'ð¥©', stock:25},
-  {id:'b-2',   name:'Lechon Belly 2kg',   cat:'Lechon Belly', price:1800, desc:'',            emo:'ð¥©', stock:20},
-  {id:'b-3',   name:'Lechon Belly 3kg',   cat:'Lechon Belly', price:2400, desc:'',            emo:'ð¥©', stock:18},
-  {id:'b-35',  name:'Lechon Belly 3.5kg', cat:'Lechon Belly', price:2900, desc:'',            emo:'ð¥©', stock:12},
-  {id:'b-4',   name:'Lechon Belly 4kg',   cat:'Lechon Belly', price:3300, desc:'',            emo:'ð¥©', stock:10},
-  {id:'b-5',   name:'Lechon Belly 5kg',   cat:'Lechon Belly', price:4000, desc:'',            emo:'ð¥©', stock:9},
-  {id:'b-6',   name:'Lechon Belly 6kg',   cat:'Lechon Belly', price:4800, desc:'',            emo:'ð¥©', stock:7},
-  {id:'b-7',   name:'Lechon Belly 7kg',   cat:'Lechon Belly', price:5800, desc:'',            emo:'ð¥©', stock:5},
-  {id:'b-8',   name:'Lechon Belly 8kg',   cat:'Lechon Belly', price:6700, desc:'',            emo:'ð¥©', stock:4},
+  {id:'b-1',   name:'Lechon Belly 1kg',   cat:'Lechon Belly', price:1000, desc:'Per kilo',    emo:'🥩', stock:25},
+  {id:'b-2',   name:'Lechon Belly 2kg',   cat:'Lechon Belly', price:1800, desc:'',            emo:'🥩', stock:20},
+  {id:'b-3',   name:'Lechon Belly 3kg',   cat:'Lechon Belly', price:2400, desc:'',            emo:'🥩', stock:18},
+  {id:'b-35',  name:'Lechon Belly 3.5kg', cat:'Lechon Belly', price:2900, desc:'',            emo:'🥩', stock:12},
+  {id:'b-4',   name:'Lechon Belly 4kg',   cat:'Lechon Belly', price:3300, desc:'',            emo:'🥩', stock:10},
+  {id:'b-5',   name:'Lechon Belly 5kg',   cat:'Lechon Belly', price:4000, desc:'',            emo:'🥩', stock:9},
+  {id:'b-6',   name:'Lechon Belly 6kg',   cat:'Lechon Belly', price:4800, desc:'',            emo:'🥩', stock:7},
+  {id:'b-7',   name:'Lechon Belly 7kg',   cat:'Lechon Belly', price:5800, desc:'',            emo:'🥩', stock:5},
+  {id:'b-8',   name:'Lechon Belly 8kg',   cat:'Lechon Belly', price:6700, desc:'',            emo:'🥩', stock:4},
   // Lechon Rolls
-  {id:'r-2',  name:'2 Lechon Rolls', cat:'Lechon Rolls', price:799,  desc:'+ FREE Coke 1.5L', emo:'ð¯', stock:20},
-  {id:'r3',  name:'3 Lechon Rolls', cat:'Lechon Rolls', price:1099, desc:'+ FREE Coke 1.5L', emo:'ð¯', stock:15},
-  {id:'r-4',  name:'4 Lechon Rolls', cat:'Lechon Rolls', price:1399, desc:'+ FREE Coke 1.5L', emo:'ð¯', stock:12},
-  {id:'r-5',  name:'5 Lechon Rolls', cat:'Lechon Rolls', price:1699, desc:'+ FREE Coke 1.5L', emo:'ð¯', stock:10},
+  {id:'r-2',  name:'2 Lechon Rolls', cat:'Lechon Rolls', price:799,  desc:'+ FREE Coke 1.5L', emo:'🌯', stock:20},
+  {id:'r-3',  name:'3 Lechon Rolls', cat:'Lechon Rolls', price:1099, desc:'+ FREE Coke 1.5L', emo:'🌯', stock:15},
+  {id:'r-4',  name:'4 Lechon Rolls', cat:'Lechon Rolls', price:1399, desc:'+ FREE Coke 1.5L', emo:'🌯', stock:12},
+  {id:'r-5',  name:'5 Lechon Rolls', cat:'Lechon Rolls', price:1699, desc:'+ FREE Coke 1.5L', emo:'🌯', stock:10},
   // Lechon Manok
-  {id:'lKLË[YNÌXÚÛX[ÚÉËØ]ÓXÚÛX[ÚÉËXÙNÎNK\ØÎÊÈQHÛÚÙHKS	Ë[[Îü'ãeÉËÝØÚÎKÚYÛKLÉË[YNÌÈXÚÛX[ÚÉËØ]ÓXÚÛX[ÚÉËXÙNLNK\ØÎÊÈQHÛÚÙHKS	Ë[[Îü'ãeÉËÝØÚÎM_KËÈÛØÚ[[ÂÚYØØË[IË[YNÐÛØÚ[[È8 $ÈYY][IËØ]ÐÛØÚ[[ÉËXÙNÎNNK\ØÎÍHÚ[ÜÈÚÛÜÙNQHX[ÚÈÜÛ
-ÈÛÚÙIË[[Îü'ä/IËÝØÚÎKÚYØØË[	Ë[YNÐÛØÚ[[È8 $È\ÙIËØ]ÐÛØÚ[[ÉËXÙN
-NK\ØÎÍÚ[ÜÈÚÛÜÙNQHX[ÚÈÜÛ
-ÈÛÚÙIË[[Îü'ä/IËÝØÚÎ_KÚYØØËZË[YNÐÛØÚ[[È8 $È[XÉËØ]ÐÛØÚ[[ÉËXÙNNNK\ØÎÍÈÚ[ÜÈÚÛÜÙNQHX[ÚÈÜÛ
-ÈÛÚÙIË[[Îü'ä/IËÝØÚÎKËÈÝ[]ÛÛXÈ8 $È[È
-È[BÚYÜØË]XË[YNÔÝ[]
-ÙÈ[È
-ÈÙÈ[IËØ]ÔÝ[]ÛÛXÉËXÙNÍNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎLKÚYÜØË]XÉË[YNÔÝ[]
-ÙÈ[È
-ÈÚÙÈ[IËØ]ÔÝ[]ÛÛXÉËXÙNÎNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎ_KÚYÜØË]X	Ë[YNÔÝ[]
-ÙÈ[È
-È
-ÙÈ[IËØ]ÔÝ[]ÛÛXÉËXÙNNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎKÚYÜØË]XIË[YNÔÝ[]
-ÙÈ[È
-È
-ZÙÈ[IËØ]ÔÝ[]ÛÛXÉËXÙNMÎNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎKÚYÜØË]XË[YNÔÝ[]
-ÙÈ[È
-È
-ÙÈ[IËØ]ÔÝ[]ÛÛXÉËXÙNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎ_KÚYÜØË]XÉË[YNÔÝ[]
-ÙÈ[È
-È
-ÚÙÈ[IËØ]ÔÝ[]ÛÛXÉËXÙNÍNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎKÚYÜØË]X	Ë[YNÔÝ[]
-ÙÈ[È
-ÈÙÈ[IËØ]ÔÝ[]ÛÛXÉËXÙNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎßKËÈÝ[]ÛÛXÈ8 $ÈÛÈ
-ÈX[ÚÂÚYÜØËLIË[YNÔÝ[]ÛÈ
-ÈHX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNLNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎLKÚYÜØËLÜIË[YNÔÝ[]ÈÛÈ
-ÈHX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNMNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎ_KÚYÜØËMIË[YNÔÝ[]
-ÛÈ
-ÈHX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNMÎNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎßKÚYÜØËM\IË[YNÔÝ[]
-HÛÈ
-ÈHX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎKËÈÝ[]ÛÛXÈ8 $ÈX[ÚÈ
-ÈÛÚYÜØËL[\Ë[YNÔÝ[]HX[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎLKÚYÜØËL\Ë[YNÔÝ[]X[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNLNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎ_KÚYÜØËLÛ\Ë[YNÔÝ[]ÈX[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNMNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎKÚYÜØËM\Ë[YNÔÝ[]
-X[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNMÎNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎKÚYÜØËM[\Ë[YNÔÝ[]
-HX[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã IËÝØÚÎ_KËÈÝ[]ÛÛXÈ8 $È[H
-ÈX[ÚÂÚYÜØËXIË[YNÔÝ[]ÙÈ[H
-ÈX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNNK\ØÎÉË[[Îü'ã¢ËÝØÚÎKÚYÜØËXÛIË[YNÔÝ[]ÚÙÈ[H
-ÈX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNÌNK\ØÎÉË[[Îü'ã¢ËÝØÚÎßKÚYÜØËXIË[YNÔÝ[]
-ÙÈ[H
-ÈX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNÎNK\ØÎÉË[[Îü'ã¢ËÝØÚÎKÚYÜØËX[IË[YNÔÝ[]
-ZÙÈ[H
-ÈX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙN
-NK\ØÎÉË[[Îü'ã¢ËÝØÚÎ_KÚYÜØËXIË[YNÔÝ[]
-ÙÈ[H
-ÈX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNLÎNK\ØÎÉË[[Îü'ã¢ËÝØÚÎKÚYÜØËXÛIË[YNÔÝ[]
-ÚÙÈ[H
-ÈX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNNK\ØÎÉË[[Îü'ã¢ËÝØÚÎßKÚYÜØËXIË[YNÔÝ[]ÙÈ[H
-ÈX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNÌNK\ØÎÉË[[Îü'ã¢ËÝØÚÎKËÈÝ[]X\Ý8 $È[H
-ÈX[ÚÈ
-ÈÛÚYÜÙLË[YNÑX\ÝÙÈ[H
-ÈX[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã¢IËÝØÚÎKÚYÜÙLÉË[YNÑX\ÝÚÙÈ[H
-ÈX[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNÍNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã¢IËÝØÚÎ_KÚYÜÙM	Ë[YNÑX\Ý
-ÙÈ[H
-ÈX[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNÎNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã¢IËÝØÚÎKÚYÜÙMIË[YNÑX\Ý
-ZÙÈ[H
-ÈX[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNLNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã¢IËÝØÚÎßKÚYÜÙMË[YNÑX\Ý
-ÙÈ[H
-ÈX[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã¢IËÝØÚÎßKÚYÜÙMÉË[YNÑX\Ý
-ÚÙÈ[H
-ÈX[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNÎNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã¢IËÝØÚÎKÚYÜÙN	Ë[YNÑX\ÝÙÈ[H
-ÈX[ÚÈ
-ÈHÛ	ËØ]ÔÝ[]ÛÛXÉËXÙNÍNNK\ØÎÑYHÛÚÙHKS	Ë[[Îü'ã¢IËÝØÚÎKËÈÜXÚX[8 ¬LÎNHÛÛXÜÂÚYÜÜLÎNXIË[YNÔÜXÚX[
-ÙÈ[È
-ÈÛÉËØ]ÔÝ[]ÛÛXÉËXÙNÎNK\ØÎÔXÚÈ[Ý\]HIË[[Îø«d	ËÝØÚÎKÚYÜÜLÎNXË[YNÔÜXÚX[
-ÙÈ[È
-ÈX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNÎNK\ØÎÔXÚÈ[Ý\]HIË[[Îø«d	ËÝØÚÎKÚYÜÜLÎNXÉË[YNÔÜXÚX[
-ÙÈ[È
-ÈHÛ
-ÈHX[ÚÉËØ]ÔÝ[]ÛÛXÉËXÙNÎNK\ØÎÔXÚÈ[Ý\]HIË[[Îø«d	ËÝØÚÎKÚYÜÜMMNIË[YNÔÝ\[YN
-ÙÈ[È
-ÈÚÙÈ[H
-ÈX[ÚÈ
-ÈØ\ØH
-ÈÛÚÙIËØ]ÔÝ[]ÛÛXÉËXÙNMNK\ØÎÉË[[Îü'ãáËÝØÚÎ_KNÂËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBËÈÕUH	ÕÔQÑBËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB[Ý[Û
-Ë
-^Ý^ØÛÛÝ[ØØ[ÝÜYÙKÙ]][JÊNÜ]\ÒÓÓ\ÙJNXØ]Ú
-J^Ü]\_B[Ý[ÛÝË^Ý^ÛØØ[ÝÜYÙKÙ]][JËÓÓÝ[ÚYJJ_XØ]Ú
-J^ß_B]ÙXÝÈH
-	ÛÜÙXÝÉËQSWÒUSTËX\
-OËJJJNÂ][ØXÝ[ÛÈH
-	ÛÝÉË×JNÂ][\ÞYY\ÈH
-	ÛÙ[\ÉËY][[\ÞYY\Ê
-JNÂ]\Ú\ÙSÜ\ÈH
-	ÛÜÜÉË×JNÂ]Ø\H×NÂ]^SY]ÙH	ØØ\Ú	ÎÂ]Ú\ÈHßNÂ]Ý\[Ø]H	Ð[	ÎÂËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBËÈQUSSTÖQQTÂËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB[Ý[ÛY][[\ÞYY\Ê
-^ÂÛÛÝÛ\ÏVÉÕX[HXY\Ë	ÐØ\ÚY\Ë	ÔY\Ë	ÒÚ]Ú[ÝY×NÂÛÛÝ[Y\Ï^Û\XÚÛÉÓX\XHØ[ÜÉË	ÒX[^Y\ÉË	Ð[HÜ^×K[Û\ÎÉÐØ\ÈX^Ë	Ó^HÜ\ÉË	ÓX\ÛÈ]]\ÝI×KØ[[ZY\ÎÉÒ[H[[ÜÉË	Ô[ÛÈÛÛY^Ë	ÔXØHÜ\É×KÝ^X\ÎÉÐ[\È[IË	Ð]Ø\ÚXIË	ÐØ\ÈY[ÞI×_NÂ][\ÏV×NÛ]YLNÂÜÛÛÝÝY[Y\×HÙØXÝ[Y\Ê[Y\ÊJ^Â[Y\ËÜXXÚ
+  {id:'lm-2', name:'2 Lechon Manok', cat:'Lechon Manok', price:799,  desc:'+ FREE Coke 1.5L', emo:'🍗', stock:20},
+  {id:'lm-3', name:'3 Lechon Manok', cat:'Lechon Manok', price:1099, desc:'+ FREE Coke 1.5L', emo:'🍗', stock:15},
+  // Cochinillo
+  {id:'cc-m', name:'Cochinillo – Medium', cat:'Cochinillo', price:7999, desc:'5 kilos | Choose: FREE Manok or Roll + Coke', emo:'🐽', stock:6},
+  {id:'cc-l', name:'Cochinillo – Large',  cat:'Cochinillo', price:8499, desc:'6 kilos | Choose: FREE Manok or Roll + Coke', emo:'🐽', stock:5},
+  {id:'cc-j', name:'Cochinillo – Jumbo',  cat:'Cochinillo', price:8999, desc:'7 kilos | Choose: FREE Manok or Roll + Coke', emo:'🐽', stock:4},
+  // Sulit Combo – Ulo + Belly
+  {id:'sc-ub2', name:'Sulit: 6kg Ulo + 2kg Belly', cat:'Sulit Combo', price:3599, desc:'Free Coke 1.5L', emo:'🎁', stock:10},
+  {id:'sc-ub3', name:'Sulit: 6kg Ulo + 3kg Belly', cat:'Sulit Combo', price:3999, desc:'Free Coke 1.5L', emo:'🎁', stock:9},
+  {id:'sc-ub4', name:'Sulit: 6kg Ulo + 4kg Belly', cat:'Sulit Combo', price:4999, desc:'Free Coke 1.5L', emo:'🎁', stock:8},
+  {id:'sc-ub5', name:'Sulit: 6kg Ulo + 5kg Belly', cat:'Sulit Combo', price:5799, desc:'Free Coke 1.5L', emo:'🎁', stock:6},
+  {id:'sc-ub6', name:'Sulit: 6kg Ulo + 6kg Belly', cat:'Sulit Combo', price:6699, desc:'Free Coke 1.5L', emo:'🎁', stock:5},
+  {id:'sc-ub7', name:'Sulit: 6kg Ulo + 7kg Belly', cat:'Sulit Combo', price:7499, desc:'Free Coke 1.5L', emo:'🎁', stock:4},
+  {id:'sc-ub8', name:'Sulit: 6kg Ulo + 8kg Belly', cat:'Sulit Combo', price:8099, desc:'Free Coke 1.5L', emo:'🎁', stock:3},
+  // Sulit Combo – Rolls + Manok
+  {id:'sc-2rm', name:'Sulit: 2 Rolls + 1 Manok', cat:'Sulit Combo', price:1199, desc:'Free Coke 1.5L', emo:'🎁', stock:10},
+  {id:'sc-3rm', name:'Sulit: 3 Rolls + 1 Manok', cat:'Sulit Combo', price:1499, desc:'Free Coke 1.5L', emo:'🎁', stock:9},
+  {id:'sc-4rm', name:'Sulit: 4 Rolls + 1 Manok', cat:'Sulit Combo', price:1799, desc:'Free Coke 1.5L', emo:'🎁', stock:7},
+  {id:'sc-5rm', name:'Sulit: 5 Rolls + 1 Manok', cat:'Sulit Combo', price:2099, desc:'Free Coke 1.5L', emo:'🎁', stock:6},
+  // Sulit Combo – Manok + Roll
+  {id:'sc-1mr', name:'Sulit: 1 Manok + 1 Roll', cat:'Sulit Combo', price:899,  desc:'Free Coke 1.5L', emo:'🎁', stock:10},
+  {id:'sc-2mr', name:'Sulit: 2 Manok + 1 Roll', cat:'Sulit Combo', price:1199, desc:'Free Coke 1.5L', emo:'🎁', stock:9},
+  {id:'sc-3mr', name:'Sulit: 3 Manok + 1 Roll', cat:'Sulit Combo', price:1499, desc:'Free Coke 1.5L', emo:'🎁', stock:8},
+  {id:'sc-4mr', name:'Sulit: 4 Manok + 1 Roll', cat:'Sulit Combo', price:1799, desc:'Free Coke 1.5L', emo:'🎁', stock:6},
+  {id:'sc-5mr', name:'Sulit: 5 Manok + 1 Roll', cat:'Sulit Combo', price:2099, desc:'Free Coke 1.5L', emo:'🎁', stock:5},
+  // Sulit Combo – Belly + Manok
+  {id:'sc-b2m', name:'Sulit: 2kg Belly + Manok', cat:'Sulit Combo', price:2099, desc:'', emo:'🎊', stock:8},
+  {id:'sc-b3m', name:'Sulit: 3kg Belly + Manok', cat:'Sulit Combo', price:3099, desc:'', emo:'🎊', stock:7},
+  {id:'sc-b4m', name:'Sulit: 4kg Belly + Manok', cat:'Sulit Combo', price:3899, desc:'', emo:'🎊', stock:6},
+  {id:'sc-b5m', name:'Sulit: 5kg Belly + Manok', cat:'Sulit Combo', price:4699, desc:'', emo:'🎊', stock:5},
+  {id:'sc-b6m', name:'Sulit: 6kg Belly + Manok', cat:'Sulit Combo', price:5399, desc:'', emo:'🎊', stock:4},
+  {id:'sc-b7m', name:'Sulit: 7kg Belly + Manok', cat:'Sulit Combo', price:6299, desc:'', emo:'🎊', stock:3},
+  {id:'sc-b8m', name:'Sulit: 8kg Belly + Manok', cat:'Sulit Combo', price:7099, desc:'', emo:'🎊', stock:2},
+  // Sulit Feast – Belly + Manok + Roll
+  {id:'sf-2',  name:'Feast: 2kg Belly + Manok + 1 Roll', cat:'Sulit Combo', price:2599, desc:'Free Coke 1.5L', emo:'🎉', stock:6},
+  {id:'sf-3',  name:'Feast: 3kg Belly + Manok + 1 Roll', cat:'Sulit Combo', price:3599, desc:'Free Coke 1.5L', emo:'🎉', stock:5},
+  {id:'sf-4',  name:'Feast: 4kg Belly + Manok + 1 Roll', cat:'Sulit Combo', price:4399, desc:'Free Coke 1.5L', emo:'🎉', stock:4},
+  {id:'sf-5',  name:'Feast: 5kg Belly + Manok + 1 Roll', cat:'Sulit Combo', price:5199, desc:'Free Coke 1.5L', emo:'🎉', stock:3},
+  {id:'sf-6',  name:'Feast: 6kg Belly + Manok + 1 Roll', cat:'Sulit Combo', price:5899, desc:'Free Coke 1.5L', emo:'🎉', stock:3},
+  {id:'sf-7',  name:'Feast: 7kg Belly + Manok + 1 Roll', cat:'Sulit Combo', price:6799, desc:'Free Coke 1.5L', emo:'🎉', stock:2},
+  {id:'sf-8',  name:'Feast: 8kg Belly + Manok + 1 Roll', cat:'Sulit Combo', price:7599, desc:'Free Coke 1.5L', emo:'🎉', stock:2},
+  // Special ₱2799 Combos
+  {id:'sp-2799a', name:'Special: 6kg Ulo + 2 Rolls',           cat:'Sulit Combo', price:2799, desc:'Pick your fave!', emo:'⭐', stock:8},
+  {id:'sp-2799b', name:'Special: 6kg Ulo + 2 Manok',           cat:'Sulit Combo', price:2799, desc:'Pick your fave!', emo:'⭐', stock:8},
+  {id:'sp-2799c', name:'Special: 6kg Ulo + 1 Roll + 1 Manok',  cat:'Sulit Combo', price:2799, desc:'Pick your fave!', emo:'⭐', stock:8},
+  {id:'sp-5499',  name:'Supreme: 6kg Ulo + 3kg Belly + 2 Manok + Sarsa + Coke', cat:'Sulit Combo', price:5499, desc:'', emo:'🏆', stock:5},
+];
 
-[YKJOOÂ[\Ë\Ú
-ÚYÙ[\IÊÚY
-ÊË[YKX[NYÛNÛ\ÖÚW_	ÔÝYË\ÙNNÛÛ[T]NÛ\ÎYXÝ[ÛÎJNÂJNÂB]\[\ÎÂBËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBËÈÐSTHUHÑSTUSÓËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB[Ý[ÛÙ[\]TØ[\Q]J
-^ÂÛÛÝÝÏ[]È]J
-NÂÛÛÝÏV×NÂÛÛÝX[RYÏVÉÛ\XÚÛË	Û[Û\ÉË	ÜØ[[ZY\ÉË	ÚÝ^X\É×NÂÛÛÝ^SY]ÙÏVÉØØ\Ú	Ë	ØØ\Ú	Ë	ØØ\Ú	Ë	ÙØØ\Ú	Ë	ÛX^XI×NÂÛÛÝÝ\ÝÛY\ÏVÉÓX\XHËË	ÒX[Ë	Ð[HËË	ÐØ\ÈË	Ó^HË	Ò[HË	Ô[ÛÈËË	Ð]ËË	Ð[\ÈË	ÔXÛÈKË	Ð[^HË	ÐÛÈKË	ÐØ\H×NÂ]YLLÂÜ]LNÙLÙKJ^ÂÛÛÝ]O[]È]JÝÊNÂ]KÙ]]J]KÙ]]J
-KY
-NÂÛÛÝÏY]KÒTÓÔÝ[Ê
-KÜ]
-	Õ	ÊVÌNÂÛÛÝ[SÜ\ÏSX]ÛÜX][ÛJ
-J
-JÌÎÂÜ]ÏLÛÏ[SÜ\ÎÛÊÊÊ^ÂÛÛÝX[O]X[RYÖÓX]ÛÜX][ÛJ
-J
-WNÂÛÛÝ[R][\ÏSX]ÛÜX][ÛJ
-JÊJÌNÂÛÛÝ][\ÏV×NÛ]Ý[LÂÜ]OLÚO[R][\ÎÚJÊÊ^ÂÛÛÝ\ÙXÝÖÓX]ÛÜX][ÛJ
-JX]Z[ÌÙXÝË[Ý
-JWNÂÛÛÝ]OLNÂ][\Ë\Ú
-ÚYY[YN[YKXÙNXÙK]_JNÂÝ[
-Ï\XÙJ]NÂBÛÛÝN
-ÓX]ÛÜX][ÛJ
-JLNÂÛÛÝ[SX]ÛÜX][ÛJ
-J
-NÂË\Ú
-ÂYÕIÊÊY
-ÊÊK]NË[YN	ÔÝ[ÊKYÝ\
-	Ì	Ê_NÔÝ[Ê[KYÝ\
-	Ì	Ê_XÝ\ÝÛY\Ý\ÝÛY\ÖÓX]ÛÜX][ÛJ
-JÝ\ÝÛY\Ë[Ý
-WKX[K][\ËÝ[^[Y[^SY]ÙÖÓX]ÛÜX][ÛJ
-J^SY]ÙË[Ý
-WKÝ]\ÎÜZY	ÂJNÂBB[ØXÝ[ÛÏ]ÎÂÝ	ÛÝÉË[ØXÝ[ÛÊNÂ[\
-	Ñ[[È]HÙ[\]YH[ØY[ËÊNÂØØ][Û[ØY
+// ============================================================
+//  STATE & STORAGE
+// ============================================================
+function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
-NÂBËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBËÈUQÐUSÓËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBÛÛÝQÑWÓQUO^Â\ÚØ\Ý]NÑ\ÚØ\	ËÝXÓÝ\Y]ÈÙ[Ý\\Ú[\ÜÈÙ^IßKÜÎÝ]NÔÔÈ\Z[[	ËÝXÔØÙ\ÜÈÜ\È[^[Y[ÉßK[[ÜNÝ]NÒ[[ÜIËÝXÓX[YÙHÙXÝÝØÚÈ][ÉßK\ÜÎÝ]NÔ\ÜÉËÝXÑZ[KÙYZÛH[[ÛH[[]XÜÉßKX[\ÎÝ]NÕX[HØ[\ÉËÝXÐÛÛ\\H\ÜX[ÙHXÜÜÜÈ[X[\ÉßKÛÛ\[Ø][ÛÝ]NÐÛÛ\[Ø][ÛËÝXÑ[\ÞYYH^H[ÛÛ[Z\ÜÚ[ÛÈ8 $È[X[\ÉßK	Ü\Ú\ÙK[Ü\ÉÎÝ]NÔ\Ú\ÙHÜ\ÉËÝXÕXÚÈÝ\Y\Ü\ÈÜXÚÛXßK[Ù[]\ÎÝ]NÒ[Ù[]\È	ÛÛ[Z\ÜÚ[ÛËÝXÐ]]ËXØ[Ý[]YX[H[Ù[]\ÈÛHØ[\ÉßKÙ][ÜÎÝ]NÔÙ][ÜÉËÝXÐÛÛYÝ\H[Ý\ÔÈÞ\Ý[IßKNÂ[Ý[Û]YÙJ^ÂÝ\[YÙO\YÙNÂØÝ[Y[]Y\TÙ[XÝÜ[
-	Ë]Z][IÊKÜXXÚ
-OÛ\ÜÓ\Ý[[ÝJ	ØXÝ]IÊJNÂØÝ[Y[]Y\TÙ[XÝÜ]Z][VÛÛÛXÚÏH]	ÉÜYÙ_IÊHX
-OËÛ\ÜÓ\ÝY
-	ØXÝ]IÊNÂØÝ[Y[]Y\TÙ[XÝÜ[
-	ËYÙIÊKÜXXÚ
-OÛ\ÜÓ\Ý[[ÝJ	ØXÝ]IÊJNÂÛÛÝ[YØÝ[Y[Ù][[Y[RY
-	ÜYÙKIÊÜYÙJNÂYY[
-\]\Â[Û\ÜÓ\ÝY
-	ØXÝ]IÊNÂÛÛÝOTQÑWÓQUVÜYÙW_Ý]NYÙKÝXÉßNÂØÝ[Y[Ù][[Y[RY
-	ÜYÙK]]IÊK^ÛÛ[[K]NÂØÝ[Y[Ù][[Y[RY
-	ÜYÙK\ÝXÊK^ÛÛ[[KÝXÂYYÙOOOIÙ\ÚØ\	ÊH[\\ÚØ\
+let products = ld('lh_products', MENU_ITEMS.map(p=>({...p})));
+let transactions = ld('lh_txns', []);
+let employees = ld('lh_emps', defaultEmployees());
+let purchaseOrders = ld('lh_pos', []);
+let cart = [];
+let payMethod = 'cash';
+let charts = {};
+let currentCat = 'All';
 
-NÂ[ÙHYYÙOOOIÜÜÉÊH[\ÔÊ
-NÂ[ÙHYYÙOOOIÚ[[ÜIÊH[\[[ÜJ
-NÂ[ÙHYYÙOOOIÜ\ÜÉÊH[\\ÜÊ
-NÂ[ÙHYYÙOOOIÝX[\ÉÊH[\X[\Ê
-NÂ[ÙHYYÙOOOIØÛÛ\[Ø][ÛÊH[\ÛÛ\[Ø][Û
-NÂ[ÙHYYÙOOOIÜ\Ú\ÙK[Ü\ÉÊH[\ÜÊ
-NÂ[ÙHYYÙOOOIÚ[Ù[]\ÉÊH[\[Ù[]\Ê
-NÂBËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBËÈÓÐÒÂËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB[Ý[Û\]PÛØÚÊ
-^ÂÛÛÝÝÏ[]È]J
-NÂØÝ[Y[Ù][[Y[RY
-	ØÛØÚÉÊK^ÛÛ[[ÝËÓØØ[Q]TÝ[Ê	Ù[T	ËÝÙYZÙ^NÜÚÜ	Ë[ÛÜÚÜ	Ë^NÛ[Y\XÉßJJÉÈ	ÊÛÝËÓØØ[U[YTÝ[Ê	Ù[T	ËÚÝ\ÌYYÚ]	ËZ[]NÌYYÚ]	ßJNÂBËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBËÈSTÂËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBÛÛÝ[Oø ¬IÊÓ[X\KÓØØ[TÝ[Ê	Ù[T	ËÛZ[[][QXÝ[ÛYÚ]ÎJNÂÛÛÝÙ^OJ
-OO]È]J
-KÒTÓÔÝ[Ê
-KÜ]
-	Õ	ÊVÌNÂÛÛÝÙ]X[OZYOPSTË[
-OYOOZY
-_Û[YNYÛÛÜÈÎ	ßNÂÛÛÝÙ]ÙXÝZYOÙXÝË[
-OYOOZY
-NÂ[Ý[ÛÑÜ]J
-^Ü]\[ØXÝ[ÛË[\O]OOOY
-_B[Ý[ÛÑÜ[Û
-J^Ü]\[ØXÝ[ÛË[\O]KÝ\ÕÚ]
-JJ_B[Ý[ÛÑÜÙYZÊÜ^ÂËÈÜHUÌMHÜX]ÛÛÝÞK×O]ÜÜ]
-	ËUÉÊNÂÛÛÝ[[]È]J
-ÞK
+// ============================================================
+//  DEFAULT EMPLOYEES
+// ============================================================
+function defaultEmployees(){
+  const roles=['Team Leader','Cashier','Rider','Kitchen Staff'];
+  const names={lipachon:['Maria Santos','Juan Reyes','Ana Cruz'],montys:['Carlo Diaz','Liza Flores','Marco Bautista'],sammies:['Jenny Ramos','Paolo Gomez','Rica Torres'],kuyas:['Andres Lim','Beth Garcia','Carlo Mendoza']};
+  let emps=[];let id=1;
+  for(const [tid,tnames] of Object.entries(names)){
+    tnames.forEach((name,i)=>{
+      emps.push({id:'emp-'+id++,name,team:tid,role:roles[i]||'Staff',base:18000,commRate:2,bonus:0,deductions:0});
+    });
+  }
+  return emps;
+}
 
-NÂÛÛÝÝ\ÙÙYZÏ[]È]J[
-NÂÝ\ÙÙYZËÙ]]J[Ù]]J
-KJ[Ù]^J
-_
-ÊJÌJÊ
-ÝËLJJÊNÂÛÛÝ[ÙÙYZÏ[]È]JÝ\ÙÙYZÊNÂ[ÙÙYZËÙ]]JÝ\ÙÙYZËÙ]]J
-JÍNÂÛÛÝÏ\Ý\ÙÙYZËÒTÓÔÝ[Ê
-KÜ]
-	Õ	ÊVÌNÂÛÛÝOY[ÙÙYZËÒTÓÔÝ[Ê
-KÜ]
-	Õ	ÊVÌNÂ]\[ØXÝ[ÛË[\O]O\É]OYJNÂB[Ý[ÛÙYZÑ]T[ÙJÜ^ÂÛÛÝÞK×O]ÜÜ]
-	ËUÉÊNÂÛÛÝ[[]È]J
-ÞK
+// ============================================================
+//  SAMPLE DATA GENERATION
+// ============================================================
+function generateSampleData(){
+  const now=new Date();
+  const txns=[];
+  const teamIds=['lipachon','montys','sammies','kuyas'];
+  const payMethods=['cash','cash','cash','gcash','maya'];
+  const customers=['Maria S.','Juan R.','Ana C.','Carlo D.','Liza F.','Jenny R.','Paolo G.','Beth G.','Andres L.','Rico M.','Amy T.','Bong E.','Carla N.'];
+  let txnId=1000;
+  for(let d=29;d>=0;d--){
+    const date=new Date(now);
+    date.setDate(date.getDate()-d);
+    const ds=date.toISOString().split('T')[0];
+    const numOrders=Math.floor(Math.random()*8)+3;
+    for(let o=0;o<numOrders;o++){
+      const team=teamIds[Math.floor(Math.random()*4)];
+      const numItems=Math.floor(Math.random()*3)+1;
+      const items=[];let total=0;
+      for(let i=0;i<numItems;i++){
+        const p=products[Math.floor(Math.random()*Math.min(30,products.length))];
+        const qty=1;
+        items.push({id:p.id,name:p.name,price:p.price,qty});
+        total+=p.price*qty;
+      }
+      const hr=8+Math.floor(Math.random()*12);
+      const mn=Math.floor(Math.random()*60);
+      txns.push({
+        id:'TXN-'+(txnId++),
+        date:ds,
+        time:`${String(hr).padStart(2,'0')}:${String(mn).padStart(2,'0')}`,
+        customer:customers[Math.floor(Math.random()*customers.length)],
+        team,items,total,
+        payment:payMethods[Math.floor(Math.random()*payMethods.length)],
+        status:'paid'
+      });
+    }
+  }
+  transactions=txns;
+  sv('lh_txns',transactions);
+  alert('Demo data generated! Reloading...');
+  location.reload();
+}
 
-NÂÛÛÝÝ\[]È]J[
-NÂÝ\Ù]]J[Ù]]J
-KJ[Ù]^J
-_
-ÊJÌJÊ
-ÝËLJJÊNÂÛÛÝ^\ÏV×NÂÜ]OLÚO
-ÎÚJÊÊ^ØÛÛÝ[]È]JÝ\
-NÙÙ]]JÝ\Ù]]J
-JÚJNÙ^\Ë\Ú
-ÒTÓÔÝ[Ê
-KÜ]
-	Õ	ÊVÌJNßB]\^\ÎÂB[Ý[Û^\Ò[[Û
-J^ÂÛÛÝÞK[×O[KÜ]
-	ËIÊKX\
-[X\NÂ]\]È]JK[Ë
-KÙ]]J
-NÂBËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBËÈTÒÐTËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB[Ý[Û[\\ÚØ\
+// ============================================================
+//  NAVIGATION
+// ============================================================
+const PAGE_META={
+  dashboard:{title:'Dashboard',sub:'Overview of your business today'},
+  pos:{title:'POS Terminal',sub:'Process orders and payments'},
+  inventory:{title:'Inventory',sub:'Manage product stock levels'},
+  reports:{title:'Reports',sub:'Daily, Weekly and Monthly analytics'},
+  teams:{title:'Team Sales',sub:'Compare performance across all teams'},
+  compensation:{title:'Compensation',sub:'Employee pay and commissions – All Teams'},
+  'purchase-orders':{title:'Purchase Orders',sub:'Track supplier orders for Lechon Hub'},
+  incentives:{title:'Incentives & Commission',sub:'Auto-calculated team incentives from sales'},
+  settings:{title:'Settings',sub:'Configure your POS system'},
+};
 
-^ÂÛÛÝÙ]Ù^J
-NÂÛÛÝÙÏ]ÑÜ]JÙ
-NÂÛÛÝÙØ[\Ï]ÙËYXÙJ
-Ë
-OOÊÝÝ[
-NÂÛÛÝÙÜ\Ï]ÙË[ÝÂÛÛÝ]ÓÕ]ÙÜ\ÏÓX]Ý[
-ÙØ[\ËÝÙÜ\ÊNÂÛÛÝÝ\[Û]ÙÛXÙJ
-ÊNÂÛÛÝ[ÛÏ]ÑÜ[Û
-Ý\[Û
-NÂÛÛÝ[ÛØ[\Ï[[ÛËYXÙJ
-Ë
-OOÊÝÝ[
-NÂËÈÜX[BÛÛÝX[TØ[\Ï^ßNÂPSTËÜXXÚ
-OÝX[TØ[\ÖÝYO[[ÛË[\OX[OOO]Y
-KYXÙJ
-Ë
-OOÊÞÝ[
-_JNÂÛÛÝÜX[RYSØXÝ[Y\ÊX[TØ[\ÊKÛÜ
+function nav(page){
+  currentPage=page;
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelector(`.nav-item[onclick="nav('${page}')"]`)?.classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById('page-'+page);
+  if(!el)return;
+  el.classList.add('active');
+  const m=PAGE_META[page]||{title:page,sub:''};
+  document.getElementById('page-title').textContent=m.title;
+  document.getElementById('page-sub').textContent=m.sub;
+  if(page==='dashboard') renderDashboard();
+  else if(page==='pos') renderPOS();
+  else if(page==='inventory') renderInventory();
+  else if(page==='reports') renderReports();
+  else if(page==='teams') renderTeams();
+  else if(page==='compensation') renderCompensation();
+  else if(page==='purchase-orders') renderPOs();
+  else if(page==='incentives') renderIncentives();
+}
 
-KOOÌWKXVÌWJVÌOËÌ_	ø %	ÎÂÛÛÝÜX[OYÙ]X[JÜX[RY
-NÂØÝ[Y[Ù][[Y[RY
-	ÚÜKYÜY	ÊK[\SX]Û\ÜÏHÜHÈ]Û\ÜÏHÜKZXÛÈ¼'ä¬Ù]]Û\ÜÏHÜK[Ù^IÜÈØ[\ÏÙ]]Û\ÜÏHÜK][Ü
-ÙØ[\Ê_OÙ]]Û\ÜÏHÜK\ÝXÝÙÜ\ßHÜ\ÈÙ^OÙ]Ù]]Û\ÜÏHÜHÈ]Û\ÜÏHÜKZXÛÈ¼'éïÙ]]Û\ÜÏHÜK[[ÛØ[\ÏÙ]]Û\ÜÏHÜK][Ü
-[ÛØ[\Ê_OÙ]]Û\ÜÏHÜK\ÝXÛ[ÛË[ÝHÜ\È\È[ÛÙ]Ù]]Û\ÜÏHÜHÜ]Û\ÜÏHÜKZXÛÈ¼'äâÙ]]Û\ÜÏHÜK[]ÈÜ\[YOÙ]]Û\ÜÏHÜK][Ü
-]ÓÕ_OÙ]]Û\ÜÏHÜK\ÝXÙ^IÜÈ]\YÙOÙ]Ù]]Û\ÜÏHÜH]Û\ÜÏHÜKZXÛÈ¼'ãáÙ]]Û\ÜÏHÜK[ÜX[H
-[Û
-OÙ]]Û\ÜÏHÜK][Ý[OHÛ\Ú^N\[HÝÜX[K[Y_OÙ]]Û\ÜÏHÜK\ÝXÜ
-X[TØ[\ÖÝÜX[RY_
-_OÙ]Ù]ÂËÈÙYZÛHÚ\ÛÛÝX[ÏV×NØÛÛÝÚÑ]OV×NÂÜ]OMÚOLÚKKJ^ÂÛÛÝ[]È]J
-NÙÙ]]JÙ]]J
-KZJNÂÛÛÝÏYÒTÓÔÝ[Ê
-KÜ]
-	Õ	ÊVÌNÂX[Ë\Ú
-ÓØØ[Q]TÝ[Ê	Ù[T	ËÝÙYZÙ^NÜÚÜ	Ë[ÛÜÚÜ	Ë^NÛ[Y\XÉßJJNÂÚÑ]K\Ú
-ÑÜ]JÊKYXÙJ
-Ë
-OOÊÝÝ[
-JNÂBZ[Ú\
-	ØÚ]ÙYZÛIË	Û[IËX[ËÞÛX[ÔØ[\È
-8 ¬JIË]NÚÑ]KÜ\ÛÛÜÈÐÐÌ	ËXÚÙÜÝ[ÛÛÜÜØJ
-
-IË[Ú[Û[YKÚ[XÚÙÜÝ[ÛÛÜÈÐÐÌ	ËÜ\ÚYWJNÂËÈX[\ÈÚ\ÛÛÝX[ÏUPSTËX\
-O[YKÜ]
-	È	ÊVÌJNÂÛÛÝ]OUPSTËX\
-OX[TØ[\ÖÝY_
-NÂZ[Ú\
-	ØÚ]X[\ËY\Ú	Ë	Ø\ËX[ËÞÛX[ÔØ[\ÉË]N]KXÚÙÜÝ[ÛÛÜPSTËX\
-OÛÛÜJKÜ\ÛÛÜPSTËX\
-OÛÛÜKÜ\ÚYÜ\Y]\ÎWJNÂËÈXÙ[ÂÛÛÝXÙ[VË[ØXÝ[Û×KÛÜ
+// ============================================================
+//  CLOCK
+// ============================================================
+function updateClock(){
+  const now=new Date();
+  document.getElementById('clock').textContent=now.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'})+' '+now.toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'});
+}
 
-KOO]KØØ[PÛÛ\\JK]J_[YKØØ[PÛÛ\\JK[YJJKÛXÙJ
-NÂÛÛÝYÙ]X[NÂØÝ[Y[Ù][[Y[RY
-	ÜXÙ[]ÉÊK[\SXOXYQÝ]OÝÝ\ÝÛY\ÝX[OÝÝ[Ý^[Y[ÝÝ]\ÏÝÝÝXYÙO	ÜXÙ[X\
-OÛ\ÜÏH\HÍÞYOÝÞ]_H	Þ[Y_OÝÞÝ\ÝÛY\	ÕØ[ËZ[ßOÝÜ[Ý[OHÛÛÜÝ
-X[JKÛÛÜHÝ
-X[JK[YKÜ]
-	È	ÊVÌ_OÜÜ[ÝÛ\ÜÏHÍÈÜ
-Ý[
-_OÝÞ^[Y[ËÕ\\Ø\ÙJ
-_OÝÜ[Û\ÜÏHÝÝIÞÝ]\ÏOOIÜZY	ÏÉÜZY	ÎÝ]\ÏOOIÝÚY	ÏÉÝÚY	ÎÜ[	ßHÞÝ]\ßOÜÜ[ÝÝ
-KÚ[	ÉÊ_BÝÙOÝXOÂËÈ[[ÜH[\ÂÛÛÝÝÔÙÏ\ÙXÝË[\OÝØÚÏLÉÝØÚÏ
-NÂÛÛÝÝ]ÙÏ\ÙXÝË[\OÝØÚÏOOL
-NÂ][\SIÉÎÂYÝ]ÙË[Ý
-H[\S
-ÏX]Û\ÜÏH[\[\Y¼'æªÈÝ]ÙÝØÚÎ	ÛÝ]ÙËX\
-O[YJKÚ[	Ë	Ê_OÙ]ÂYÝÔÙË[Ý
-H[\S
-Ï[ÝÔÙËX\
-O]Û\ÜÏH[\[\]È¸¦¨ÝÈÝØÚÎÝÛÏÜ[Y_OÜÝÛÏ8 %	ÜÝØÚßHYÙ]
-KÚ[	ÉÊNÂY[Ý]ÙË[Ý	[ÝÔÙË[Ý
-H[\SIÏ]Û\ÜÏH[\[\\È¸§!H[ÙXÝÈÝYXÚY[HÝØÚÙYÙ]ÎÂØÝ[Y[Ù][[Y[RY
-	Ú[X[\ÉÊK[\SX[\SÂÛÛÝYÙOYØÝ[Y[Ù][[Y[RY
-	ÛÝË\ÝØÚËXYÙIÊNÂYÙKÝ[K\Ü^OJÝÔÙË[Ý
-ÛÝ]ÙË[Ý
-OÉÉÎÛÛIÎÂBËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBËÈÒTSTËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBÛÛÝÚ\Y][Ï^Ü\ÜÛÚ]NYKXZ[Z[\ÜXÝ][Î[ÙKYÚ[ÎÛYÙ[ÛX[ÎØÛÛÜÈÍÐL	ËÛÜÚ^NL___KÛÛ\ØXÚÙÜÝ[ÛÛÜÈÑË]PÛÛÜÈÌPL	ËÙPÛÛÜÈÍÐL	ËÜ\ÛÛÜÈÑÐÐÐÉËÜ\ÚY__KØØ[\ÎÞÝXÚÜÎØÛÛÜÈÐËÛÜÚ^NL_KÜYØÛÛÜÜØJMKNNÍJIß_KNÝXÚÜÎØÛÛÜÈÐËÛÜÚ^NLKØ[XÚÎOø ¬IÊÓ[X\KÓØØ[TÝ[Ê
-_KÜYØÛÛÜÜØJMKNNÍJIß___NÂ[Ý[ÛZ[Ú\
-Y\KX[Ë]\Ù]Ë^SÜÏ^ßJ^ÂÛÛÝÝYØÝ[Y[Ù][[Y[RY
-Y
-NÂYXÝ
-\]\ÂYÚ\ÖÚYJ^ØÚ\ÖÚYK\ÝÞJ
-NßBÛÛÝÜÏRÓÓ\ÙJÓÓÝ[ÚYJÚ\Y][ÊJNÂY\OOOIÜYIß\OOOIÙÝYÚ]	Ê^Ù[]HÜËØØ[\ÎßBÚ\ÖÚYO[]ÈÚ\
-ÝÝ\K]NÛX[Ë]\Ù]ßKÜ[ÛÎËÜË^SÜß_JNÂBËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBËÈÔÂËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB[Ý[Û[\ÔÊ
-^ÂËÈZ[Ø]YÛÜHXÂÛÛÝØ]ÏVÉÐ[	Ë]ÈÙ]
-ÙXÝËX\
-OØ]
-JWNÂØÝ[Y[Ù][[Y[RY
-	ØØ]X\ÊK[\SXØ]ËX\
-ÏO]Û\ÜÏHØ]XØÏOOXÝ\[Ø]ÉÈXÝ]IÎÉßHÛÛXÚÏHÙ]Ø]
-	ÉØßIÊHØßOÙ]
-KÚ[	ÉÊNÂ[\ÙÜY
+// ============================================================
+//  HELPERS
+// ============================================================
+const php=n=>'₱'+Number(n).toLocaleString('en-PH',{minimumFractionDigits:0});
+const today=()=>new Date().toISOString().split('T')[0];
+const getTeam=id=>TEAMS.find(t=>t.id===id)||{name:id,color:'#888'};
+const getProduct=id=>products.find(p=>p.id===id);
 
-NÂ[\Ø\RJ
-NÂB[Ý[ÛÙ]Ø]
-Ê^ØÝ\[Ø]XÎÜ[\ÔÊ
-NßB[Ý[Û[\ÙÊ
-^Ü[\ÙÜY
+function txnsForDate(d){return transactions.filter(t=>t.date===d)}
+function txnsForMonth(m){return transactions.filter(t=>t.date.startsWith(m))}
+function txnsForWeek(wr){
+  // wr = "2026-W15" format
+  const [y,w]=wr.split('-W');
+  const jan4=new Date(+y,0,4);
+  const startOfWeek=new Date(jan4);
+  startOfWeek.setDate(jan4.getDate()-(jan4.getDay()||7)+1+(+w-1)*7);
+  const endOfWeek=new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate()+6);
+  const s=startOfWeek.toISOString().split('T')[0];
+  const e=endOfWeek.toISOString().split('T')[0];
+  return transactions.filter(t=>t.date>=s&&t.date<=e);
+}
+function weekDateRange(wr){
+  const [y,w]=wr.split('-W');
+  const jan4=new Date(+y,0,4);
+  const start=new Date(jan4);
+  start.setDate(jan4.getDate()-(jan4.getDay()||7)+1+(+w-1)*7);
+  const days=[];
+  for(let i=0;i<7;i++){const d=new Date(start);d.setDate(start.getDate()+i);days.push(d.toISOString().split('T')[0]);}
+  return days;
+}
+function daysInMonth(m){
+  const [y,mo]=m.split('-').map(Number);
+  return new Date(y,mo,0).getDate();
+}
 
-NßB[Ý[Û[\ÙÜY
+// ============================================================
+//  DASHBOARD
+// ============================================================
+function renderDashboard(){
+  const tod=today();
+  const todTxns=txnsForDate(tod);
+  const todSales=todTxns.reduce((s,t)=>s+t.total,0);
+  const todOrders=todTxns.length;
+  const avgOV=todOrders?Math.round(todSales/todOrders):0;
+  const curMonth=tod.slice(0,7);
+  const monTxns=txnsForMonth(curMonth);
+  const monSales=monTxns.reduce((s,t)=>s+t.total,0);
 
-^ÂÛÛÝOJØÝ[Y[Ù][[Y[RY
-	ÜÙ\ÙX\Ú	ÊOË[Y_	ÉÊKÓÝÙ\Ø\ÙJ
-NÂ]ÙÏ\ÙXÝÎÂYÝ\[Ø]OOIÐ[	ÊHÙÏ\ÙË[\OØ]OOXÝ\[Ø]
-NÂYJHÙÏ\ÙË[\O[YKÓÝÙ\Ø\ÙJ
-K[ÛY\ÊJ_\ØËÓÝÙ\Ø\ÙJ
-K[ÛY\ÊJJNÂØÝ[Y[Ù][[Y[RY
-	ÜÙYÜY	ÊK[\S\ÙËX\
-O]Û\ÜÏHÙXØ\ÛÛXÚÏHYÐØ\
-	ÉÜYIÊH]Û\ÜÏHÙY[[ÈÜ[[ßOÙ]]Û\ÜÏHÙ[[YHÜ[Y_OÙ]	Ü\ØÏØ]Û\ÜÏHÙY\ØÈÜ\ØßOÙ]ÉßB]Û\ÜÏHÙ\XÙHÜ
-XÙJ_OÙ]]Ý[OHÛ\Ú^N\[NÛX\Ú[]ÜØÛÛÜÜÝØÚÏLÏÉÝ\K\Y
-IÎÝØÚÏMOÉÝ\KYÛÛ
-IÎÝ\K]ÊIßHÝØÚÎ	ÜÝØÚßOÙ]Ù]
-KÚ[	ÉÊNÂB[Ý[ÛYÐØ\
-Y
-^ÂÛÛÝYÙ]ÙXÝ
-Y
-NÚY\
-\]\ÂÛÛÝ^\Ý[ÏXØ\[
-ÏOËYOO\Y
-NÂY^\Ý[Ê^Ù^\Ý[Ë]JÊÎßH[Ù^ØØ\\Ú
-Ë]N_JNßB[\Ø\RJ
-NÂB[Ý[ÛÚ[ÙT]JY[J^ÂÛÛÝ][OXØ\[
-ÏOËYOO\Y
-NÂYZ][J\]\Â][K]JÏY[NÂY][K]OL
-HØ\XØ\[\ÏOËYOO\Y
-NÂ[\Ø\RJ
-NÂB[Ý[Û[[ÝQÛPØ\
-Y
-^ØØ\XØ\[\ÏOËYOO\Y
-NÜ[\Ø\RJ
-NßB[Ý[ÛÛX\Ø\
+  // Top team
+  const teamSales={};
+  TEAMS.forEach(t=>{teamSales[t.id]=monTxns.filter(x=>x.team===t.id).reduce((s,x)=>s+x.total,0)});
+  const topTeamId=Object.entries(teamSales).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';
+  const topTeam=getTeam(topTeamId);
 
-^ØØ\V×NÜ[\Ø\RJ
-NßB[Ý[Û[\Ø\RJ
-^ÂÛÛÝ[YØÝ[Y[Ù][[Y[RY
-	ØØ\Z][\ÉÊNÂYXØ\[Ý
-^Ù[[\SIÏ]Û\ÜÏH[\KXØ\Ü[Û\ÜÏHXËZXÛÈ¼'æäÜÜ[Ø\\È[\K\HÙXÝÈYÙ]ÎÂØÝ[Y[Ù][[Y[RY
-	ØØ\\ÝXÊK^ÛÛ[Iø ¬L	ÎÂØÝ[Y[Ù][[Y[RY
-	ØØ\]Ý	ÊK^ÛÛ[Iø ¬L	ÎÂ]\ÂBÛÛÝÝXÝ[XØ\YXÙJ
-ËJOOÊÚKXÙJK]K
-NÂ[[\SXØ\X\
-OO]Û\ÜÏHÚH]Û\ÜÏHÚK[[YHÚK[[ßH	ÚK[Y_OÙ]]Û\ÜÏHXÈ]ÛÛ\ÜÏHXÛÛXÚÏHÚ[ÙT]J	ÉÚKYIËLJH¸¢$Ø]ÛÜ[Û\ÜÏH]ÚK]_OÜÜ[]ÛÛ\ÜÏHXÛÛXÚÏHÚ[ÙT]J	ÉÚKYIËJHÏØ]ÛÙ]]Û\ÜÏHÚK\XÙHÜ
-KXÙJK]J_OÙ]Ü[Û\ÜÏHHÛÛXÚÏH[[ÝQÛPØ\
-	ÉÚKYIÊH¸§%OÜÜ[Ù]
-KÚ[	ÉÊNÂØÝ[Y[Ù][[Y[RY
-	ØØ\\ÝXÊK^ÛÛ[\
-ÝXÝ[
-NÂØÝ[Y[Ù][[Y[RY
-	ØØ\]Ý	ÊK^ÛÛ[\
-ÝXÝ[
-NÂB[Ý[ÛÜ[^S[Ù[
+  document.getElementById('kpi-grid').innerHTML=`
+    <div class="kpi o"><div class="kpi-ico">💰</div><div class="kpi-lbl">Today's Sales</div><div class="kpi-val">${php(todSales)}</div><div class="kpi-sub">${todOrders} orders today</div></div>
+    <div class="kpi g"><div class="kpi-ico">🧾</div><div class="kpi-lbl">Month Sales</div><div class="kpi-val">${php(monSales)}</div><div class="kpi-sub">${monTxns.length} orders this month</div></div>
+    <div class="kpi gr"><div class="kpi-ico">📊</div><div class="kpi-lbl">Avg Order Value</div><div class="kpi-val">${php(avgOV)}</div><div class="kpi-sub">Today's average</div></div>
+    <div class="kpi r"><div class="kpi-ico">🏆</div><div class="kpi-lbl">Top Team (Month)</div><div class="kpi-val" style="font-size:1rem">${topTeam.name}</div><div class="kpi-sub">${php(teamSales[topTeamId]||0)}</div></div>
+  `;
 
-^ÂYXØ\[Ý
-^Ø[\
-	ÐØ\\È[\HIÊNÜ]\ßBÛÛÝÝ[XØ\YXÙJ
-ËJOOÊÚKXÙJK]K
-NÂØÝ[Y[Ù][[Y[RY
-	Ü^K[Ü\\Ý[[X\IÊK[\SX]Ý[OHX\Ú[XÝÛNÙÛ]ÙZYÚÌØÛÛÜ\K\JHÜ\Ý[[X\OÙ]	ØØ\X\
-OO]Ý[OH\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[ÛX\Ú[XÝÛNÜÜ[ÚK[[ßH	ÚK[Y_H	ÚK]_OÜÜ[Ü[Ü
-KXÙJK]J_OÜÜ[Ù]
-KÚ[	ÉÊ_B]Ý[OH\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[ÙÛ]ÙZYÚÌÙÛ\Ú^N\[NØÜ\]Ü\\ÚY\KXNÛX\Ú[]ÜÜY[Ë]ÜÜ[ÕSÜÜ[Ü[Ý[OHÛÛÜ\KYÛÛ
-HÜ
-Ý[
-_OÜÜ[Ù]ÂØÝ[Y[Ù][[Y[RY
-	Ý[\Y	ÊK[YOIÉÎÂØÝ[Y[Ù][[Y[RY
-	ØÚ[ÙK\ÝÉÊKÝ[K\Ü^OIÛÛIÎÂØÝ[Y[Ù][[Y[RY
-	Ü^K[[Ù[	ÊKÛ\ÜÓ\ÝY
-	ÛÜ[ÊNÂB[Ý[ÛÛÜÙT^S[Ù[
+  // Weekly chart
+  const labels=[];const wkData=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const ds=d.toISOString().split('T')[0];
+    labels.push(d.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'}));
+    wkData.push(txnsForDate(ds).reduce((s,t)=>s+t.total,0));
+  }
+  buildChart('ch-weekly','line',labels,[{label:'Sales (₱)',data:wkData,borderColor:'#CC0000',backgroundColor:'rgba(204,0,0,.08)',tension:.4,fill:true,pointBackgroundColor:'#CC0000',borderWidth:2}]);
 
-^ÙØÝ[Y[Ù][[Y[RY
-	Ü^K[[Ù[	ÊKÛ\ÜÓ\Ý[[ÝJ	ÛÜ[ÊNßB[Ý[ÛÙ[^SY]Ù
-K[
-^Â^SY]Ù[NÂØÝ[Y[]Y\TÙ[XÝÜ[
-	Ë^K[Ü	ÊKÜXXÚ
-OÛ\ÜÓ\Ý[[ÝJ	ÜÙ[	ÊJNÂ[Û\ÜÓ\ÝY
-	ÜÙ[	ÊNÂØÝ[Y[Ù][[Y[RY
-	ØØ\Ú\ÙXÝ[ÛÊKÝ[K\Ü^O[OOOIØØ\Ú	ÏÉØØÚÉÎÛÛIÎÂB[Ý[ÛØ[ÐÚ[ÙJ
-^ÂÛÛÝÝ[XØ\YXÙJ
-ËJOOÊÚKXÙJK]K
-NÂÛÛÝ[\Y\\ÙQØ]
-ØÝ[Y[Ù][[Y[RY
-	Ý[\Y	ÊK[YJ_ÂÛÛÝÚ[ÙO][\Y]Ý[ÂØÝ[Y[Ù][[Y[RY
-	ØÚ[ÙK\ÝÉÊKÝ[K\Ü^O][\YÉÙ^	ÎÛÛIÎÂØÝ[Y[Ù][[Y[RY
-	ØÚ[ÙK][	ÊK^ÛÛ[\
-X]X^
-Ú[ÙJJNÂØÝ[Y[Ù][[Y[RY
-	ØÚ[ÙK][	ÊKÝ[KÛÛÜXÚ[ÙOÉÝ\K\Y
-IÎÝ\KYÜIÎÂB[Ý[ÛÛÛ\]SÜ\
-^ÂY^SY]ÙOOIØØ\Ú	Ê^ÂÛÛÝÝ[XØ\YXÙJ
-ËJOOÊÚKXÙJK]K
-NÂÛÛÝ[\Y\\ÙQØ]
-ØÝ[Y[Ù][[Y[RY
-	Ý[\Y	ÊK[YJ_ÂY[\YÝ[
-^Ø[\
-	Ò[ÝYXÚY[[[Ý[HÝ[\È	ÊÜ
-Ý[
-JNÜ]\ßBBÛÛÝÝÏ[]È]J
-NÂÛÛÝ^ÂYÕIÊÊ]KÝÊ
-ILL
-K]NÝËÒTÓÔÝ[Ê
-KÜ]
-	Õ	ÊVÌK[YNÝËÓØØ[U[YTÝ[Ê	Ù[T	ËÚÝ\ÌYYÚ]	ËZ[]NÌYYÚ]	ßJKÝ\ÝÛY\ØÝ[Y[Ù][[Y[RY
-	ØØ\XÝ\ÝÛY\ÊK[Y_	ÕØ[ËZ[ËX[NØÝ[Y[Ù][[Y[RY
-	ØØ\]X[IÊK[YK][\ÎËØ\KÝ[Ø\YXÙJ
-ËJOOÊÚKXÙJK]K
-K^[Y[^SY]ÙÝ]\ÎÜZY	ÂNÂËÈYXÝÝØÚÂØ\ÜXXÚ
-ÚOOØÛÛÝYÙ]ÙXÝ
-ÚKY
-NÚY
-^ÜÝØÚÏSX]X^
-ÝØÚËXÚK]JNÙÜ]TÝØÚ
-YÝØÚÊNß_JNÂÝ	ÛÜÙXÝÉËÙXÝÊNÂ[ØXÝ[ÛË[ÚY
-NÂÝ	ÛÝÉË[ØXÝ[ÛÊNÂËÈ\ÚÈ\X\ÙH
-ÜÜÜËY]XÙHÞ[ÊBÜ]U[ØXÝ[ÛNÂËÈØYØ\ÝÈÝ\XÈ
-Ø[YKY]XÙHÞ[ÊBÐØYØ\Ý
-	ÕÐQQ	ËNÂ\]PYÙJ
-NÂÛÜÙT^S[Ù[
+  // Teams chart
+  const tLabels=TEAMS.map(t=>t.name.split(' ')[0]);
+  const tData=TEAMS.map(t=>teamSales[t.id]||0);
+  buildChart('ch-teams-dash','bar',tLabels,[{label:'Sales',data:tData,backgroundColor:TEAMS.map(t=>t.colorA),borderColor:TEAMS.map(t=>t.color),borderWidth:2,borderRadius:6}]);
 
-NÂÚÝÔXÙZ\
-NÂØ\V×NÂ[\Ø\RJ
-NÂØÝ[Y[Ù][[Y[RY
-	ØØ\XÝ\ÝÛY\ÊK[YOIÉÎÂB[Ý[ÛÚÝÔXÙZ\
-^ÂÛÛÝÚ[ÙO\^SY]ÙOOIØØ\Ú	ÏÊ\ÙQØ]
-ØÝ[Y[Ù][[Y[RY
-	Ý[\Y	ÊOË[Y_
-K]Ý[
-NÂØÝ[Y[Ù][[Y[RY
-	ÜXÙZ\XÛÛ[	ÊK[\S]Û\ÜÏHXÙZ\]Û\ÜÏHXÙZ\Z]Ý[OHÛ\Ú^NK\[NÙÛ]ÙZYÚ¼'å)HPÒÓPÙ]]\HÚ]K][Ø\ÏÙ]]Ý[OHÛ\Ú^NÜ[NÛX\Ú[]ÜÜÙÙ]X[JX[JK[Y_OÙ]Ù]]Û\ÜÏHXÙZ\Y]Ù]]Ý[OH\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[Ü[XÙZ\ÎÜÜ[Ü[ÝYOÜÜ[Ù]]Ý[OH\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[Ü[]NÜÜ[Ü[Ý]_H	Ý[Y_OÜÜ[Ù]]Ý[OH\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[Ü[Ý\ÝÛY\ÜÜ[Ü[ÝÝ\ÝÛY\OÜÜ[Ù]]Û\ÜÏHXÙZ\Y]Ù]	Ý][\ËX\
-OO]Ý[OH\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[ÛX\Ú[XÝÛNÜÜ[ÚK[Y_H	ÚK]_OÜÜ[Ü[¸ ¬IÊKXÙJK]JKÓØØ[TÝ[Ê
-_OÜÜ[Ù]
-KÚ[	ÉÊ_B]Û\ÜÏHXÙZ\Y]Ù]]Ý[OH\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[ÙÛ]ÙZYÚÙÛ\Ú^N\[HÜ[ÕSÜÜ[Ü[¸ ¬IÝÝ[ÓØØ[TÝ[Ê
-_OÜÜ[Ù]]Ý[OH\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[Ü[^[Y[ÜÜ[Ü[Ý^[Y[ËÕ\\Ø\ÙJ
-_OÜÜ[Ù]	Ü^SY]ÙOOIØØ\Ú	ÏØ]Ý[OH\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[Ü[[\YÜÜ[Ü[¸ ¬IÜ\ÙQØ]
-ØÝ[Y[Ù][[Y[RY
-	Ý[\Y	ÊOË[Y_
-KÓØØ[TÝ[Ê
-_OÜÜ[Ù]]Ý[OH\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[Ü[Ú[ÙNÜÜ[Ü[¸ ¬IÓX]X^
-Ú[ÙJKÓØØ[TÝ[Ê
-_OÜÜ[Ù]ÉßB]Û\ÜÏHXÙZ\Y]Ù]]Ý[OH^X[YÛÙ[\ÙÛ\Ú^NÍ\[H[È[ÝHÜ[Ý\Ü\O[[ÈØYØ][[ÈØHYØYH<'å)OÙ]Ù]ÂØÝ[Y[Ù][[Y[RY
-	ÜXÙZ\[[Ù[	ÊKÛ\ÜÓ\ÝY
-	ÛÜ[ÊNÂBËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBËÈSSÔBËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB[Ý[Û[\[[ÜJ
-^ÂÛÛÝOJØÝ[Y[Ù][[Y[RY
-	Ú[\ÙX\Ú	ÊOË[Y_	ÉÊKÓÝÙ\Ø\ÙJ
-NÂÛÛÝØ]YØÝ[Y[Ù][[Y[RY
-	Ú[XØ]Y[\ÊOË[Y_	ÉÎÂÛÛÝÝYØÝ[Y[Ù][[Y[RY
-	Ú[\Ý]\ËY[\ÊOË[Y_	ÉÎÂ]ÙÏ\ÙXÝÎÂYJHÙÏ\ÙË[\O[YKÓÝÙ\Ø\ÙJ
-K[ÛY\ÊJJNÂYØ]
-HÙÏ\ÙË[\OØ]OOXØ]
-NÂYÝOOIÛÚÉÊHÙÏ\ÙË[\OÝØÚÏJNÂ[ÙHYÝOOIÛÝÉÊHÙÏ\ÙË[\OÝØÚÏ	ÝØÚÏMJNÂ[ÙHYÝOOIÛÝ]	ÊHÙÏ\ÙË[\OÝØÚÏOOL
-NÂÛÛÝÙOYØÝ[Y[Ù][[Y[RY
-	Ú[XÙIÊNÂÙK[\S\ÙËX\
-OÂÛÛÝØÏ\ÝØÚÏOOLÉÚ[[Ý]	ÎÝØÚÏLÏÉÚ[[ÝÉÎÚ[[ÚÉÎÂÛÛÝÛ\ÝØÚÏOOLÉÓÝ]ÙÝØÚÉÎÝØÚÏLÏÉÓÝÈÝØÚÉÎÒ[ÝØÚÉÎÂÛÛÝ\ÐYZ[XÝ\[\Ù\ËÛOOOIØYZ[ÎÂ]\ÝÛÏÜ[[ßH	Ü[Y_OÜÝÛÏÝÛ\ÜÏH^[]]YÜØ]OÝÛ\ÜÏHÍÈÜ
-XÙJ_OÝÛ\ÜÏHÍÈÜÝØÚßOÝÜ[Û\ÜÏH[\Ý	ÜØßHÜÛOÜÜ[ÝÝ[OH\Ü^N^ÙØ\	Ú\ÐYZ[Ø]ÛÛ\ÜÏH[Ý]\ÛHÛÛXÚÏHÜ[ÝØÚÓ[Ù[
-	ÉÜYIÊH°¬HÝØÚÏØ]Û]ÛÛ\ÜÏH\H\ÛHÛÛXÚÏHÜ[Y]ÙXÝ
-	ÉÜYIÊH¸§#ÈY]Ø]ÛÏÜ[Û\ÜÏH^[]]YÝ[OHÛ\Ú^NÍ\[HY]ÈÛOÜÜ[ßBÝÝÂJKÚ[	ÉÊNÂB[Ý[ÛÜ[ÝØÚÓ[Ù[
-Y
-^ÂÛÛÝYÙ]ÙXÝ
-Y
-NÚY\
-\]\ÂØÝ[Y[Ù][[Y[RY
-	ÜÝØÚË\ÙZY	ÊK[YO\YÂØÝ[Y[Ù][[Y[RY
-	ÜÝØÚË\Ù[[YIÊK^ÛÛ[\[[ÊÉÈ	ÊÜ[YNÂØÝ[Y[Ù][[Y[RY
-	ÜÝØÚËXÝ\[	ÊK^ÛÛ[\ÝØÚÊÉÈ[]ÉÎÂØÝ[Y[Ù][[Y[RY
-	ÜÝØÚËXYÊK[YOIÉÎÂØÝ[Y[Ù][[Y[RY
-	ÜÝØÚË[[Ù[	ÊKÛ\ÜÓ\ÝY
-	ÛÜ[ÊNÂB[Ý[Û\]PYÙJ
-^ÂÛÛÝÝÔÙÏ\ÙXÝË[\OÝØÚÏLÉÝØÚÏ
-NÂÛÛÝÝ]ÙÏ\ÙXÝË[\OÝØÚÏOOL
-NÂÛÛÝYÙOYØÝ[Y[Ù][[Y[RY
-	ÛÝË\ÝØÚËXYÙIÊNÂYYÙJHYÙKÝ[K\Ü^OJÝÔÙË[Ý
-ÛÝ]ÙË[Ý
-OÉÉÎÛÛIÎÂB[Ý[Û\]TÝØÚÊ
-^ÂÛÛÝYYØÝ[Y[Ù][[Y[RY
-	ÜÝØÚË\ÙZY	ÊK[YNÂÛÛÝY\\ÙR[
-ØÝ[Y[Ù][[Y[RY
-	ÜÝØÚËXYÊK[YJ_ÂÛÛÝYÙ]ÙXÝ
-Y
-NÚY\
-\]\ÂÝØÚÏSX]X^
-ÝØÚÊØYNÂÝ	ÛÜÙXÝÉËÙXÝÊNÂÜ]TÝØÚÊYÝØÚÊNÂÐØYØ\Ý
-	ÔÕÐÒ×ÕTUIËÚYYÝØÚÎÝØÚßJNÂØÝ[Y[Ù][[Y[RY
-	ÜÝØÚË[[Ù[	ÊKÛ\ÜÓ\Ý[[ÝJ	ÛÜ[ÊNÂ[\[[ÜJ
-NÝ\]PYÙJ
-NÂB[Ý[ÛÜ[YÙXÝ
+  // Recent txns
+  const recent=[...transactions].sort((a,b)=>b.date.localeCompare(a.date)||b.time.localeCompare(a.time)).slice(0,8);
+  const t=getTeam;
+  document.getElementById('recent-txns').innerHTML=`<table><thead><tr><th>ID</th><th>Date</th><th>Customer</th><th>Team</th><th>Total</th><th>Payment</th><th>Status</th></tr></thead><tbody>
+  ${recent.map(x=>`<tr><td class="txt-pri fw6">${x.id}</td><td>${x.date} ${x.time}</td><td>${x.customer||'Walk-in'}</td><td><span style="color:${t(x.team).color}">${t(x.team).name.split(' ')[0]}</span></td><td class="fw7">${php(x.total)}</td><td>${x.payment?.toUpperCase()}</td><td><span class="st st-${x.status==='paid'?'paid':x.status==='void'?'void':'pend'}">${x.status}</span></td></tr>`).join('')}
+  </tbody></table>`;
 
-^ÂØÝ[Y[Ù][[Y[RY	ÜÙ[[Ù[]]IÊK^ÛÛ[IÐYÙXÝ	ÎÂØÝ[Y[Ù][[Y[RY
-	ÜÙZY	ÊK[YOIÉÎÂÉÜK[[YIË	ÜK\XÙIË	ÜKY\ØÉË	ÜK\ÝØÚÉ×KÜXXÚ
-YOØÝ[Y[Ù][[Y[RY
-Y
-K[YOIÉÊNÂØÝ[Y[Ù][[Y[RY
-	ÜÙXÝ[[Ù[	ÊKÛ\ÜÓ\ÝY
-	ÛÜ[ÊNÂB[Ý[ÛÜ[Y]ÙXÝ
-Y
-^ÂÛÛÝYÙ]ÙXÝ
-Y
-NÚY\
-\]\ÂØÝ[Y[Ù][[Y[RY
-	ÜÙ[[Ù[]]IÊK^ÛÛ[IÑY]ÙXÝ	ÎÂØÝ[Y[Ù][[Y[RY
-	ÜÙZY	ÊK[YO\YÂØÝ[Y[Ù][[Y[RY
-	ÜK[[YIÊK[YO\[YNÂØÝ[Y[Ù][[Y[RY
-	ÜKXØ]	ÊK[YO\Ø]ÂØÝ[Y[Ù][[Y[RY
-	ÜK\XÙIÊK[YO\XÙNÂØÝ[Y[Ù][[Y[RY
-	ÜKY\ØÉÊK[YO\\ØÎÂØÝ[Y[Ù][[Y[RY
-	ÜK\ÝØÚÉÊK[YO\ÝØÚÎÂØÝ[Y[Ù][[Y[RY
-	ÜÙXÝ[[Ù[	ÊKÛ\ÜÓ\ÝY
-	ÛÜ[ÊNÂB[Ý[ÛØ]TÙXÝ
+  // Inventory alerts
+  const lowProds=products.filter(p=>p.stock<=3&&p.stock>0);
+  const outProds=products.filter(p=>p.stock===0);
+  let alertHTML='';
+  if(outProds.length) alertHTML+=`<div class="alert alert-d">🚫 Out of Stock: ${outProds.map(p=>p.name).join(', ')}</div>`;
+  if(lowProds.length) alertHTML+=lowProds.map(p=>`<div class="alert alert-w">⚠ Low Stock: <strong>${p.name}</strong> — ${p.stock} left</div>`).join('');
+  if(!outProds.length&&!lowProds.length) alertHTML='<div class="alert alert-s">✅ All products sufficiently stocked</div>';
+  document.getElementById('inv-alerts').innerHTML=alertHTML;
+  const badge=document.getElementById('low-stock-badge');
+  badge.style.display=(lowProds.length+outProds.length)>0?'':'none';
+}
 
-^ÂÛÛÝYYØÝ[Y[Ù][[Y[RY
-	ÜÙZY	ÊK[YNÂÛÛÝ]O^Â[YNØÝ[Y[Ù][[Y[RY
-	ÜK[[YIÊK[YKØ]ØÝ[Y[Ù][[Y[RY
-	ÜKXØ]	ÊK[YKXÙN\ÙQØ]
-ØÝ[Y[Ù][[Y[RY
-	ÜK\XÙIÊK[YJ_\ØÎØÝ[Y[Ù][[Y[RY
-	ÜKY\ØÉÊK[YKÝØÚÎ\ÙR[
-ØÝ[Y[Ù][[Y[RY
-	ÜK\ÝØÚÉÊK[YJ_NÂYY]K[Y_Y]KXÙJ^Ø[\
-	Ó[YH[XÙH\H\]Z\YÊNÜ]\ßBYY
-^ØÛÛÝYÙ]ÙXÝ
-Y
-NÚY
-SØXÝ\ÜÚYÛ]JNßB[Ù^ÜÙXÝË\Ú
-ÚYØÝ\ÝÛKIÊÑ]KÝÊ
-K[[Îü'ãoIËÝ]\ÎØXÝ]IË]_JNßBÝ	ÛÜÙXÝÉËÙXÝÊNÂØÝ[Y[Ù][[Y[RY
-	ÜÙXÝ[[Ù[	ÊKÛ\ÜÓ\Ý[[ÝJ	ÛÜ[ÊNÂ[\[[ÜJ
-NÂBËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBËÈTÔÂËÈOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB]Ý\[\ÜXIÙZ[IÎÂ[Ý[ÛÝÚ]Ú\Ü
-X[
-^ÂÝ\[\ÜX]XÂØÝ[Y[]Y\TÙ[XÝÜ[
-	Ë]XÊKÜXXÚ
-OÛ\ÜÓ\Ý[[ÝJ	ØXÝ]IÊJNÂ[Û\ÜÓ\ÝY
-	ØXÝ]IÊNÂÉÙZ[IË	ÝÙYZÛIË	Û[ÛI×KÜXXÚ
-OØÝ[Y[Ù][[Y[RY
-	ÜIÊÝ
-KÝ[K\Ü^O]OO]XÉØØÚÉÎÛÛIÊNÂYXOOIÙZ[IÊH[\Z[T\Ü
+// ============================================================
+//  CHART HELPER
+// ============================================================
+const chartDefaults={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#7A0000',font:{size:11}}},tooltip:{backgroundColor:'#FFFFFF',titleColor:'#1A0000',bodyColor:'#7A0000',borderColor:'#FFCCCC',borderWidth:1}},scales:{x:{ticks:{color:'#BB6666',font:{size:10}},grid:{color:'rgba(255,180,180,.35)'}},y:{ticks:{color:'#BB6666',font:{size:10},callback:v=>'₱'+Number(v).toLocaleString()},grid:{color:'rgba(255,180,180,.35)'}}}};
 
-NÂ[ÙHYXOOIÝÙYZÛIÊH[\ÙYZÛT\Ü
+function buildChart(id,type,labels,datasets,extraOpts={}){
+  const ctx=document.getElementById(id);
+  if(!ctx)return;
+  if(charts[id]){charts[id].destroy();}
+  const opts=JSON.parse(JSON.stringify(chartDefaults));
+  if(type==='pie'||type==='doughnut'){delete opts.scales;}
+  charts[id]=new Chart(ctx,{type,data:{labels,datasets},options:{...opts,...extraOpts}});
+}
 
-NÂ[ÙH[\[ÛT\Ü
+// ============================================================
+//  POS
+// ============================================================
+function renderPOS(){
+  // Build category tabs
+  const cats=['All',...new Set(products.map(p=>p.cat))];
+  document.getElementById('cat-bar').innerHTML=cats.map(c=>`<div class="cat-btn${c===currentCat?' active':''}" onclick="setCat('${c}')">${c}</div>`).join('');
+  renderProdGrid();
+  renderCartUI();
+}
 
-NÂB[Ý[Û[\\ÜÊ
-^ÂÛÛÝ]Q[YØÝ[Y[Ù][[Y[RY
-	ÜY]IÊNÂY]Q[	Y]Q[[YJH]Q[[YO]Ù^J
-NÂÛÛÝÙYZÑ[YØÝ[Y[Ù][[Y[RY
-	Ü]ÙYZÉÊNÂYÙYZÑ[	]ÙYZÑ[[YJ^ØÛÛÝÝÏ[]È]J
-NØÛÛÝO[ÝËÙ][YX\
-NØÛÛÝÏYÙ]TÓÕÙYZÊÝÊNÝÙYZÑ[[YOX	Þ_KUÉÔÝ[ÊÊKYÝ\
-	Ì	Ê_XßBÛÛÝ[Û[YØÝ[Y[Ù][[Y[RY
-	Ü[[Û	ÊNÂY[Û[	[[Û[[YJH[Û[[YO]Ù^J
-KÛXÙJ
-ÊNÂ[\Z[T\Ü
+function setCat(c){currentCat=c;renderPOS();}
 
-NÂB[Ý[ÛÙ]TÓÕÙYZÊ
-^ØÛÛÝ]O[]È]J
-NÙ]KÙ]Ý\Ê
-NÙ]KÙ]]J]KÙ]]J
-JÌËJ]KÙ]^J
-JÍIMÊNØÛÛÝÙYZÌO[]È]J]KÙ][YX\
-K
+function filterProds(){renderProdGrid();}
 
-NÜ]\JÓX]Ý[
+function renderProdGrid(){
+  const q=(document.getElementById('prod-search')?.value||'').toLowerCase();
+  let prods=products;
+  if(currentCat!=='All') prods=prods.filter(p=>p.cat===currentCat);
+  if(q) prods=prods.filter(p=>p.name.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q));
+  document.getElementById('prod-grid').innerHTML=prods.map(p=>`
+    <div class="prod-card" onclick="addToCart('${p.id}')">
+      <div class="prod-emo">${p.emo}</div>
+      <div class="prod-name">${p.name}</div>
+      ${p.desc?`<div class="prod-desc">${p.desc}</div>`:''}
+      <div class="prod-price">${php(p.price)}</div>
+      <div style="font-size:.65rem;margin-top:4px;color:${p.stock<=3?'var(--red)':p.stock<=5?'var(--gold)':'var(--tx3)'}">Stock: ${p.stock}</div>
+    </div>`).join('');
+}
 
+function addToCart(pid){
+  const p=getProduct(pid);if(!p)return;
+  const existing=cart.find(c=>c.id===pid);
+  if(existing){existing.qty++;} else{cart.push({...p,qty:1});}
+  renderCartUI();
+}
 
-]KÙ][YJ
-K]ÙYZÌKÙ][YJ
-JKÎ
-LÊÊÙYZÌKÙ]^J
-JÍIMÊKÍÊNßB[Ý[Û[\Z[T\Ü
+function changeQty(pid,delta){
+  const item=cart.find(c=>c.id===pid);
+  if(!item)return;
+  item.qty+=delta;
+  if(item.qty<=0) cart=cart.filter(c=>c.id!==pid);
+  renderCartUI();
+}
 
-^ÂÛÛÝYØÝ[Y[Ù][[Y[RY
-	ÜY]IÊOË[Y_Ù^J
-NÂÛÛÝÏ]ÑÜ]J
-NÂÛÛÝÝ[]ËYXÙJ
-Ë
-OOÊÝÝ[
-NÂÛÛÝ]Ï]Ë[ÝÓX]Ý[
-Ý[ÝË[Ý
-NÂØÝ[Y[Ù][[Y[RY
-	ÜYZÜIÊK[\SZÜRS
-ÂÛÕÝ[Ø[\ÉË[
-Ý[
-KÝXË[Ý
-ÉÈÜ\ÉËÛÎÛÉßKÛÐ]ÈÜ\Ë[
-]ÊKÝXÔ\[ØXÝ[ÛËÛÎÙÉßKÛÕÜ^[Y[	Ë[Ü^SY]Ù
-ÊKÝXÓ[ÜÝ\ÙYÙ^IËÛÎÙÜßKJNÂËÈÝ\HÚ\ÛÛÝÝ\ÏP\^KÛJÛ[ÝMK
-ËJOOÝ[ÊJÍÊKYÝ\
-	Ì	ÊJÉÎ	ÊNÂÛÛÝÝ\Q]OZÝ\ËX\
-OØÛÛÝZÛXÙJNÜ]\Ë[\O[YKÝ\ÕÚ]
-
-JKYXÙJ
-Ë
-OOÊÝÝ[
-NßJNÂZ[Ú\
-	ØÚYZ[IË	Û[IËÝ\ËÞÛX[ÒÝ\HØ[\ÉË]NÝ\Q]KÜ\ÛÛÜÈÐÐÌ	ËXÚÙÜÝ[ÛÛÜÜØJ
-
-IË[Ú[Û[YKÚ[XÚÙÜÝ[ÛÛÜÈÐÐÌ	ËÜ\ÚYWJNÂØÝ[Y[Ù][[Y[RY
-	ÜYXÙIÊK[\S]Ë[ÝÝËX\
+function removeFromCart(pid){cart=cart.filter(c=>c.id!==pid);renderCartUI();}
 
-JOOÚJÌ_OÝÝ[Y_OÝÝÝ\ÝÛY\	ÕØ[ËZ[ßOÝÝ[OHÛÛÜÙÙ]X[JX[JKÛÛÜHÙÙ]X[JX[JK[YKÜ]
-	È	ÊVÌ_OÝÝ][\Ë[ÝH][JÊOÝÛ\ÜÏHÍÈÜ
-Ý[
-_OÝÝ^[Y[ËÕ\\Ø\ÙJ
-_OÝÜ[Û\ÜÏHÝÝIÝÝ]\ÏOOIÜZY	ÏÉÜZY	ÎÝÚY	ßHÝÝ]\ßOÜÜ[ÝÝ
-KÚ[	ÉÊNÏÛÛÜ[HÝ[OH^X[YÛÙ[\ØÛÛÜ\K]ÊNÜY[ÎÈ[ØXÝ[ÛÈÜ\È]OÝÝÎÂB[Ý[ÛÜ^SY]Ù
-Ê^ÂY]Ë[Ý
-\]\	ø %	ÎÂÛÛÝÛÝ[Ï^ßNÝËÜXXÚ
-OØÛÝ[ÖÝ^[Y[OJÛÝ[ÖÝ^[Y[_
-JÌNßJNÂ]\ØXÝ[Y\ÊÛÝ[ÊKÛÜ
+function clearCart(){cart=[];renderCartUI();}
 
-KOOÌWKXVÌWJVÌVÌOËÕ\\Ø\ÙJ
-_	ø %	ÎÂB[Ý[Û[\ÙYZÛT\Ü
+function renderCartUI(){
+  const el=document.getElementById('cart-items');
+  if(!cart.length){el.innerHTML='<div class="empty-cart"><span class="ec-ico">🛒</span>Cart is empty.<br>Tap a product to add.</div>';
+    document.getElementById('cart-sub').textContent='₱0';
+    document.getElementById('cart-tot').textContent='₱0';
+    return;
+  }
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  el.innerHTML=cart.map(i=>`<div class="ci">
+    <div class="ci-name">${i.emo} ${i.name}</div>
+    <div class="qc">
+      <button class="qb" onclick="changeQty('${i.id}',-1)">−</button>
+      <span class="qv">${i.qty}</span>
+      <button class="qb" onclick="changeQty('${i.id}',1)">+</button>
+    </div>
+    <div class="ci-price">${php(i.price*i.qty)}</div>
+    <span class="rm" onclick="removeFromCart('${i.id}')">✕</span>
+  </div>`).join('');
+  document.getElementById('cart-sub').textContent=php(subtotal);
+  document.getElementById('cart-tot').textContent=php(subtotal);
+}
 
-^ÂÛÛÝÜYØÝ[Y[Ù][[Y[RY
-	Ü]ÙYZÉÊOË[YNÂY]Ü\]\ÂÛÛÝÏ]ÑÜÙYZÊÜNÂÛÛÝÝ[]ËYXÙJ
-Ë
-OOÊÝÝ[
-NÂÛÛÝ]Ï]Ë[ÝÓX]Ý[
-Ý[ÝË[Ý
-NÂØÝ[Y[Ù][[Y[RY
-	Ü]ËZÜIÊK[\SZÜRS
-ÂÛÕÙYZÈØ[\ÉË[
-Ý[
-KÝXË[Ý
-ÉÈÜ\ÉËÛÎÛÉßKÛÐ]ÈÜ\Ë[
-]ÊKÝXÔ\[ØXÝ[ÛËÛÎÙÉßKÛÐ\ÝX[IË[\ÝX[JÊKÝXÕ\ÈÙYZÉËÛÎÜßKJNÂÛÛÝ^\Ï]ÙYZÑ]T[ÙJÜNÂÛÛÝX[ÏY^\ËX\
-O]È]J
-ÉÕL	ÊKÓØØ[Q]TÝ[Ê	Ù[T	ËÝÙYZÙ^NÜÚÜ	Ë[ÛÜÚÜ	Ë^NÛ[Y\XÉßJJNÂËÈ[X[\È
-ÈÝ[ÛÛÝ]\Ù]ÏVÂÛX[ÕÝ[	Ë]N^\ËX\
-OÑÜ]J
-KYXÙJ
-Ë
-OOÊÝÝ[
-JKÜ\ÛÛÜÈÍML	ËXÚÙÜÝ[ÛÛÜÜØJ
-K
-JIË[Ú[ÛÜ\ÚYÜ\\ÚÍK
-W_KPSTËX\
-OÛX[[YKÜ]
-	È	ÊVÌK]N^\ËX\
-OË[\O]OOOY	X[OOO]Y
-KYXÙJ
-Ë
-OOÊÞÝ[
-JKÜ\ÛÛÜÛÛÜXÚÙÜÝ[ÛÛÜÛÛÜK\XÙJ	ËÉË	ËIÊK[Ú[Û[[ÙKÚ[XÚÙÜÝ[ÛÛÜÛÛÜJJBNÂZ[Ú\
-	ØÚ]ÙYZÛK\	Ë	Û[IËX[Ë]\Ù]ÊNÂØÝ[Y[Ù][[Y[RY
-	Ü]ËXÙIÊK[\S]Ë[ÝÝËX\
-OÝ]_OÝÝÝ\ÝÛY\	ÕØ[ËZ[ßOÝÝ[OHÛÛÜÙÙ]X[JX[JKÛÛÜHÙÙ]X[JX[JK[YKÜ]
-	È	ÊVÌ_OÝÝ][\Ë[ÝOÝÛ\ÜÏHÍÈÜ
-Ý[
-_OÝÝ^[Y[ËÕ\\Ø\ÙJ
-_OÝÝ
-KÚ[	ÉÊNÏÛÛÜ[HÝ[OH^X[YÛÙ[\ØÛÛÜ\K]ÊNÜY[ÎÈ[ØXÝ[ÛÈ\ÈÙYZÏÝÝÎÂB[Ý[Û[\[ÛT\Ü
+function openPayModal(){
+  if(!cart.length){alert('Cart is empty!');return;}
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('pay-order-summary').innerHTML=`
+    <div style="margin-bottom:8px;font-weight:700;color:var(--pri)">Order Summary</div>
+    ${cart.map(i=>`<div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>${i.emo} ${i.name} x${i.qty}</span><span>${php(i.price*i.qty)}</span></div>`).join('')}
+    <div style="display:flex;justify-content:space-between;font-weight:700;font-size:1rem;border-top:1px dashed var(--bdr);margin-top:8px;padding-top:8px"><span>TOTAL</span><span style="color:var(--gold)">${php(total)}</span></div>`;
+  document.getElementById('tendered').value='';
+  document.getElementById('change-row').style.display='none';
+  document.getElementById('pay-modal').classList.add('open');
+}
 
-^ÂÛÛÝOYØÝ[Y[Ù][[Y[RY
-	Ü[[Û	ÊOË[Y_Ù^J
-KÛXÙJ
-ÊNÂÛÛÝÏ]ÑÜ[Û
-JNÂÛÛÝÝ[]ËYXÙJ
-Ë
-OOÊÝÝ[
-NÂÛÛÝ]Ï]Ë[ÝÓX]Ý[
-Ý[ÝË[Ý
-NÂØÝ[Y[Ù][[Y[RY
-	Ü[KZÜIÊK[\SZÜRS
-ÂÛÓ[ÛØ[\ÉË[
-Ý[
-KÝXË[Ý
-ÉÈÜ\ÉËÛÎÛÉßKÛÐ]ÈÜ\Ë[
-]ÊKÝXÔ\[ØXÝ[ÛËÛÎÙÉßKÛÐ\ÝX[IË[\ÝX[JÊKÝXÕ\È[Û	ËÛÎÜßKJNÂÛÛÝ^\ÏY^\Ò[[Û
-JNÂÛÛÝX[ÏP\^KÛJÛ[Ý^\ßK
-ËJOOÝ[ÊJÌJJNÂÛÛÝ]\Ù]ÏVÂÛX[ÑZ[HØ[\ÉË]NX[ËX\
-OØÛÛÝÏ[JÉËIÊÔÝ[Ê
-KYÝ\
-	Ì	ÊNÜ]\Ë[\O]OOOYÊKYXÙJ
-Ë
-OOÊÝÝ[
-NßJKÜ\ÛÛÜÈÐÐÌ	ËXÚÙÜÝ[ÛÛÜÜØJ
-
-IË[Ú[Û[YKÚ[Y]\ÎËÚ[XÚÙÜÝ[ÛÛÜÈÐÐÌ	ËÜ\ÚYKNÂZ[Ú\
-	ØÚ[[ÛK\	Ë	Û[IËX[Ë]\Ù]ÊNÂËÈÜÙXÝÂÛÛÝÙX\^ßNÂËÜXXÚ
-O][\ËÜXXÚ
-OOÚY\ÙX\ÚK[YWJ\ÙX\ÚK[YWO^Ü]N]NÜÙX\ÚK[YWK]JÏZK]NÜÙX\ÚK[YWK]ÏZKXÙJK]NßJJNÂÛÛÝÛÜYSØXÝ[Y\ÊÙX\
-KÛÜ
+function closePayModal(){document.getElementById('pay-modal').classList.remove('open');}
 
-KOOÌWK]XVÌWK]KÛXÙJL
-NÂØÝ[Y[Ù][[Y[RY
-	Ü[K\ÙÉÊK[\S\Ãorted.map(([name,s])=>`<tr><td>${name}</td><td>${s.qty}</td><td class="fw7">${php(s.rev)}</td></tr>`).join('')||'<tr><td colspan="3" style="text-align:center;color:var(--tx3)">No data</td></tr>';
+function selPayMethod(m,el){
+  payMethod=m;
+  document.querySelectorAll('.pay-opt').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('cash-section').style.display=m==='cash'?'block':'none';
+}
+
+function calcChange(){
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const tendered=parseFloat(document.getElementById('tendered').value)||0;
+  const change=tendered-total;
+  document.getElementById('change-row').style.display=tendered>0?'flex':'none';
+  document.getElementById('change-val').textContent=php(Math.max(0,change));
+  document.getElementById('change-val').style.color=change<0?'var(--red)':'var(--grn)';
+}
+
+function completeOrder(){
+  if(payMethod==='cash'){
+    const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+    const tendered=parseFloat(document.getElementById('tendered').value)||0;
+    if(tendered<total){alert('Insufficient amount! Total is '+php(total));return;}
+  }
+  const now=new Date();
+  const txn={
+    id:'TXN-'+(Date.now()%100000),
+    date:now.toISOString().split('T')[0],
+    time:now.toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'}),
+    customer:document.getElementById('cart-customer').value||'Walk-in',
+    team:document.getElementById('cart-team').value,
+    items:[...cart],
+    total:cart.reduce((s,i)=>s+i.price*i.qty,0),
+    payment:payMethod,
+    status:'paid'
+  };
+  // Deduct stock
+  cart.forEach(ci=>{const p=getProduct(ci.id);if(p){p.stock=Math.max(0,p.stock-ci.qty);fbWriteStock(p.id,p.stock);}});
+  sv('lh_products',products);
+  transactions.unshift(txn);
+  sv('lh_txns',transactions);
+  // Push to Firebase (cross-device sync)
+  fbWriteTransaction(txn);
+  // Broadcast to other tabs (same-device sync)
+  bcBroadcast('TXN_ADDED',txn);
+  updateBadge();
+  closePayModal();
+  showReceipt(txn);
+  cart=[];
+  renderCartUI();
+  document.getElementById('cart-customer').value='';
+}
+
+function showReceipt(txn){
+  const change=payMethod==='cash'?(parseFloat(document.getElementById('tendered')?.value||0)-txn.total):0;
+  document.getElementById('receipt-content').innerHTML=`<div class="receipt">
+    <div class="receipt-hdr"><div style="font-size:1.1rem;font-weight:800">🔥 LECHON HUB</div><div>Lipa City, Batangas</div><div style="font-size:.7rem;margin-top:3px">${getTeam(txn.team).name}</div></div>
+    <div class="receipt-div"></div>
+    <div style="display:flex;justify-content:space-between"><span>Receipt #:</span><span>${txn.id}</span></div>
+    <div style="display:flex;justify-content:space-between"><span>Date:</span><span>${txn.date} ${txn.time}</span></div>
+    <div style="display:flex;justify-content:space-between"><span>Customer:</span><span>${txn.customer}</span></div>
+    <div class="receipt-div"></div>
+    ${txn.items.map(i=>`<div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>${i.name} x${i.qty}</span><span>₱${(i.price*i.qty).toLocaleString()}</span></div>`).join('')}
+    <div class="receipt-div"></div>
+    <div style="display:flex;justify-content:space-between;font-weight:800;font-size:1rem"><span>TOTAL</span><span>₱${txn.total.toLocaleString()}</span></div>
+    <div style="display:flex;justify-content:space-between"><span>Payment:</span><span>${txn.payment?.toUpperCase()}</span></div>
+    ${payMethod==='cash'?`<div style="display:flex;justify-content:space-between"><span>Tendered:</span><span>₱${parseFloat(document.getElementById('tendered')?.value||0).toLocaleString()}</span></div><div style="display:flex;justify-content:space-between"><span>Change:</span><span>₱${Math.max(0,change).toLocaleString()}</span></div>`:''}
+    <div class="receipt-div"></div>
+    <div style="text-align:center;font-size:.75rem">Thank you for your order!<br>Unang Kagat, Panalo Ka Agad! 🔥</div>
+  </div>`;
+  document.getElementById('receipt-modal').classList.add('open');
+}
+
+// ============================================================
+//  INVENTORY
+// ============================================================
+function renderInventory(){
+  const q=(document.getElementById('inv-search')?.value||'').toLowerCase();
+  const cat=document.getElementById('inv-cat-filter')?.value||'';
+  const st=document.getElementById('inv-status-filter')?.value||'';
+  let prods=products;
+  if(q) prods=prods.filter(p=>p.name.toLowerCase().includes(q));
+  if(cat) prods=prods.filter(p=>p.cat===cat);
+  if(st==='ok') prods=prods.filter(p=>p.stock>5);
+  else if(st==='low') prods=prods.filter(p=>p.stock>0&&p.stock<=5);
+  else if(st==='out') prods=prods.filter(p=>p.stock===0);
+  const tbody=document.getElementById('inv-body');
+  tbody.innerHTML=prods.map(p=>{
+    const sc=p.stock===0?'inv-out':p.stock<=3?'inv-low':'inv-ok';
+    const sl=p.stock===0?'Out of Stock':p.stock<=3?'Low Stock':'In Stock';
+    const isAdmin=currentUser?.role==='admin';
+    return `<tr><td><strong>${p.emo} ${p.name}</strong></td><td class="text-muted">${p.cat}</td><td class="fw7">${php(p.price)}</td><td class="fw7">${p.stock}</td><td><span class="inv-st ${sc}">${sl}</span></td><td style="display:flex;gap:6px">
+      ${isAdmin?`<button class="btn btn-out btn-sm" onclick="openStockModal('${p.id}')">± Stock</button><button class="btn btn-pri btn-sm" onclick="openEditProduct('${p.id}')">✏ Edit</button>`:'<span class="text-muted" style="font-size:.75rem">View only</span>'}
+    </td></tr>`;
+  }).join('');
+}
+
+function openStockModal(pid){
+  const p=getProduct(pid);if(!p)return;
+  document.getElementById('stock-prod-id').value=pid;
+  document.getElementById('stock-prod-name').textContent=p.emo+' '+p.name;
+  document.getElementById('stock-current').textContent=p.stock+' units';
+  document.getElementById('stock-adj').value='';
+  document.getElementById('stock-modal').classList.add('open');
+}
+
+function updateBadge(){
+  const lowProds=products.filter(p=>p.stock<=3&&p.stock>0);
+  const outProds=products.filter(p=>p.stock===0);
+  const badge=document.getElementById('low-stock-badge');
+  if(badge) badge.style.display=(lowProds.length+outProds.length)>0?'':'none';
+}
+
+function updateStock(){
+  const pid=document.getElementById('stock-prod-id').value;
+  const adj=parseInt(document.getElementById('stock-adj').value)||0;
+  const p=getProduct(pid);if(!p)return;
+  p.stock=Math.max(0,p.stock+adj);
+  sv('lh_products',products);
+  fbWriteStock(p.id,p.stock);
+  bcBroadcast('STOCK_UPDATE',{id:p.id,stock:p.stock});
+  document.getElementById('stock-modal').classList.remove('open');
+  renderInventory();updateBadge();
+}
+
+function openAddProduct(){
+  document.getElementById('prod-modal-title').textContent='Add Product';
+  document.getElementById('prod-id').value='';
+  ['pm-name','pm-price','pm-desc','pm-stock'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('product-modal').classList.add('open');
+}
+
+function openEditProduct(pid){
+  const p=getProduct(pid);if(!p)return;
+  document.getElementById('prod-modal-title').textContent='Edit Product';
+  document.getElementById('prod-id').value=pid;
+  document.getElementById('pm-name').value=p.name;
+  document.getElementById('pm-cat').value=p.cat;
+  document.getElementById('pm-price').value=p.price;
+  document.getElementById('pm-desc').value=p.desc;
+  document.getElementById('pm-stock').value=p.stock;
+  document.getElementById('product-modal').classList.add('open');
+}
+
+function saveProduct(){
+  const pid=document.getElementById('prod-id').value;
+  const data={
+    name:document.getElementById('pm-name').value,
+    cat:document.getElementById('pm-cat').value,
+    price:parseFloat(document.getElementById('pm-price').value)||0,
+    desc:document.getElementById('pm-desc').value,
+    stock:parseInt(document.getElementById('pm-stock').value)||0,
+  };
+  if(!data.name||!data.price){alert('Name and price are required.');return;}
+  if(pid){const p=getProduct(pid);if(p)Object.assign(p,data);}
+  else{products.push({id:'custom-'+Date.now(),emo:'🍽',status:'active',...data});}
+  sv('lh_products',products);
+  document.getElementById('product-modal').classList.remove('open');
+  renderInventory();
+}
+
+// ============================================================
+//  REPORTS
+// ============================================================
+let currentReportTab='daily';
+
+function switchReport(tab,el){
+  currentReportTab=tab;
+  document.querySelectorAll('.rpt-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  ['daily','weekly','monthly'].forEach(t=>document.getElementById('rpt-'+t).style.display=t===tab?'block':'none');
+  if(tab==='daily') renderDailyReport();
+  else if(tab==='weekly') renderWeeklyReport();
+  else renderMonthlyReport();
+}
+
+function renderReports(){
+  const dateEl=document.getElementById('rpt-date');
+  if(dateEl&&!dateEl.value) dateEl.value=today();
+  const weekEl=document.getElementById('rpt-week');
+  if(weekEl&&!weekEl.value){const now=new Date();const y=now.getFullYear();const w=getISOWeek(now);weekEl.value=`${y}-W${String(w).padStart(2,'0')}`;}
+  const monthEl=document.getElementById('rpt-month');
+  if(monthEl&&!monthEl.value) monthEl.value=today().slice(0,7);
+  renderDailyReport();
+}
+
+function getISOWeek(d){const date=new Date(d);date.setHours(0,0,0,0);date.setDate(date.getDate()+3-(date.getDay()+6)%7);const week1=new Date(date.getFullYear(),0,4);return 1+Math.round(((date.getTime()-week1.getTime())/86400000-3+(week1.getDay()+6)%7)/7);}
+
+function renderDailyReport(){
+  const d=document.getElementById('rpt-date')?.value||today();
+  const txns=txnsForDate(d);
+  const total=txns.reduce((s,t)=>s+t.total,0);
+  const avg=txns.length?Math.round(total/txns.length):0;
+  document.getElementById('rpt-d-kpi').innerHTML=kpiHTML([
+    {lbl:'Total Sales',val:php(total),sub:txns.length+' orders',cls:'o'},
+    {lbl:'Avg Order',val:php(avg),sub:'Per transaction',cls:'g'},
+    {lbl:'Top Payment',val:topPayMethod(txns),sub:'Most used today',cls:'gr'},
+  ]);
+  // Hourly chart
+  const hours=Array.from({length:16},(_,i)=>String(i+7).padStart(2,'0')+':00');
+  const hourlyData=hours.map(h=>{const hh=h.slice(0,2);return txns.filter(t=>t.time.startsWith(hh)).reduce((s,t)=>s+t.total,0);});
+  buildChart('ch-daily','line',hours,[{label:'Hourly Sales',data:hourlyData,borderColor:'#CC0000',backgroundColor:'rgba(204,0,0,.08)',tension:.4,fill:true,pointBackgroundColor:'#CC0000',borderWidth:2}]);
+  document.getElementById('rpt-d-body').innerHTML=txns.length?txns.map((t,i)=>`<tr><td>${i+1}</td><td>${t.time}</td><td>${t.customer||'Walk-in'}</td><td style="color:${getTeam(t.team).color}">${getTeam(t.team).name.split(' ')[0]}</td><td>${t.items.length} item(s)</td><td class="fw7">${php(t.total)}</td><td>${t.payment?.toUpperCase()}</td><td><span class="st st-${t.status==='paid'?'paid':'void'}">${t.status}</span></td></tr>`).join(''):'<tr><td colspan="8" style="text-align:center;color:var(--tx3);padding:20px">No transactions for this date</td></tr>';
+}
+
+function topPayMethod(txns){
+  if(!txns.length)return '—';
+  const counts={};txns.forEach(t=>{counts[t.payment]=(counts[t.payment]||0)+1;});
+  return Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0]?.toUpperCase()||'—';
+}
+
+function renderWeeklyReport(){
+  const wr=document.getElementById('rpt-week')?.value;
+  if(!wr)return;
+  const txns=txnsForWeek(wr);
+  const total=txns.reduce((s,t)=>s+t.total,0);
+  const avg=txns.length?Math.round(total/txns.length):0;
+  document.getElementById('rpt-w-kpi').innerHTML=kpiHTML([
+    {lbl:'Week Sales',val:php(total),sub:txns.length+' orders',cls:'o'},
+    {lbl:'Avg Order',val:php(avg),sub:'Per transaction',cls:'g'},
+    {lbl:'Best Team',val:bestTeam(txns),sub:'This week',cls:'r'},
+  ]);
+  const days=weekDateRange(wr);
+  const labels=days.map(d=>new Date(d+'T12:00').toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'}));
+  // All teams + total
+  const datasets=[
+    {label:'Total',data:days.map(d=>txnsForDate(d).reduce((s,t)=>s+t.total,0)),borderColor:'#550000',backgroundColor:'rgba(85,0,0,.05)',tension:.4,borderWidth:2,borderDash:[5,5]},
+    ...TEAMS.map(t=>({label:t.name.split(' ')[0],data:days.map(d=>txns.filter(x=>x.date===d&&x.team===t.id).reduce((s,x)=>s+x.total,0)),borderColor:t.color,backgroundColor:t.colorA.replace('.7','.1'),tension:.4,fill:false,pointBackgroundColor:t.color}))
+  ];
+  buildChart('ch-weekly-rpt','line',labels,datasets);
+  document.getElementById('rpt-w-body').innerHTML=txns.length?txns.map(t=>`<tr><td>${t.date}</td><td>${t.customer||'Walk-in'}</td><td style="color:${getTeam(t.team).color}">${getTeam(t.team).name.split(' ')[0]}</td><td>${t.items.length}</td><td class="fw7">${php(t.total)}</td><td>${t.payment?.toUpperCase()}</td></tr>`).join(''):'<tr><td colspan="6" style="text-align:center;color:var(--tx3);padding:20px">No transactions this week</td></tr>';
+}
+
+function renderMonthlyReport(){
+  const m=document.getElementById('rpt-month')?.value||today().slice(0,7);
+  const txns=txnsForMonth(m);
+  const total=txns.reduce((s,t)=>s+t.total,0);
+  const avg=txns.length?Math.round(total/txns.length):0;
+  document.getElementById('rpt-m-kpi').innerHTML=kpiHTML([
+    {lbl:'Month Sales',val:php(total),sub:txns.length+' orders',cls:'o'},
+    {lbl:'Avg Order',val:php(avg),sub:'Per transaction',cls:'g'},
+    {lbl:'Best Team',val:bestTeam(txns),sub:'This month',cls:'r'},
+  ]);
+  const days=daysInMonth(m);
+  const labels=Array.from({length:days},(_,i)=>String(i+1));
+  const datasets=[
+    {label:'Daily Sales',data:labels.map(d=>{const ds=m+'-'+String(d).padStart(2,'0');return txns.filter(t=>t.date===ds).reduce((s,t)=>s+t.total,0);}),borderColor:'#CC0000',backgroundColor:'rgba(204,0,0,.08)',tension:.4,fill:true,pointRadius:3,pointBackgroundColor:'#CC0000',borderWidth:2},
+  ];
+  buildChart('ch-monthly-rpt','line',labels,datasets);
+  // Top products
+  const prodMap={};
+  txns.forEach(t=>t.items.forEach(i=>{if(!prodMap[i.name])prodMap[i.name]={qty:0,rev:0};prodMap[i.name].qty+=i.qty;prodMap[i.name].rev+=i.price*i.qty;}));
+  const sorted=Object.entries(prodMap).sort((a,b)=>b[1].rev-a[1].rev).slice(0,10);
+  document.getElementById('rpt-m-prods').innerHTML=sorted.map(([name,s])=>`<tr><td>${name}</td><td>${s.qty}</td><td class="fw7">${php(s.rev)}</td></tr>`).join('')||'<tr><td colspan="3" style="text-align:center;color:var(--tx3)">No data</td></tr>';
 }
 
 function bestTeam(txns){
-  if(!txns.length)return 'â';
+  if(!txns.length)return '—';
   const s={};TEAMS.forEach(t=>{s[t.id]=txns.filter(x=>x.team===t.id).reduce((a,x)=>a+x.total,0);});
   const topId=Object.entries(s).sort((a,b)=>b[1]-a[1])[0]?.[0];
   return getTeam(topId).name.split(' ')[0];
@@ -1447,7 +1378,7 @@ function renderTeams(){
     return {...t,sales:tt.reduce((s,x)=>s+x.total,0),orders:tt.length};
   }).sort((a,b)=>b.sales-a.sales);
   const maxSales=teamData[0]?.sales||1;
-  const rankLabels=['ð¥ 1st Place','ð¥ 2nd Place','ð¥ 3rd Place','4th Place'];
+  const rankLabels=['🥇 1st Place','🥈 2nd Place','🥉 3rd Place','4th Place'];
   const rankCls=['r1','r2','r3','r4'];
   document.getElementById('team-cards').innerHTML=teamData.map((t,i)=>`<div class="team-card">
     <span class="tc-rank ${rankCls[i]}">${rankLabels[i]}</span>
@@ -1462,7 +1393,7 @@ function renderTeams(){
   buildChart('ch-team-bar','bar',TEAMS.map(t=>t.name.split(' ')[0]),
     [{label:'Total Sales',data:TEAMS.map(t=>txns.filter(x=>x.team===t.id).reduce((s,x)=>s+x.total,0)),backgroundColor:TEAMS.map(t=>t.colorA),borderColor:TEAMS.map(t=>t.color),borderWidth:2,borderRadius:6}]);
 
-  // Line trend â last 8 weeks
+  // Line trend – last 8 weeks
   const weekLabels=[];const weekDatasets=TEAMS.map(t=>({label:t.name.split(' ')[0],data:[],borderColor:t.color,backgroundColor:'transparent',tension:.4,pointBackgroundColor:t.color}));
   for(let w=7;w>=0;w--){
     const d=new Date();d.setDate(d.getDate()-w*7);
@@ -1499,7 +1430,7 @@ function renderCompensation(){
   const totNet=emps.reduce((s,e)=>{const comm=Math.round(hubSales*(e.commRate/100)/Math.max(emps.length,1));return s+e.base+comm+(e.bonus||0)-(e.deductions||0);},0);
 
   document.getElementById('comp-summary').innerHTML=`
-    <div class="kpi o"><div class="kpi-lbl">Total Base Pay</div><div class="kpi-val">${php(totBase)}</div><div class="kpi-sub">Lechon Hub â All Staff</div></div>
+    <div class="kpi o"><div class="kpi-lbl">Total Base Pay</div><div class="kpi-val">${php(totBase)}</div><div class="kpi-sub">Lechon Hub — All Staff</div></div>
     <div class="kpi g"><div class="kpi-lbl">Total Commission</div><div class="kpi-val">${php(totComm)}</div><div class="kpi-sub">Hub sales: ${php(hubSales)}</div></div>
     <div class="kpi gr"><div class="kpi-lbl">Total Net Pay</div><div class="kpi-val">${php(totNet)}</div><div class="kpi-sub">${emps.length} employees</div></div>`;
 
@@ -1542,7 +1473,8 @@ function renderPOs(){
   const pendingVal=purchaseOrders.filter(p=>p.status==='pending').reduce((s,p)=>s+p.totalCost,0);
   const receivedCount=purchaseOrders.filter(p=>p.status==='received').length;
 
-  document.getElementById('po-summary').innerHTML=`  <div class="kpi o"><div class="kpi-lbl">Total PO Value</div><div class="kpi-val">${php(totalVal)}</div><div class="kpi-sub">${purchaseOrders.length} total orders</div></div>
+  document.getElementById('po-summary').innerHTML=`
+    <div class="kpi o"><div class="kpi-lbl">Total PO Value</div><div class="kpi-val">${php(totalVal)}</div><div class="kpi-sub">${purchaseOrders.length} total orders</div></div>
     <div class="kpi r"><div class="kpi-lbl">Pending Value</div><div class="kpi-val">${php(pendingVal)}</div><div class="kpi-sub">${purchaseOrders.filter(p=>p.status==='pending').length} pending</div></div>
     <div class="kpi gr"><div class="kpi-lbl">Received Orders</div><div class="kpi-val">${receivedCount}</div><div class="kpi-sub">fulfilled POs</div></div>`;
 
@@ -1558,7 +1490,7 @@ function renderPOs(){
       <td style="text-align:center">${p.qty}</td>
       <td class="fw7 txt-pri">${php(p.totalCost)}</td>
       <td><span class="st ${stClass}">${stLabel}</span></td>
-      <td style="display:flex;gap:4px">${isAdmin?`<button class="btn btn-out btn-sm" onclick="editPO('${p.id}')">â Edit</button><button class="btn btn-red btn-sm" onclick="deletePO('${p.id}')">ð</button>`:''}</td>
+      <td style="display:flex;gap:4px">${isAdmin?`<button class="btn btn-out btn-sm" onclick="editPO('${p.id}')">✏ Edit</button><button class="btn btn-red btn-sm" onclick="deletePO('${p.id}')">🗑</button>`:''}</td>
     </tr>`;
   }).join('')||'<tr><td colspan="8" style="text-align:center;color:var(--tx3);padding:20px">No purchase orders yet. Add one above.</td></tr>';
 }
@@ -1599,7 +1531,7 @@ function savePO(){
   if(!supplier){alert('Supplier name is required.');return;}
   const data={
     supplier,
-    items:document.getElementById('po-items').value.trim()||'â',
+    items:document.getElementById('po-items').value.trim()||'—',
     qty:parseInt(document.getElementById('po-qty').value)||0,
     totalCost:parseFloat(document.getElementById('po-cost').value)||0,
     date:document.getElementById('po-date').value||today(),
@@ -1620,7 +1552,7 @@ function savePO(){
 // ============================================================
 //  INCENTIVES & COMMISSION
 // ============================================================
-// Product incentive rates (â± per unit sold) â based on LH Incentive Rates sheet
+// Product incentive rates (₱ per unit sold) — based on LH Incentive Rates sheet
 const DEFAULT_PRODUCT_INC_RATES={
   // LECHON BELLY
   'Belly - 1kg':100,'Belly - 2kg':200,'Belly - 3kg':200,'Belly - 3.5kg':300,
@@ -1686,24 +1618,300 @@ function renderIncentives(){
     return `<tr>
       <td style="color:${t.color};font-weight:600">${t.name}</td>
       <td style="text-align:center">${tTxns.length}</td>
-      <tÑÍÑå±ôÑáÐµ±¥¸é¹ÑÈøíÅÑåôð½Ñø(ñÑ±ÍÌôÜÜÑáÐµÉ¸øíÁ¡À¡¥¹¥ôð½Ñø(ð½ÑÈùì(ô¤¹©½¥¸ ¤ì((½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¥¹µÑ½Ñ±Ì¤¹¥¹¹É!Q50õ(ñ¥Ø±ÍÌô­Á¤Èøñ¥Ø±ÍÌô­Á¤µ±°ùQ½Ñ°%¹¹Ñ¥ÙÌð½¥Øøñ¥Ø±ÍÌô­Á¤µÙ°øíÁ¡À¡É¹%¹¥ôð½¥Øøñ¥Ø±ÍÌô­Á¤µÍÕù±°ÑµÌ½µ¥¹ð½¥Øøð½¥Øø(ñ¥Ø±ÍÌô­Á¤¼øñ¥Ø±ÍÌô­Á¤µ±°ùQ½Ñ°=ÉÉÌð½¥Øøñ¥Ø±ÍÌô­Á¤µÙ°øíÉ¹=ÉÉÍôð½¥Øøñ¥Ø±ÍÌô­Á¤µÍÕùQ¡¥Ìµ½¹Ñ ð½¥Øøð½¥Øø(ñ¥Ø±ÍÌô­Á¤øñ¥Ø±ÍÌô­Á¤µ±°ùQ½Ñ°EÑäM½±ð½¥Øøñ¥Ø±ÍÌô­Á¤µÙ°øíÉ¹EÑåôð½¥Øøñ¥Ø±ÍÌô­Á¤µÍÕùU¹¥ÑÌÉ½ÍÌ±°ÁÉ½ÕÑÌð½¥Øøð½¥Øùì((½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¥¹µ½ä¤¹¥¹¹É!Q50õÉ½ÝÌ¬(ñÑÈÍÑå±ô½ÉÈµÑ½ÀèÉÁàÍ½±¥ÙÈ ´µÈ¤í½¹ÐµÝ¥¡ÐèàÀÀí­É½Õ¹èÕÔø(ñÑùI9Q=Q0ð½Ñø(ñÑÍÑå±ôÑáÐµ±¥¸é¹ÑÈøíÉ¹=ÉÉÍôð½Ñø(ñÑÍÑå±ôÑáÐµ±¥¸é¹ÑÈøíÉ¹EÑåôð½Ñø(ñÑ±ÍÌôÑáÐµÉ¸øíÁ¡À¡É¹%¹¥ôð½Ñø(ð½ÑÈùì((¼¼I¹ÈÉÑ¥Ñ½È½Èµ¥¸(½¹ÍÐ¥Ñ½Èõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¥¹µÉÑµ¥Ñ½È¤ì(¥¡¥Ñ½È¥ì(¥Ñ½È¹¥¹¹É!Q50õ=©Ð¹¹ÑÉ¥Ì¡ÁÉ½ÕÑ%¹IÑÌ¤¹µÀ ¡m¹µ±ÉÑt¤ôù(ñ¥ØÍÑå±ô¥ÍÁ±äé±àí±¥¸µ¥ÑµÌé¹ÑÈíÀèÄÁÁàíÁ¥¹èÙÁàÀí½ÉÈµ½ÑÑ½´èÅÁàÍ½±¥ÙÈ ´µÈ¤ø(ñÍÁ¸ÍÑå±ô±àèÄí½¹ÐµÍ¥éè¸àÉÉ´øí¹µôð½ÍÁ¸ø(ñÍÁ¸ÍÑå±ô½¹ÐµÍ¥éè¸ÜÕÉ´í½±½ÈéÙÈ ´µÑàÌ¤û
-Äð½ÍÁ¸ø(ñ¥¹ÁÕÐÑåÁô¹ÕµÈÙ±ÕôíÉÑôµ¥¸ôÀÍÑÀôÔÀÑµÁ¹µôí¹µ¹ÉÁ± ¼½°ÅÕ½Ðì¥ô(ÍÑå±ôÝ¥Ñ èäÁÁàíÑáÐµ±¥¸éÉ¥¡Ð½¹¡¹ôÁÉ½ÕÑ%¹IÑÍmÑ¡¥Ì¹ÑÍÐ¹Á¹µtõÁÉÍ±½Ð¡Ñ¡¥Ì¹Ù±Õ¥ñðÀø(ð½¥Øù¤¹©½¥¸ ¤ì(ô)ô()Õ¹Ñ¥½¸ÍÙ%¹IÑÌ ¥ì(ÍØ ±¡}¥¹}ÉÑÌ±ÁÉ½ÕÑ%¹IÑÌ¤ì(É¹É%¹¹Ñ¥ÙÌ ¤ì(±ÉÐ %¹¹Ñ¥ÙÉÑÌÍÙ¤ì)ô((¼¼ôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôô(¼¼aA=IP(¼¼ôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôô)Õ¹Ñ¥½¸áÁ½ÉÑIÁ½ÉÐ¡ÑåÁ¥ì(±ÉÐ áÁ½ÉÐÑÕÉè%¸ÁÉ½ÕÑ¥½¸¹Ù¥É½¹µ¹Ð°Ñ¡¥ÌÝ½Õ±¹ÉÑA½Èá°¥±½Ñ¡­ÑåÁ¬ÉÁ½ÉÐ¸¤ì)ô((¼¼ôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôô(¼¼1=%8(¼¼ôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôô)½¹ÍÐUMILõl(íÕÍÉ¹µèµ¥¸°ÁÍÍÝ½Éè±¡½¹¡ÕÈÀÈÐ°¹µèµ¥¹¥ÍÑÉÑ½È°É½±èµ¥¸°Ñ´è±°ô°(íÕÍÉ¹µè±¥Á¡½¸±qÁÍÍÝ½Éè±¥ÁÄÈÌ°¹µè1¥Á¡½¸Q´°É½±èÑ´°Ñ´è±¥Á¡½¸ô°(íÕÍÉ¹µè¥½¹ÑåÌ°ÁÍÍÝ½Éèµ½¹ÑäÄÈÌ°¹µè5½¹ÑäÌ	Ñ¹Ì°É½±èÑ´°Ñ´èµ½¹ÑåÌô°(íÕÍÉ¹µèÍµµ¥Ì°ÁÍÍÝ½ÉèÍµµ¥ÄÈÌ°¹µèMµµ¥Ì1¡½¸°É½±èÑ´°Ñ´èÍµµ¥Ìô°(íÕÍÉ¹µè­ÕåÌ°ÁÍÍÝ½Éè­ÕåÄÈÌ°¹µè-ÕåÌ1¡½¸°É½±èÑ´°Ñ´è­ÕåÌô°)tì)±ÐÕÉÉ¹ÑUÍÈõ¹Õ±°ì()Õ¹Ñ¥½¸½1½¥¸ ¥ì(½¹ÍÐÔõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% °µÕÍÈ¤¹Ù±Õ¹ÑÉ¥´ ¤¹Ñ½1½ÝÉ
-Í ¤ì(½¹ÍÐÀõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% °µÁÍÌ¤¹Ù±Õì(½¹ÍÐ½Õ¹õUMIL¹¥¹¡àôùàµÕÍÉ¹µôôõÔà¹ÁÍÍÝ½ÉôôõÀ¤ì(½¹ÍÐÉÉ°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ±½¥¸µÉÈ¤ì(¥ ½Õ¹¥íÉÉ°¹ÍÑå±¹¥ÍÁ±äô±àíÉÑÕÉ¸íô(ÉÉ°¹ÍÑå±¹¥ÍÁ±äô¹½¹ì(ÕÉÉ¹ÑUÍÈõ½Õ¹ì(ÍÍÍ¥½¹MÑ½É¹ÍÑ%Ñ´ ±¡}ÍÍÍ¥½¸±)M=8¹ÍÑÉ¥¹¥ä¡½Õ¹¤¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ±½¥¸µÍÉ¸¤¹ÍÑå±¹¥ÍÁ±äô¹½¹ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% µ¥¸µÁÀ¤¹ÍÑå±¹¥ÍÁ±äô±àì(¼¼ÁÁ±äÉ½±µÍÍÌ(½Õµ¹Ð¹½ä¹±ÍÍ1¥ÍÐ¹Ñ½± ¥Ìµµ¥¸°½Õ¹¹É½±ôôôµ¥¸¤ì(¼¼UÁÑÍ¥ÈÕÍÈ¥¹¼(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÍµÕÍÈµ¹µ¤¹ÑáÑ
-½¹Ñ¹Ðõ½Õ¹¹¹µì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÍµÕÍÈµÉ½±¤¹ÑáÑ
-½¹Ñ¹Ðõ½Õ¹¹É½±ôôôµ¥¸üµ¥¹¥ÍÑÉÑ½Èé½Õ¹¹¹µì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÍµØµ¥¹¥Ñ¥±Ì¤¹ÑáÑ
-½¹Ñ¹Ðõ½Õ¹¹¹µ¹ÍÁ±¥Ð ¤¹µÀ¡ÜôùÝlÁt¤¹©½¥¸ ¤¹Í±¥ À°È¤¹Ñ½UÁÁÉ
-Í ¤ì(¼¼AÉµÍÐÑ´¥¸A=L¥Ñ´±½¥¸(¥¡½Õ¹¹É½±ôôôÑ´¥ì(½¹ÍÐÑµM°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÐµÑ´¤ì(¥¡ÑµM°¤ÑµM°¹Ù±Õõ½Õ¹¹Ñ´ì(ô(½½ÑÁÀ ¤ì)ô()Õ¹Ñ¥½¸½1½½ÕÐ ¥ì(¥ ½¹¥É´ M¥¸½ÕÐ½1¡½¸!Õü¤¥ÉÑÕÉ¸ì(ÍÍÍ¥½¹MÑ½É¹Éµ½Ù%Ñ´ ±¡}ÍÍÍ¥½¸¤ì(ÕÉÉ¹ÑUÍÈõ¹Õ±°ì(½Õµ¹Ð¹½ä¹±ÍÍ1¥ÍÐ¹Éµ½Ù ¥Ìµµ¥¸¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% µ¥¸µÁÀ¤¹ÍÑå±¹¥ÍÁ±äô¹½¹ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ±½¥¸µÍÉ¸¤¹ÍÑå±¹¥ÍÁ±äô±àì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% °µÕÍÈ¤¹Ù±Õôì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% °µÁÍÌ¤¹Ù±Õôì)ô()Õ¹Ñ¥½¸¡­MÍÍ¥½¸ ¥ì(½¹ÍÐÍÙõÍÍÍ¥½¹MÑ½É¹Ñ%Ñ´ ±¡}ÍÍÍ¥½¸¤ì(¥¡ÍÙ¥ì(ÑÉåì(½¹ÍÐÔõ)M=8¹ÁÉÍ¡ÍÙ¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% °µÕÍÈ¤¹Ù±ÕõÔ¹ÕÍÉ¹µì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% °µÁÍÌ¤¹Ù±ÕõUMIL¹¥¹¡àôùà¹ÕÍÉ¹µôôõÔ¹ÕÍÉ¹µ¤ü¹ÁÍÍÝ½Éñðì(½1½¥¸ ¤ì(ÉÑÕÉ¸ÑÉÕì(õÑ ¡¥íô(ô(ÉÑÕÉ¸±Íì)ô((¼¼ôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôô(¼¼	I=
-MP
-!990¡ÍµµÙ¥µÕ±Ñ¤µÑÍå¹¤(¼¼ôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôô)±Ðõ¹Õ±°ì)ÑÉåíõ¹Ü	É½ÍÑ
-¡¹¹° ±¡½¹}¡Õ}ØÄ¤íõÑ ¡¥íô()Õ¹Ñ¥½¸	É½ÍÐ¡ÑåÁ±Ñ¥ì(ÑÉåí¹Á½ÍÑ5ÍÍ¡íÑåÁ±Ñ±ÑÌéÑ¹¹½Ü ¥ô¤íõÑ ¡¥íô)ô()Õ¹Ñ¥½¸1¥ÍÑ¸ ¥ì(¥ ¥ÉÑÕÉ¸ì(¹½¹µÍÍõôùì(½¹ÍÐíÑåÁ±Ñôõ¹Ñì(¥¡ÑåÁôôôQa9}¥ì(¥ ÑÉ¹ÍÑ¥½¹Ì¹¥¹¡ÐôùÐ¹¥ôôõÑ¹¥¤¥ì(ÑÉ¹ÍÑ¥½¹Ì¹Õ¹Í¡¥Ð¡Ñ¤íÍØ ±¡}Ñá¹Ì±ÑÉ¹ÍÑ¥½¹Ì¤ì(ÉÉÍ¡
-ÕÉÉ¹ÑY¥Ü ¤íÍ¡½ÝMå¹Q½ÍÐ 9Ü½ÉÈÍå¹É½´¹½Ñ¡ÈÑ¤ì(ô(ô±Í¥¡ÑåÁôôôMQ=
--}UAQ¥ì(½¹ÍÐÀõÁÉ½ÕÑÌ¹¥¹¡àôùà¹¥ôôõÑ¹¥¤ì(¥¡À¥íÀ¹ÍÑ½¬õÑ¹ÍÑ½¬íÍØ ±¡}ÁÉ½ÕÑÌ±ÁÉ½ÕÑÌ¤íô(¥¡ÕÉÉ¹ÑAôôô¥¹Ù¹Ñ½Éä¤É¹É%¹Ù¹Ñ½Éä ¤ì(ô(ôì)ô()Õ¹Ñ¥½¸Í¡½ÝMå¹Q½ÍÐ¡µÍ¥ì(±ÐÐõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Íå¹µÑ½ÍÐ¤ì(¥ Ð¥íÐõ½Õµ¹Ð¹ÉÑ±µ¹Ð ¥Ø¤íÐ¹¥ôÍå¹µÑ½ÍÐíÐ¹ÍÑå±¹ÍÍQáÐôÁ½Í¥Ñ¥½¸é¥áí½ÑÑ½´èÈÁÁàíÉ¥¡ÐèÈÁÁàí­É½Õ¹è
-ÀÀÀÀí½±½ÈèíÁ¥¹èÄÁÁàÄáÁàí½ÉÈµÉ¥ÕÌèÄÁÁàí½¹ÐµÍ¥éè¸áÉ´íèµ¥¹àèäääàí½àµÍ¡½ÜèÀÑÁàÈÁÁàÉ ÈÀÐ°À°À°¸Ð¤íÑÉ¹Í¥Ñ¥½¸é½Á¥Ñä¸ÍÌí½Õµ¹Ð¹½ä¹ÁÁ¹
-¡¥±¡Ð¤íô(Ð¹ÑáÑ
-½¹Ñ¹ÐôÂ~R¨­µÍíÐ¹ÍÑå±¹½Á¥ÑäôÄì(±ÉQ¥µ½ÕÐ¡Ð¹}Ñ¥µÈ¤íÐ¹}Ñ¥µÈõÍÑQ¥µ½ÕÐ  ¤ôùíÐ¹ÍÑå±¹½Á¥ÑäôÀíô°ÌÀÀÀ¤ì)ô()±ÐÕÉÉ¹ÑAôÍ¡½Éì((¼¼ôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôô(¼¼%I	M¡É½ÍÌµÙ¥É°µÑ¥µÍå¹¤(¼¼ôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôôô)±ÐÁÀõ¹Õ±°±õ¹Õ±°ì()½¹ÍÐU1Q}	}
-=9%õì(Á¥-äè%éMå	I!1å©UÉe)ÅeeI±¡½e%EYÅ
-<ÅÑ(5Ñ8M½µ¥¸è±¡½¹¡Õ´ÕÐØÜ¹¥ÉÍÁÀ¹½´°(ÑÍUI0è¡ÑÑÁÌè¼½±¡½¹¡Õ´ÕÐØÜµÕ±ÐµÉÑ¹¥ÉÍ¥¼¹½´°(ÁÉ½©Ñ%è±¡½¹¡Õ´ÕÐØÜ°(ÍÑ½É	Õ­Ðè±¡½¹¡Õ´ÕÐØÜ¹¥ÉÍÍÑ½É¹ÁÀ°(µÍÍ¥¹M¹É%èÐÐÌØÈÐäØÄÜÌØ°(ÁÁ%èÄèÐÐÌØÈÐäØÄÜÌØéÝèÍÌÀÜÄÁäÀÜÔÔÜäÕÄÝ)ôì()Õ¹Ñ¥½¸±½¥ÉÍ
-½¹¥ ¥íÉÑÕÉ¸± ±¡}}½¹¥±¹Õ±°¥ññU1Q}	}
-=9%íô()Õ¹Ñ¥½¸ÍÙ¥ÉÍ
-½¹¥ ¥ì(½¹ÍÐõì(Á¥-äé½Õµ¹Ð¹Ñ±µ¹Ñ	å% µÁ¥-ä¤¹Ù±Õ¹ÑÉ¥´ ¤°(ÑÍUI0é½Õµ¹Ð¹Ñ±µ¹Ñ	å% µUI0¤¹Ù±Õ¹ÑÉ¥´ ¤°(ÁÉ½©Ñ%é½Õµ¹Ð¹Ñ±µ¹Ñ	å% µÁÉ½©Ñ%¤¹Ù±Õ¹ÑÉ¥´ ¤°(ÁÁ%é½Õµ¹Ð¹Ñ±µ¹Ñ	å% µÁÁ%¤¹Ù±Õ¹ÑÉ¥´ ¤°(ôì(¥ ¹Á¥-åñð¹ÑÍUI0¥í±ÉÐ A$-ä¹ÑÍUI0ÉÉÅÕ¥É¸¤íÉÑÕÉ¸íô(ÍØ ±¡}}½¹¥±¤ì(¥¹¥Ñ¥ÉÍ¡¤ì(ÕÁÑMå¹U$ ±¥Ù¤ì(±ÉÐ r¥ÉÍ½¹¹ÑI°µÑ¥µÍå¹¥Ì¹½ÜÑ¥ÙÉ½ÍÌ±°Ù¥Ì¸¤ì)ô()Õ¹Ñ¥½¸±É¥ÉÍ
-½¹¥ ¥ì(¥ ½¹¥É´ ¥Í½¹¹Ð¥ÉÍüÑÝ¥±°ÍÑä±½°½¹±ä¸¤¥ÉÑÕÉ¸ì(±½±MÑ½É¹Éµ½Ù%Ñ´ ±¡}}½¹¥¤ì(õ¹Õ±°íÕFFU7æ5TvÆö6Âr°¢Fö7VÖVçBævWDVÆVÖVçD'Bvf"×7FGW2Ö&FvRrçFWD6öçFVçCÒtæ÷B6öææV7FVBs°¢Fö7VÖVçBævWDVÆVÖVçD'Bvf"×7FGW2Ö&FvRrç7GÆRæ775FWCÒv&6¶w&÷VæC§&v&ÃÃÂãR¶6öÆ÷#¢3s°§Ð ¦gVæ7FöâæDf&V&6R6fr°¢G'°¢b6fwÇÂ6fræ¶WÇÂ6fræFF&6UU$Â&WGW&ã°¢bf$·G'¶f&V&6Ræ·Ö6F6R·×Ð¢G'¶f$Öf&V&6RææFÆ¦T6frÂvÆV6öæV"r·Ö6F6R¶f$Öf&V&6RævÆV6öæV"r·Ð¢f$F#Öf&V&6RæFF&6Rf$°¢WFFU7æ5TvÆfRr°¢Fö7VÖVçBævWDVÆVÖVçD'Bvf"×7FGW2Ö&FvRrçFWD6öçFVçCÒ	ùú"6öææV7FVBs°¢Fö7VÖVçBævWDVÆVÖVçD'Bvf"×7FGW2Ö&FvRrç7GÆRæ775FWCÒv&6¶w&÷VæC§&v&CbÃcÃsBÂã¶6öÆ÷#¢3$TDs°¢òò&VfÆÂ6WGFæw2fVÆG0¢bFö7VÖVçBævWDVÆVÖVçD'Bvf"Ö¶WrFö7VÖVçBævWDVÆVÖVçD'Bvf"Ö¶WrçfÇVSÖ6fræ¶WÇÂrs°¢bFö7VÖVçBævWDVÆVÖVçD'Bvf"ÖF%U$ÂrFö7VÖVçBævWDVÆVÖVçD'Bvf"ÖF%U$ÂrçfÇVSÖ6fræFF&6UU$ÇÇÂrs°¢bFö7VÖVçBævWDVÆVÖVçD'Bvf"×&ö¦V7DBrFö7VÖVçBævWDVÆVÖVçD'Bvf"×&ö¦V7DBrçfÇVSÖ6frç&ö¦V7DGÇÂrs°¢bFö7VÖVçBævWDVÆVÖVçD'Bvf"ÖBrFö7VÖVçBævWDVÆVÖVçD'Bvf"ÖBrçfÇVSÖ6fræGÇÂrs°¢òòÆ7FVâf÷"G&ç67Föâ6ævW0¢f$F"ç&VbvÆ÷G&ç67Föç2ræöâwfÇVRrÇ6æÓç°¢6öç7BfÃ×6æçfÂ°¢bfÂ°¢6öç7Bæ6öÖæsÔö&¦V7BçfÇVW2fÂç6÷'BÆ"Óæ"æFFRæÆö6ÆT6ö×&RæFFRÇÆ"çFÖRæÆö6ÆT6ö×&RçFÖR°¢G&ç67Föç3Öæ6öÖæs·7bvÆ÷Gç2rÇG&ç67Föç2°¢&Vg&W67W'&VçEfWr°¢WFFU7æ5TvÆfRr°¢Ð¢Ò°¢òòÆ7FVâf÷"çfVçF÷'÷7Fö6²6ævW0¢f$F"ç&VbvÆöçfVçF÷'ræöâwfÇVRrÇ6æÓç°¢6öç7BfÃ×6æçfÂ°¢bfÂ°¢6öç7Bæ6öÖæsÔö&¦V7BçfÇVW2fÂ°¢æ6öÖæræf÷$V6WÓç¶6öç7B×&öGV7G2æfæBÓçæCÓÓ×WæB¶bç7Fö6³×Wç7Fö6³·Ò°¢7bvÆ÷&öGV7G2rÇ&öGV7G2°¢b7W'&VçEvSÓÓÒvçfVçF÷'r&VæFW$çfVçF÷'°¢WFFT&FvR°¢Ð¢Ò°¢Ö6F6W'"¶6öç6öÆRçv&âtf&V&6RæBW'&÷#¢rÆW'"·WFFU7æ5TvW'&÷"r·Ð§Ð ¦gVæ7Föâf%w&FUG&ç67FöâGâ°¢bf$F"°¢WFFU7æ5Tw7æ6ærr°¢f$F"ç&VbvÆ÷G&ç67Föç2òr·GâæBç6WBGâ¢çFVâÓçWFFU7æ5TvÆfRr¢æ6F6SÓç¶6öç6öÆRçv&âtd"w&FRfÃ¢rÆR·WFFU7æ5TvW'&÷"r·Ò°¢Ð§Ð ¦gVæ7Föâf%w&FU7Fö6²&öGV7DBÇ7Fö6²°¢bf$F"f$F"ç&VbvÆöçfVçF÷'òr·&öGV7DBç6WB¶C§&öGV7DBÇ7Fö6·Ò°§Ð ¦gVæ7FöâWFFU7æ5T7FFR°¢6öç7BF÷CÖFö7VÖVçBævWDVÆVÖVçD'Bw7æ2ÖF÷Br°¢6öç7BÆ&ÃÖFö7VÖVçBævWDVÆVÖVçD'Bw7æ2ÖÆ&VÂr°¢bF÷GÇÂÆ&Â&WGW&ã°¢F÷Bæ6Æ74æÖSÒw7æ2ÖF÷Bs°¢b7FFSÓÓÒvÆfRr¶F÷Bæ6Æ74Æ7BæFBvÆfRr¶Æ&ÂçFWD6öçFVçCÒtÆfRs·Ð¢VÇ6Rb7FFSÓÓÒw7æ6ærr¶F÷Bæ6Æ74Æ7BæFBw7æ6ærr¶Æ&ÂçFWD6öçFVçCÒu7æ6ærâââs·Ð¢VÇ6Rb7FFSÓÓÒvW'&÷"r¶Æ&ÂçFWD6öçFVçCÒu7æ2W'&÷"s·Ð¢VÇ6W¶Æ&ÂçFWD6öçFVçCÒtÆö6Âs·Ð§Ð ¦gVæ7Föâ&Vg&W67W'&VçEfWr°¢b7W'&VçEvSÓÓÒvF6&ö&Br&VæFW$F6&ö&B°¢VÇ6Rb7W'&VçEvSÓÓÒw&W÷'G2r°¢bFö7VÖVçBævWDVÆVÖVçD'Bw'BÖFÇrç7GÆRæF7ÆÓÒvæöæRr&VæFW$FÇ&W÷'B°¢VÇ6RbFö7VÖVçBævWDVÆVÖVçD'Bw'B×vVV¶Çrç7GÆRæF7ÆÓÒvæöæRr&VæFW%vVV¶Ç&W÷'B°¢VÇ6R&VæFW$ÖöçFÇ&W÷'B°¢Ð¢VÇ6Rb7W'&VçEvSÓÓÒwFV×2r&VæFW%FV×2°¢VÇ6Rb7W'&VçEvSÓÓÒv6ö×Vç6Föâr&VæFW$6ö×Vç6Föâ°¢VÇ6Rb7W'&VçEvSÓÓÒwW&66RÖ÷&FW'2r&VæFW%÷2°¢VÇ6Rb7W'&VçEvSÓÓÒvæ6VçFfW2r&VæFW$æ6VçFfW2°§Ð ¢òò÷fW'&FRæbFòG&6²7W'&VçEvP¦6öç7Bö÷&tæc×GVöbæcÓÓÒvgVæ7Föâsöæc¦çVÆÃ° ¦gVæ7Föâ6ÆV$ÆÅG&ç67Föç2°¢b6öæf&ÒuF2vÆÂW&ÖæVçFÇFVÆWFRÆÂG&ç67Föç2â&R÷R7W&Sòr&WGW&ã°¢G&ç67Föç3ÕµÓ·7bvÆ÷Gç2rÅµÒ°¢bf$F"f$F"ç&VbvÆ÷G&ç67Föç2rç&VÖ÷fR°¢ÆW'BtÆÂG&ç67Föç26ÆV&VBâr°¢&VæFW$F6&ö&B°§Ð ¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÐ¢òòä@¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÐ¦gVæ7Föâ&ö÷D°¢òò6WBFVfVÇBFFRçWG0¢Fö7VÖVçBævWDVÆVÖVçD'Bw'BÖFFRrçfÇVS×FöF°¢Fö7VÖVçBævWDVÆVÖVçD'Bw'BÖÖöçFrçfÇVS×FöFç6Æ6RÃr°¢Fö7VÖVçBævWDVÆVÖVçD'BwFVÒÖÖöçFrçfÇVS×FöFç6Æ6RÃr°¢Fö7VÖVçBævWDVÆVÖVçD'Bv6ö×ÖÖöçFrçfÇVS×FöFç6Æ6RÃr°¢Fö7VÖVçBævWDVÆVÖVçD'Bvæ2ÖÖöçFrçfÇVS×FöFç6Æ6RÃr°¢òò6Æö6°¢WFFT6Æö6²·6WDçFW'fÂWFFT6Æö6²Ã3°¢òò'&öF67D6ææVÀ¢&4Æ7FVâ°¢òòf&V&6Rb6öæfwW&VB¢6öç7Bf$6fsÖÆöDf&V&6T6öæfr°¢bf$6fræDf&V&6Rf$6fr²VÇ6RWFFU7æ5TvÆö6Âr°¢òò&VæFW"F6&ö&B7F'Bg&W6(	Bæò6×ÆRFF¢æbvF6&ö&Br°¢7W'&VçD6CÒtÆÂs°§Ð ¦Fö7VÖVçBæFDWfVçDÆ7FVæW"tDôÔ6öçFVçDÆöFVBrÂÓç°¢b6V6µ6W76öâ°¢òò6÷rÆövâ67&VVâÂ7F2FFVà¢Ð§Ò°£Â÷67&Cà£Âö&öGà£ÂöFÖÃà
+      <td style="text-align:center">${qty}</td>
+      <td class="fw7 txt-grn">${php(inc)}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('inc-totals').innerHTML=`
+    <div class="kpi gr"><div class="kpi-lbl">Total Incentives</div><div class="kpi-val">${php(grandInc)}</div><div class="kpi-sub">All teams combined</div></div>
+    <div class="kpi o"><div class="kpi-lbl">Total Orders</div><div class="kpi-val">${grandOrders}</div><div class="kpi-sub">This month</div></div>
+    <div class="kpi g"><div class="kpi-lbl">Total Qty Sold</div><div class="kpi-val">${grandQty}</div><div class="kpi-sub">Units across all products</div></div>`;
+
+  document.getElementById('inc-body').innerHTML=rows+
+    `<tr style="border-top:2px solid var(--bdr);font-weight:800;background:#FFF5F5">
+      <td>GRAND TOTAL</td>
+      <td style="text-align:center">${grandOrders}</td>
+      <td style="text-align:center">${grandQty}</td>
+      <td class="txt-grn">${php(grandInc)}</td>
+    </tr>`;
+
+  // Render rate editor for admin
+  const editor=document.getElementById('inc-rate-editor');
+  if(editor){
+    editor.innerHTML=Object.entries(productIncRates).map(([name,rate])=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--bdr)">
+        <span style="flex:1;font-size:.82rem">${name}</span>
+        <span style="font-size:.75rem;color:var(--tx3)">₱</span>
+        <input type="number" value="${rate}" min="0" step="50" data-pname="${name.replace(/"/g,'&quot;')}"
+          style="width:90px;text-align:right" onchange="productIncRates[this.dataset.pname]=parseFloat(this.value)||0">
+      </div>`).join('');
+  }
+}
+
+function saveIncRates(){
+  sv('lh_inc_rates',productIncRates);
+  renderIncentives();
+  alert('Incentive rates saved!');
+}
+
+// ============================================================
+//  EXPORT
+// ============================================================
+function exportReport(type){
+  alert('Export feature: In a production environment, this would generate a PDF or Excel file of the '+type+' report.');
+}
+
+// ============================================================
+//  LOGIN
+// ============================================================
+const USERS=[
+  {username:'admin',   password:'lechonhub2024', name:'Administrator',        role:'admin', team:'all'},
+  {username:'lipachon',password:'lipa123',        name:'Lipachon Team',        role:'team',  team:'lipachon'},
+  {username:'montys',  password:'monty123',       name:"Monty's Batangas",     role:'team',  team:'montys'},
+  {username:'sammies', password:'sammie123',      name:"Sammie's Lechon",      role:'team',  team:'sammies'},
+  {username:'kuyas',   password:'kuya123',        name:"Kuya's Lechon",        role:'team',  team:'kuyas'},
+];
+let currentUser=null;
+
+function doLogin(){
+  const u=document.getElementById('l-user').value.trim().toLowerCase();
+  const p=document.getElementById('l-pass').value;
+  const found=USERS.find(x=>x.username===u&&x.password===p);
+  const errEl=document.getElementById('login-err');
+  if(!found){errEl.style.display='flex';return;}
+  errEl.style.display='none';
+  currentUser=found;
+  sessionStorage.setItem('lh_session',JSON.stringify(found));
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('main-app').style.display='flex';
+  // Apply role-based access
+  document.body.classList.toggle('is-admin', found.role==='admin');
+  // Update sidebar user info
+  document.getElementById('sb-user-name').textContent=found.name;
+  document.getElementById('sb-user-role').textContent=found.role==='admin'?'Administrator':found.name;
+  document.getElementById('sb-av-initials').textContent=found.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  // Pre-set team in POS if team login
+  if(found.role==='team'){
+    const teamSel=document.getElementById('cart-team');
+    if(teamSel) teamSel.value=found.team;
+  }
+  bootApp();
+}
+
+function doLogout(){
+  if(!confirm('Sign out of Lechon Hub?'))return;
+  sessionStorage.removeItem('lh_session');
+  currentUser=null;
+  document.body.classList.remove('is-admin');
+  document.getElementById('main-app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('l-user').value='';
+  document.getElementById('l-pass').value='';
+}
+
+function checkSession(){
+  const saved=sessionStorage.getItem('lh_session');
+  if(saved){
+    try{
+      const u=JSON.parse(saved);
+      document.getElementById('l-user').value=u.username;
+      document.getElementById('l-pass').value=USERS.find(x=>x.username===u.username)?.password||'';
+      doLogin();
+      return true;
+    }catch(e){}
+  }
+  return false;
+}
+
+// ============================================================
+//  BROADCAST CHANNEL (same-device multi-tab sync)
+// ============================================================
+let bc=null;
+try{bc=new BroadcastChannel('lechon_hub_v1');}catch(e){}
+
+function bcBroadcast(type,data){
+  try{bc&&bc.postMessage({type,data,ts:Date.now()});}catch(e){}
+}
+
+function bcListen(){
+  if(!bc)return;
+  bc.onmessage=e=>{
+    const {type,data}=e.data;
+    if(type==='TXN_ADDED'){
+      if(!transactions.find(t=>t.id===data.id)){
+        transactions.unshift(data);sv('lh_txns',transactions);
+        refreshCurrentView();showSyncToast('New order synced from another tab!');
+      }
+    } else if(type==='STOCK_UPDATE'){
+      const p=products.find(x=>x.id===data.id);
+      if(p){p.stock=data.stock;sv('lh_products',products);}
+      if(currentPage==='inventory') renderInventory();
+    }
+  };
+}
+
+function showSyncToast(msg){
+  let t=document.getElementById('sync-toast');
+  if(!t){t=document.createElement('div');t.id='sync-toast';t.style.cssText='position:fixed;bottom:20px;right:20px;background:#CC0000;color:#fff;padding:10px 18px;border-radius:10px;font-size:.8rem;z-index:9998;box-shadow:0 4px 20px rgba(204,0,0,.4);transition:opacity .3s';document.body.appendChild(t);}
+  t.textContent='🔄 '+msg;t.style.opacity='1';
+  clearTimeout(t._timer);t._timer=setTimeout(()=>{t.style.opacity='0';},3000);
+}
+
+let currentPage='dashboard';
+
+// ============================================================
+//  FIREBASE (cross-device real-time sync)
+// ============================================================
+let fbApp=null,fbDb=null;
+
+const DEFAULT_FB_CONFIG={
+  apiKey:"AIzaSyBRHLyjUDrYJqYYRfDclhdoYIQVqCbO1tA",
+  authDomain:"lechonhub-5e467.firebaseapp.com",
+  databaseURL:"https://lechonhub-5e467-default-rtdb.firebaseio.com",
+  projectId:"lechonhub-5e467",
+  storageBucket:"lechonhub-5e467.firebasestorage.app",
+  messagingSenderId:"443624961736",
+  appId:"1:443624961736:web:3a30710b90755795ac17fd"
+};
+
+function loadFirebaseConfig(){return ld('lh_fb_config',null)||DEFAULT_FB_CONFIG;}
+
+function saveFirebaseConfig(){
+  const cfg={
+    apiKey:document.getElementById('fb-apiKey').value.trim(),
+    databaseURL:document.getElementById('fb-dbURL').value.trim(),
+    projectId:document.getElementById('fb-projectId').value.trim(),
+    appId:document.getElementById('fb-appId').value.trim(),
+  };
+  if(!cfg.apiKey||!cfg.databaseURL){alert('API Key and Database URL are required.');return;}
+  sv('lh_fb_config',cfg);
+  initFirebase(cfg);
+  updateSyncUI('live');
+  alert('✅ Firebase connected! Real-time sync is now active across all devices.');
+}
+
+function clearFirebaseConfig(){
+  if(!confirm('Disconnect Firebase? Data will stay local only.'))return;
+  localStorage.removeItem('lh_fb_config');
+  fbDb=null;updateSyncUI('local');
+  document.getElementById('fb-status-badge').textContent='Not Connected';
+  document.getElementById('fb-status-badge').style.cssText='background:rgba(180,180,180,.15);color:#888';
+}
+
+function initFirebase(cfg){
+  try{
+    if(!cfg||!cfg.apiKey||!cfg.databaseURL)return;
+    if(fbApp){try{firebase.app();}catch(e){}}
+    try{fbApp=firebase.initializeApp(cfg,'lechonhub');}catch(e){fbApp=firebase.app('lechonhub');}
+    fbDb=firebase.database(fbApp);
+    updateSyncUI('live');
+    document.getElementById('fb-status-badge').textContent='🟢 Connected';
+    document.getElementById('fb-status-badge').style.cssText='background:rgba(46,168,74,.18);color:#2EA84A';
+    // Prefill settings fields
+    if(document.getElementById('fb-apiKey')) document.getElementById('fb-apiKey').value=cfg.apiKey||'';
+    if(document.getElementById('fb-dbURL')) document.getElementById('fb-dbURL').value=cfg.databaseURL||'';
+    if(document.getElementById('fb-projectId')) document.getElementById('fb-projectId').value=cfg.projectId||'';
+    if(document.getElementById('fb-appId')) document.getElementById('fb-appId').value=cfg.appId||'';
+    // Listen for transaction changes
+    fbDb.ref('lh_transactions').on('value',snap=>{
+      const val=snap.val();
+      if(val){
+        const incoming=Object.values(val).sort((a,b)=>b.date.localeCompare(a.date)||b.time.localeCompare(a.time));
+        transactions=incoming;sv('lh_txns',transactions);
+        refreshCurrentView();
+        updateSyncUI('live');
+      }
+    });
+    // Listen for inventory/stock changes
+    fbDb.ref('lh_inventory').on('value',snap=>{
+      const val=snap.val();
+      if(val){
+        const incoming=Object.values(val);
+        incoming.forEach(up=>{const p=products.find(x=>x.id===up.id);if(p)p.stock=up.stock;});
+        sv('lh_products',products);
+        if(currentPage==='inventory') renderInventory();
+        updateBadge();
+      }
+    });
+  }catch(err){console.warn('Firebase init error:',err);updateSyncUI('error');}
+}
+
+function fbWriteTransaction(txn){
+  if(fbDb){
+    updateSyncUI('syncing');
+    fbDb.ref('lh_transactions/'+txn.id).set(txn)
+      .then(()=>updateSyncUI('live'))
+      .catch(e=>{console.warn('FB write fail:',e);updateSyncUI('error');});
+  }
+}
+
+function fbWriteStock(productId,stock){
+  if(fbDb) fbDb.ref('lh_inventory/'+productId).set({id:productId,stock});
+}
+
+function updateSyncUI(state){
+  const dot=document.getElementById('sync-dot');
+  const lbl=document.getElementById('sync-label');
+  if(!dot||!lbl)return;
+  dot.className='sync-dot';
+  if(state==='live'){dot.classList.add('live');lbl.textContent='Live';}
+  else if(state==='syncing'){dot.classList.add('syncing');lbl.textContent='Syncing...';}
+  else if(state==='error'){lbl.textContent='Sync Error';}
+  else{lbl.textContent='Local';}
+}
+
+function refreshCurrentView(){
+  if(currentPage==='dashboard') renderDashboard();
+  else if(currentPage==='reports'){
+    if(document.getElementById('rpt-daily').style.display!=='none') renderDailyReport();
+    else if(document.getElementById('rpt-weekly').style.display!=='none') renderWeeklyReport();
+    else renderMonthlyReport();
+  }
+  else if(currentPage==='teams') renderTeams();
+  else if(currentPage==='compensation') renderCompensation();
+  else if(currentPage==='purchase-orders') renderPOs();
+  else if(currentPage==='incentives') renderIncentives();
+}
+
+// Override nav to track currentPage
+const _origNav=typeof nav==='function'?nav:null;
+
+function clearAllTransactions(){
+  if(!confirm('This will permanently delete all transactions. Are you sure?'))return;
+  transactions=[];sv('lh_txns',[]);
+  if(fbDb) fbDb.ref('lh_transactions').remove();
+  alert('All transactions cleared.');
+  renderDashboard();
+}
+
+// ============================================================
+//  INIT
+// ============================================================
+function bootApp(){
+  // Set default date inputs
+  document.getElementById('rpt-date').value=today();
+  document.getElementById('rpt-month').value=today().slice(0,7);
+  document.getElementById('team-month').value=today().slice(0,7);
+  document.getElementById('comp-month').value=today().slice(0,7);
+  document.getElementById('inc-month').value=today().slice(0,7);
+  // Clock
+  updateClock();setInterval(updateClock,30000);
+  // BroadcastChannel
+  bcListen();
+  // Firebase (if configured)
+  const fbCfg=loadFirebaseConfig();
+  if(fbCfg) initFirebase(fbCfg); else updateSyncUI('local');
+  // Render dashboard (start fresh — no sample data)
+  nav('dashboard');
+  currentCat='All';
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  if(!checkSession()){
+    // Show login screen, app stays hidden
+  }
+});
+</script>
+</body>
+</html>
