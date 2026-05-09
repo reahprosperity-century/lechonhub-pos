@@ -251,7 +251,7 @@ select option{background:var(--surf)}
     <div class="nav-item" onclick="nav('inventory')"><span class="ni">&#x1F4E6;</span> Inventory</div>
     <div class="nav-item" onclick="nav('reports')"><span class="ni">&#x1F4C8;</span> Reports</div>
     <div class="nav-item" onclick="nav('teams')"><span class="ni">&#x1F465;</span> Team Sales</div>
-    <div class="nav-item" onclick="nav('compensation')"><span class="ni">&#x1F4B0;</span> Compensation</div>
+    <div class="nav-item" onclick="nav('expenses')"><span class="ni">&#x1F4B8;</span> Expenses</div>
     <div class="nav-item" onclick="nav('purchase-orders')"><span class="ni">&#x1F4CB;</span> Purchase Orders</div>
     <div class="nav-item" onclick="nav('incentives')"><span class="ni">&#x1F3C6;</span> Incentives</div>
     <div class="nav-section admin-only">Settings</div>
@@ -380,7 +380,10 @@ select option{background:var(--surf)}
       <div id="rpt-daily">
         <div class="flex-between mb14">
           <input type="date" id="rpt-date" onchange="renderDailyReport()">
-          <button class="btn btn-out btn-sm" onclick="exportReport('daily')">&#x1F4E5; Export</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-out btn-sm" onclick="printReport('daily')">&#x1F5A8; Print</button>
+            <button class="btn btn-out btn-sm" onclick="exportReport('daily')">&#x1F4E5; Export CSV</button>
+          </div>
         </div>
         <div class="kpi-grid" id="rpt-d-kpi" style="grid-template-columns:repeat(3,1fr)"></div>
         <div class="card mb14">
@@ -389,37 +392,58 @@ select option{background:var(--surf)}
         </div>
         <div class="card">
           <div class="card-hdr"><span class="card-ttl">Transactions</span></div>
-          <div class="tbl-wrap"><table><thead><tr><th>#</th><th>Time</th><th>Customer</th><th>Team</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th></tr></thead><tbody id="rpt-d-body"></tbody></table></div>
+          <div class="tbl-wrap"><table><thead><tr><th>#</th><th>Time</th><th>Customer</th><th>Team</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Actions</th></tr></thead><tbody id="rpt-d-body"></tbody></table></div>
         </div>
       </div>
       <div id="rpt-weekly" style="display:none">
         <div class="flex-between mb14">
-          <input type="week" id="rpt-week" onchange="renderWeeklyReport()">
-          <button class="btn btn-out btn-sm" onclick="exportReport('weekly')">&#x1F4E5; Export</button>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <label style="font-size:.78rem;color:var(--tx2);font-weight:600">Week ending:</label>
+            <input type="week" id="rpt-week" onchange="renderWeeklyReport()">
+            <select id="rpt-weeks-count" onchange="renderWeeklyReport()" style="padding:7px 10px;border-radius:8px;border:1.5px solid var(--bdr);background:#FFF5F5;font-size:.82rem;color:var(--tx)">
+              <option value="1">1 week</option>
+              <option value="2">2 weeks</option>
+              <option value="3">3 weeks</option>
+              <option value="4" selected>4 weeks</option>
+              <option value="8">8 weeks</option>
+              <option value="12">12 weeks</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-out btn-sm" onclick="printReport('weekly')">&#x1F5A8; Print</button>
+            <button class="btn btn-out btn-sm" onclick="exportReport('weekly')">&#x1F4E5; Export CSV</button>
+          </div>
         </div>
         <div class="kpi-grid" id="rpt-w-kpi" style="grid-template-columns:repeat(3,1fr)"></div>
         <div class="card mb14">
-          <div class="card-hdr"><span class="card-ttl">&#x1F4C8; Weekly Sales Line Graph</span></div>
+          <div class="card-hdr"><span class="card-ttl" id="rpt-w-chart-ttl">&#x1F4C8; Weekly Sales Line Graph</span></div>
           <div class="ch-wrap"><canvas id="ch-weekly-rpt"></canvas></div>
         </div>
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">Transactions This Week</span></div>
-          <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Customer</th><th>Team</th><th>Items</th><th>Total</th><th>Payment</th></tr></thead><tbody id="rpt-w-body"></tbody></table></div>
+          <div class="card-hdr"><span class="card-ttl" id="rpt-w-txn-ttl">Transactions</span></div>
+          <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Time</th><th>Customer</th><th>Team</th><th>Items</th><th>Total</th><th>Payment</th><th>Actions</th></tr></thead><tbody id="rpt-w-body"></tbody></table></div>
         </div>
       </div>
       <div id="rpt-monthly" style="display:none">
         <div class="flex-between mb14">
           <input type="month" id="rpt-month" onchange="renderMonthlyReport()">
-          <button class="btn btn-out btn-sm" onclick="exportReport('monthly')">&#x1F4E5; Export</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-out btn-sm" onclick="printReport('monthly')">&#x1F5A8; Print</button>
+            <button class="btn btn-out btn-sm" onclick="exportReport('monthly')">&#x1F4E5; Export CSV</button>
+          </div>
         </div>
         <div class="kpi-grid" id="rpt-m-kpi" style="grid-template-columns:repeat(3,1fr)"></div>
         <div class="card mb14">
           <div class="card-hdr"><span class="card-ttl">&#x1F4C8; Monthly Sales Line Graph</span></div>
           <div class="ch-wrap"><canvas id="ch-monthly-rpt"></canvas></div>
         </div>
-        <div class="card">
+        <div class="card mb14">
           <div class="card-hdr"><span class="card-ttl">Top Products This Month</span></div>
           <div class="tbl-wrap"><table><thead><tr><th>Product</th><th>Qty Sold</th><th>Revenue</th></tr></thead><tbody id="rpt-m-prods"></tbody></table></div>
+        </div>
+        <div class="card">
+          <div class="card-hdr"><span class="card-ttl">All Transactions This Month</span></div>
+          <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Time</th><th>Customer</th><th>Team</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Actions</th></tr></thead><tbody id="rpt-m-body"></tbody></table></div>
         </div>
       </div>
     </div>
@@ -450,18 +474,69 @@ select option{background:var(--surf)}
       </div>
     </div>
 
-    <!-- ====== COMPENSATION ====== -->
-    <div class="page" id="page-compensation">
+    <!-- ====== EXPENSES ====== -->
+    <div class="page" id="page-expenses">
       <div class="flex-between mb14">
         <div style="display:flex;gap:8px;align-items:center">
-          <input type="month" id="comp-month" onchange="renderCompensation()">
+          <label style="font-size:.78rem;color:var(--tx2);font-weight:600">Month:</label>
+          <input type="month" id="exp-month" onchange="renderExpenses()">
         </div>
-        <button class="btn btn-pri admin-only" onclick="openAddEmployee()">+ Add Employee</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-out btn-sm" onclick="printReport('expenses')">&#x1F5A8; Print</button>
+          <button class="btn btn-out btn-sm admin-only" onclick="exportReport('expenses')">&#x1F4E5; Export CSV</button>
+        </div>
       </div>
-      <div class="comp-cards" id="comp-summary"></div>
+      <!-- Grand Total Summary -->
+      <div id="exp-summary" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px"></div>
+
+      <!-- 1. COMPENSATION -->
+      <div class="card mb14">
+        <div class="card-hdr">
+          <span class="card-ttl">&#x1F4B0; Compensation &#x2014; Lechon Hub Employees</span>
+          <button class="btn btn-pri btn-sm admin-only" onclick="openAddEmployee()">+ Add Employee</button>
+        </div>
+        <div id="comp-kpi" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px"></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Name</th><th>Role</th><th>Base Pay</th><th>Commission</th><th>Bonus</th><th>Deductions</th><th>Net Pay</th><th class="admin-only">Actions</th></tr></thead><tbody id="comp-body"></tbody></table></div>
+      </div>
+
+      <!-- 2. MARKETING -->
+      <div class="card mb14">
+        <div class="card-hdr">
+          <span class="card-ttl">&#x1F4E2; Marketing &#x2014; Ads &amp; Boosting</span>
+          <button class="btn btn-pri btn-sm admin-only" onclick="openAddMarketing()">+ Add</button>
+        </div>
+        <div id="mkt-kpi" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px"></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Description</th><th>Amount</th><th class="admin-only">Actions</th></tr></thead><tbody id="mkt-body"></tbody></table></div>
+      </div>
+
+      <!-- 3. UTILITIES -->
+      <div class="card mb14">
+        <div class="card-hdr">
+          <span class="card-ttl">&#x26A1; Utilities &#x2014; Electricity &amp; Water</span>
+          <button class="btn btn-pri btn-sm admin-only" onclick="openAddUtility()">+ Add</button>
+        </div>
+        <div id="util-kpi" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px"></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Month</th><th>Electricity (&#x20B1;)</th><th>Water (&#x20B1;)</th><th>Total</th><th class="admin-only">Actions</th></tr></thead><tbody id="util-body"></tbody></table></div>
+      </div>
+
+      <!-- 4. MISCELLANEOUS -->
+      <div class="card mb14">
+        <div class="card-hdr">
+          <span class="card-ttl">&#x1F4CE; Miscellaneous</span>
+          <button class="btn btn-pri btn-sm admin-only" onclick="openAddMisc()">+ Add</button>
+        </div>
+        <div id="misc-kpi" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px"></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Remarks</th><th class="admin-only">Actions</th></tr></thead><tbody id="misc-body"></tbody></table></div>
+      </div>
+
+      <!-- 5. OTHER EXPENSES -->
       <div class="card">
-        <div class="card-hdr"><span class="card-ttl">Employee Compensation Details</span></div>
-        <div class="tbl-wrap"><table><thead><tr><th>Name</th><th>Role</th><th>Base Pay</th><th>Commission</th><th>Bonus</th><th>Deductions</th><th>Net Pay</th><th>Status</th></tr></thead><tbody id="comp-body"></tbody></table></div>
+        <div class="card-hdr">
+          <span class="card-ttl">&#x1F4C2; Other Expenses</span>
+          <button class="btn btn-pri btn-sm admin-only" onclick="openAddOther()">+ Add</button>
+        </div>
+        <div id="other-kpi" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px"></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Remarks</th><th class="admin-only">Actions</th></tr></thead><tbody id="other-body"></tbody></table></div>
       </div>
     </div>
 
@@ -637,21 +712,135 @@ select option{background:var(--surf)}
   <div class="modal">
     <h2 id="emp-modal-title">Add Employee</h2>
     <input type="hidden" id="emp-id">
+    <div style="background:#FFF5F5;border:1px solid #FFCCCC;border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:.75rem;color:#7A0000">Lechon Hub &#x2014; All employees are part of the main hub staff.</div>
     <div class="fg"><label>Full Name</label><input id="em-name" style="width:100%"></div>
+    <div class="fg"><label>Role</label><input id="em-role" placeholder="e.g. Team Leader, Rider, Cashier" style="width:100%"></div>
+    <div class="g2">
+      <div class="fg"><label>Base Pay (&#x20B1;/month)</label><input id="em-base" type="number" style="width:100%" placeholder="0"></div>
+      <div class="fg"><label>Commission Rate (%)</label><input id="em-comm" type="number" style="width:100%" placeholder="e.g. 2"></div>
+    </div>
+    <div class="g2">
+      <div class="fg"><label>Bonus (&#x20B1;)</label><input id="em-bonus" type="number" style="width:100%" placeholder="0"></div>
+      <div class="fg"><label>Deductions (&#x20B1;)</label><input id="em-deduct" type="number" style="width:100%" placeholder="0"></div>
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-out" onclick="document.getElementById('emp-modal').classList.remove('open')" style="flex:.4">Cancel</button>
+      <button class="btn btn-pri" onclick="saveEmployee()" style="flex:1">Save Employee</button>
+    </div>
+  </div>
+</div>
+
+<!-- MARKETING EXPENSE MODAL -->
+<div class="modal-ov" id="mkt-modal">
+  <div class="modal">
+    <h2 id="mkt-modal-title">Add Marketing Expense</h2>
+    <input type="hidden" id="mkt-id">
+    <div class="fg"><label>Date</label><input id="mkt-date" type="date" style="width:100%"></div>
+    <div class="fg"><label>Type</label>
+      <select id="mkt-type" style="width:100%">
+        <option value="Ads">Ads</option>
+        <option value="Boosting">Boosting</option>
+        <option value="Influencer">Influencer / Endorsement</option>
+        <option value="Flyers">Flyers / Print</option>
+        <option value="Events">Events / Promo</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="fg"><label>Description</label><input id="mkt-desc" style="width:100%" placeholder="e.g. Facebook Ads - May campaign"></div>
+    <div class="fg"><label>Amount (&#x20B1;)</label><input id="mkt-amount" type="number" style="width:100%" placeholder="0"></div>
+    <div class="modal-acts">
+      <button class="btn btn-out" onclick="document.getElementById('mkt-modal').classList.remove('open')" style="flex:.4">Cancel</button>
+      <button class="btn btn-pri" onclick="saveMarketing()" style="flex:1">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- UTILITY EXPENSE MODAL -->
+<div class="modal-ov" id="util-modal">
+  <div class="modal">
+    <h2 id="util-modal-title">Add Utility Expense</h2>
+    <input type="hidden" id="util-id">
+    <div class="fg"><label>Month</label><input id="util-month-inp" type="month" style="width:100%"></div>
+    <div class="g2">
+      <div class="fg"><label>Electricity (&#x20B1;)</label><input id="util-elec" type="number" style="width:100%" placeholder="0"></div>
+      <div class="fg"><label>Water (&#x20B1;)</label><input id="util-water" type="number" style="width:100%" placeholder="0"></div>
+    </div>
+    <div class="fg"><label>Remarks (optional)</label><input id="util-notes" style="width:100%" placeholder="Additional notes..."></div>
+    <div class="modal-acts">
+      <button class="btn btn-out" onclick="document.getElementById('util-modal').classList.remove('open')" style="flex:.4">Cancel</button>
+      <button class="btn btn-pri" onclick="saveUtility()" style="flex:1">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- MISCELLANEOUS EXPENSE MODAL -->
+<div class="modal-ov" id="misc-modal">
+  <div class="modal">
+    <h2 id="misc-modal-title">Add Miscellaneous Expense</h2>
+    <input type="hidden" id="misc-id">
+    <div class="fg"><label>Date</label><input id="misc-date" type="date" style="width:100%"></div>
+    <div class="fg"><label>Description</label><input id="misc-desc" style="width:100%" placeholder="e.g. Office supplies, cleaning materials..."></div>
+    <div class="fg"><label>Amount (&#x20B1;)</label><input id="misc-amount" type="number" style="width:100%" placeholder="0"></div>
+    <div class="fg"><label>Remarks / Notes</label><textarea id="misc-remarks" style="width:100%;height:70px;resize:vertical" placeholder="Optional notes..."></textarea></div>
+    <div class="modal-acts">
+      <button class="btn btn-out" onclick="document.getElementById('misc-modal').classList.remove('open')" style="flex:.4">Cancel</button>
+      <button class="btn btn-pri" onclick="saveMisc()" style="flex:1">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- OTHER EXPENSE MODAL -->
+<div class="modal-ov" id="other-modal">
+  <div class="modal">
+    <h2 id="other-modal-title">Add Other Expense</h2>
+    <input type="hidden" id="other-id">
+    <div class="fg"><label>Date</label><input id="other-date" type="date" style="width:100%"></div>
+    <div class="fg"><label>Description</label><input id="other-desc" style="width:100%" placeholder="e.g. Equipment repair, logistics..."></div>
+    <div class="fg"><label>Amount (&#x20B1;)</label><input id="other-amount" type="number" style="width:100%" placeholder="0"></div>
+    <div class="fg"><label>Remarks / Notes</label><textarea id="other-remarks" style="width:100%;height:70px;resize:vertical" placeholder="Optional notes..."></textarea></div>
+    <div class="modal-acts">
+      <button class="btn btn-out" onclick="document.getElementById('other-modal').classList.remove('open')" style="flex:.4">Cancel</button>
+      <button class="btn btn-pri" onclick="saveOther()" style="flex:1">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT TRANSACTION MODAL -->
+<div class="modal-ov" id="edit-txn-modal">
+  <div class="modal">
+    <h2>Edit Transaction</h2>
+    <input type="hidden" id="edit-txn-id">
+    <div style="background:#FFF5F5;border:1px solid #FFCCCC;border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:.75rem;color:#7A0000">Note: Editing a transaction updates its details but does not restock inventory.</div>
+    <div class="g2">
+      <div class="fg"><label>Date</label><input id="edit-txn-date" type="date" style="width:100%"></div>
+      <div class="fg"><label>Time</label><input id="edit-txn-time" type="time" style="width:100%"></div>
+    </div>
+    <div class="fg"><label>Customer Name</label><input id="edit-txn-customer" style="width:100%" placeholder="Walk-in"></div>
     <div class="fg"><label>Team</label>
-      <select id="em-team" style="width:100%">
+      <select id="edit-txn-team" style="width:100%">
         <option value="lipachon">Lipachon</option>
-        <option value="montys">Monty's Batangas Lechon</option>
+        <option value="montys">Monty's Batangas</option>
         <option value="sammies">Sammie's Lechon</option>
         <option value="kuyas">Kuya's Lechon</option>
       </select>
     </div>
-    <div class="fg"><label>Role</label><input id="em-role" placeholder="e.g. Team Leader, Rider, Cashier" style="width:100%"></div>
-    <div class="fg"><label>Base Pay (&#x20B1;/month)</label><input id="em-base" type="number" style="width:100%"></div>
-    <div class="fg"><label>Commission Rate (%)</label><input id="em-comm" type="number" placeholder="e.g. 2" style="width:100%"></div>
+    <div class="fg"><label>Payment Method</label>
+      <select id="edit-txn-payment" style="width:100%">
+        <option value="cash">Cash</option>
+        <option value="gcash">GCash</option>
+        <option value="maya">Maya</option>
+        <option value="bank">Bank Transfer</option>
+      </select>
+    </div>
+    <div class="fg"><label>Status</label>
+      <select id="edit-txn-status" style="width:100%">
+        <option value="paid">Paid</option>
+        <option value="void">Void</option>
+      </select>
+    </div>
     <div class="modal-acts">
-      <button class="btn btn-out" onclick="document.getElementById('emp-modal').classList.remove('open')" style="flex:.4">Cancel</button>
-      <button class="btn btn-pri" onclick="saveEmployee()" style="flex:1">Save Employee</button>
+      <button class="btn btn-out" onclick="document.getElementById('edit-txn-modal').classList.remove('open')" style="flex:.4">Cancel</button>
+      <button class="btn btn-pri" onclick="saveEditTxn()" style="flex:1">Save Changes</button>
     </div>
   </div>
 </div>
@@ -801,6 +990,10 @@ let products = ld('lh_products', MENU_ITEMS.map(p=>({...p})));
 let transactions = ld('lh_txns', []);
 let employees = ld('lh_emps', defaultEmployees());
 let purchaseOrders = ld('lh_pos', []);
+let marketingExpenses = ld('lh_mkt', []);
+let utilityExpenses = ld('lh_util', []);
+let miscExpenses = ld('lh_misc', []);
+let otherExpenses = ld('lh_other', []);
 let cart = [];
 let payMethod = 'cash';
 let charts = {};
@@ -810,15 +1003,13 @@ let currentCat = 'All';
 //  DEFAULT EMPLOYEES
 // ============================================================
 function defaultEmployees(){
-  const roles=['Team Leader','Cashier','Rider','Kitchen Staff'];
-  const names={lipachon:['Maria Santos','Juan Reyes','Ana Cruz'],montys:['Carlo Diaz','Liza Flores','Marco Bautista'],sammies:['Jenny Ramos','Paolo Gomez','Rica Torres'],kuyas:['Andres Lim','Beth Garcia','Carlo Mendoza']};
-  let emps=[];let id=1;
-  for(const [tid,tnames] of Object.entries(names)){
-    tnames.forEach((name,i)=>{
-      emps.push({id:'emp-'+id++,name,team:tid,role:roles[i]||'Staff',base:18000,commRate:2,bonus:0,deductions:0});
-    });
-  }
-  return emps;
+  const defaults=[
+    {name:'Maria Santos',role:'Store Manager',base:25000,commRate:2,bonus:0,deductions:0},
+    {name:'Juan Reyes',role:'Cashier',base:18000,commRate:1,bonus:0,deductions:0},
+    {name:'Ana Cruz',role:'Kitchen Staff',base:16000,commRate:1,bonus:0,deductions:0},
+    {name:'Carlo Diaz',role:'Rider / Delivery',base:15000,commRate:1,bonus:0,deductions:0},
+  ];
+  return defaults.map((e,i)=>({id:'emp-'+(i+1),...e}));
 }
 
 // ============================================================
@@ -874,7 +1065,7 @@ const PAGE_META={
   inventory:{title:'Inventory',sub:'Manage product stock levels'},
   reports:{title:'Reports',sub:'Daily, Weekly and Monthly analytics'},
   teams:{title:'Team Sales',sub:'Compare performance across all teams'},
-  compensation:{title:'Compensation',sub:'Employee pay and commissions \u2013 All Teams'},
+  expenses:{title:'Expenses',sub:'Compensation, Marketing, Utilities & More \u2014 Lechon Hub'},
   'purchase-orders':{title:'Purchase Orders',sub:'Track supplier orders for Lechon Hub'},
   incentives:{title:'Incentives & Commission',sub:'Auto-calculated team incentives from sales'},
   settings:{title:'Settings',sub:'Configure your POS system'},
@@ -896,7 +1087,7 @@ function nav(page){
   else if(page==='inventory') renderInventory();
   else if(page==='reports') renderReports();
   else if(page==='teams') renderTeams();
-  else if(page==='compensation') renderCompensation();
+  else if(page==='expenses') renderExpenses();
   else if(page==='purchase-orders') renderPOs();
   else if(page==='incentives') renderIncentives();
 }
@@ -1304,7 +1495,14 @@ function renderDailyReport(){
   const hours=Array.from({length:16},(_,i)=>String(i+7).padStart(2,'0')+':00');
   const hourlyData=hours.map(h=>{const hh=h.slice(0,2);return txns.filter(t=>t.time.startsWith(hh)).reduce((s,t)=>s+t.total,0);});
   buildChart('ch-daily','line',hours,[{label:'Hourly Sales',data:hourlyData,borderColor:'#CC0000',backgroundColor:'rgba(204,0,0,.08)',tension:.4,fill:true,pointBackgroundColor:'#CC0000',borderWidth:2}]);
-  document.getElementById('rpt-d-body').innerHTML=txns.length?txns.map((t,i)=>`<tr><td>${i+1}</td><td>${t.time}</td><td>${t.customer||'Walk-in'}</td><td style="color:${getTeam(t.team).color}">${getTeam(t.team).name.split(' ')[0]}</td><td>${t.items.length} item(s)</td><td class="fw7">${php(t.total)}</td><td>${t.payment?.toUpperCase()}</td><td><span class="st st-${t.status==='paid'?'paid':'void'}">${t.status}</span></td></tr>`).join(''):'<tr><td colspan="8" style="text-align:center;color:var(--tx3);padding:20px">No transactions for this date</td></tr>';
+  const isAdmin=currentUser?.role==='admin';
+  document.getElementById('rpt-d-body').innerHTML=txns.length?txns.map((t,i)=>`<tr>
+    <td>${i+1}</td><td>${t.time}</td><td>${t.customer||'Walk-in'}</td>
+    <td style="color:${getTeam(t.team).color}">${getTeam(t.team).name.split(' ')[0]}</td>
+    <td>${t.items.length} item(s)</td><td class="fw7">${php(t.total)}</td>
+    <td>${t.payment?.toUpperCase()}</td><td><span class="st st-${t.status==='paid'?'paid':'void'}">${t.status}</span></td>
+    <td style="display:flex;gap:4px">${isAdmin?`<button class="btn btn-out btn-sm" onclick="openEditTxn('${t.id}')">\u270F</button><button class="btn btn-red btn-sm" onclick="deleteTxn('${t.id}')">\uD83D\uDDD1</button>`:''}</td>
+  </tr>`).join(''):'<tr><td colspan="9" style="text-align:center;color:var(--tx3);padding:20px">No transactions for this date</td></tr>';
 }
 
 function topPayMethod(txns){
@@ -1313,26 +1511,64 @@ function topPayMethod(txns){
   return Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0]?.toUpperCase()||'\u2014';
 }
 
+function weekStartDate(wr,offsetWeeks=0){
+  // wr = "2026-W19", returns Date of Monday of that week + offset
+  const [yr,wn]=wr.split('-W').map(Number);
+  const jan4=new Date(yr,0,4);
+  const jan4Day=(jan4.getDay()+6)%7;
+  const monday=new Date(jan4);
+  monday.setDate(jan4.getDate()-jan4Day+(wn-1)*7);
+  monday.setDate(monday.getDate()+offsetWeeks*7);
+  return monday;
+}
+function dateToWeekStr(d){
+  const dt=new Date(d);
+  const y=dt.getFullYear();
+  const w=getISOWeek(dt);
+  return `${y}-W${String(w).padStart(2,'0')}`;
+}
+
 function renderWeeklyReport(){
   const wr=document.getElementById('rpt-week')?.value;
   if(!wr)return;
-  const txns=txnsForWeek(wr);
-  const total=txns.reduce((s,t)=>s+t.total,0);
-  const avg=txns.length?Math.round(total/txns.length):0;
+  const wc=parseInt(document.getElementById('rpt-weeks-count')?.value||'1');
+
+  // Collect all days across the selected number of weeks
+  let allDays=[];
+  for(let i=wc-1;i>=0;i--){
+    const wStart=weekStartDate(wr,-i);
+    const wKey=dateToWeekStr(wStart);
+    allDays=[...allDays,...weekDateRange(wKey)];
+  }
+  const allTxns=allDays.flatMap(d=>txnsForDate(d));
+  const total=allTxns.reduce((s,t)=>s+t.total,0);
+  const avg=allTxns.length?Math.round(total/allTxns.length):0;
+
+  const rangeStart=allDays[0];const rangeEnd=allDays[allDays.length-1];
+  const rangeLabel=wc>1?` (${rangeStart} to ${rangeEnd})`:'';
+  document.getElementById('rpt-w-chart-ttl').textContent=`\uD83D\uDCC8 Sales \u2014 ${wc} Week${wc>1?'s':''} View${rangeLabel}`;
+  document.getElementById('rpt-w-txn-ttl').textContent=`Transactions \u2014 ${wc} Week${wc>1?'s':''} (${allTxns.length} total)`;
+
   document.getElementById('rpt-w-kpi').innerHTML=kpiHTML([
-    {lbl:'Week Sales',val:php(total),sub:txns.length+' orders',cls:'o'},
+    {lbl:wc>1?`${wc}-Week Sales`:'Week Sales',val:php(total),sub:allTxns.length+' orders',cls:'o'},
     {lbl:'Avg Order',val:php(avg),sub:'Per transaction',cls:'g'},
-    {lbl:'Best Team',val:bestTeam(txns),sub:'This week',cls:'r'},
+    {lbl:'Best Team',val:bestTeam(allTxns),sub:`This period`,cls:'r'},
   ]);
-  const days=weekDateRange(wr);
-  const labels=days.map(d=>new Date(d+'T12:00').toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'}));
-  // All teams + total
+
+  const labels=allDays.map(d=>new Date(d+'T12:00').toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'}));
   const datasets=[
-    {label:'Total',data:days.map(d=>txnsForDate(d).reduce((s,t)=>s+t.total,0)),borderColor:'#550000',backgroundColor:'rgba(85,0,0,.05)',tension:.4,borderWidth:2,borderDash:[5,5]},
-    ...TEAMS.map(t=>({label:t.name.split(' ')[0],data:days.map(d=>txns.filter(x=>x.date===d&&x.team===t.id).reduce((s,x)=>s+x.total,0)),borderColor:t.color,backgroundColor:t.colorA.replace('.7','.1'),tension:.4,fill:false,pointBackgroundColor:t.color}))
+    {label:'Total',data:allDays.map(d=>txnsForDate(d).reduce((s,t)=>s+t.total,0)),borderColor:'#550000',backgroundColor:'rgba(85,0,0,.05)',tension:.4,borderWidth:2,borderDash:[5,5]},
+    ...TEAMS.map(t=>({label:t.name.split(' ')[0],data:allDays.map(d=>allTxns.filter(x=>x.date===d&&x.team===t.id).reduce((s,x)=>s+x.total,0)),borderColor:t.color,backgroundColor:t.colorA.replace('.7','.1'),tension:.4,fill:false,pointBackgroundColor:t.color}))
   ];
   buildChart('ch-weekly-rpt','line',labels,datasets);
-  document.getElementById('rpt-w-body').innerHTML=txns.length?txns.map(t=>`<tr><td>${t.date}</td><td>${t.customer||'Walk-in'}</td><td style="color:${getTeam(t.team).color}">${getTeam(t.team).name.split(' ')[0]}</td><td>${t.items.length}</td><td class="fw7">${php(t.total)}</td><td>${t.payment?.toUpperCase()}</td></tr>`).join(''):'<tr><td colspan="6" style="text-align:center;color:var(--tx3);padding:20px">No transactions this week</td></tr>';
+
+  const isAdmin=currentUser?.role==='admin';
+  document.getElementById('rpt-w-body').innerHTML=allTxns.length?allTxns.map(t=>`<tr>
+    <td>${t.date}</td><td>${t.time}</td><td>${t.customer||'Walk-in'}</td>
+    <td style="color:${getTeam(t.team).color}">${getTeam(t.team).name.split(' ')[0]}</td>
+    <td>${t.items.length}</td><td class="fw7">${php(t.total)}</td><td>${t.payment?.toUpperCase()}</td>
+    <td style="display:flex;gap:4px">${isAdmin?`<button class="btn btn-out btn-sm" onclick="openEditTxn('${t.id}')">\u270F</button><button class="btn btn-red btn-sm" onclick="deleteTxn('${t.id}')">\uD83D\uDDD1</button>`:''}</td>
+  </tr>`).join(''):'<tr><td colspan="8" style="text-align:center;color:var(--tx3);padding:20px">No transactions for this period</td></tr>';
 }
 
 function renderMonthlyReport(){
@@ -1356,6 +1592,15 @@ function renderMonthlyReport(){
   txns.forEach(t=>t.items.forEach(i=>{if(!prodMap[i.name])prodMap[i.name]={qty:0,rev:0};prodMap[i.name].qty+=i.qty;prodMap[i.name].rev+=i.price*i.qty;}));
   const sorted=Object.entries(prodMap).sort((a,b)=>b[1].rev-a[1].rev).slice(0,10);
   document.getElementById('rpt-m-prods').innerHTML=sorted.map(([name,s])=>`<tr><td>${name}</td><td>${s.qty}</td><td class="fw7">${php(s.rev)}</td></tr>`).join('')||'<tr><td colspan="3" style="text-align:center;color:var(--tx3)">No data</td></tr>';
+  // All transactions table
+  const isAdmin=currentUser?.role==='admin';
+  document.getElementById('rpt-m-body').innerHTML=txns.length?txns.map(t=>`<tr>
+    <td>${t.date}</td><td>${t.time}</td><td>${t.customer||'Walk-in'}</td>
+    <td style="color:${getTeam(t.team).color}">${getTeam(t.team).name.split(' ')[0]}</td>
+    <td>${t.items.length}</td><td class="fw7">${php(t.total)}</td>
+    <td>${t.payment?.toUpperCase()}</td><td><span class="st st-${t.status==='paid'?'paid':'void'}">${t.status}</span></td>
+    <td style="display:flex;gap:4px">${isAdmin?`<button class="btn btn-out btn-sm" onclick="openEditTxn('${t.id}')">\u270F</button><button class="btn btn-red btn-sm" onclick="deleteTxn('${t.id}')">\uD83D\uDDD1</button>`:''}</td>
+  </tr>`).join(''):'<tr><td colspan="9" style="text-align:center;color:var(--tx3);padding:20px">No transactions this month</td></tr>';
 }
 
 function bestTeam(txns){
@@ -1417,46 +1662,320 @@ function renderTeams(){
 }
 
 // ============================================================
-//  COMPENSATION
+//  EXPENSES (Master Page)
 // ============================================================
-function renderCompensation(){
-  const m=document.getElementById('comp-month')?.value||today().slice(0,7);
+function renderExpenses(){
+  const m=document.getElementById('exp-month')?.value||today().slice(0,7);
   const txns=txnsForMonth(m);
-  const emps=employees;
   const hubSales=txns.reduce((s,x)=>s+x.total,0);
 
+  // Compensation total
+  const emps=employees;
+  const totComp=emps.reduce((s,e)=>{const comm=Math.round(hubSales*(e.commRate/100)/Math.max(emps.length,1));return s+e.base+comm+(e.bonus||0)-(e.deductions||0);},0);
+
+  // Marketing total
+  const mktM=marketingExpenses.filter(x=>x.month===m);
+  const totMkt=mktM.reduce((s,x)=>s+(x.amount||0),0);
+
+  // Utilities total
+  const utilM=utilityExpenses.filter(x=>x.month===m);
+  const totUtil=utilM.reduce((s,x)=>s+(x.electricity||0)+(x.water||0),0);
+
+  // Misc total
+  const miscM=miscExpenses.filter(x=>x.month===m);
+  const totMisc=miscM.reduce((s,x)=>s+(x.amount||0),0);
+
+  // Other total
+  const otherM=otherExpenses.filter(x=>x.month===m);
+  const totOther=otherM.reduce((s,x)=>s+(x.amount||0),0);
+
+  const grand=totComp+totMkt+totUtil+totMisc+totOther;
+
+  // Grand summary KPIs
+  document.getElementById('exp-summary').innerHTML=`
+    <div class="kpi b"><div class="kpi-lbl">Grand Total Expenses</div><div class="kpi-val" style="font-size:1.3rem">${php(grand)}</div><div class="kpi-sub">All categories</div></div>
+    <div class="kpi o"><div class="kpi-lbl">Compensation</div><div class="kpi-val" style="font-size:1.3rem">${php(totComp)}</div><div class="kpi-sub">${emps.length} employees</div></div>
+    <div class="kpi g"><div class="kpi-lbl">Marketing</div><div class="kpi-val" style="font-size:1.3rem">${php(totMkt)}</div><div class="kpi-sub">${mktM.length} entries</div></div>
+    <div class="kpi gr"><div class="kpi-lbl">Utilities</div><div class="kpi-val" style="font-size:1.3rem">${php(totUtil)}</div><div class="kpi-sub">Elec. &amp; Water</div></div>
+    <div class="kpi r"><div class="kpi-lbl">Misc &amp; Other</div><div class="kpi-val" style="font-size:1.3rem">${php(totMisc+totOther)}</div><div class="kpi-sub">${miscM.length+otherM.length} entries</div></div>`;
+
+  renderCompSection(m,hubSales);
+  renderMarketingSection(m);
+  renderUtilitiesSection(m);
+  renderMiscSection(m);
+  renderOtherSection(m);
+}
+
+// -- Compensation Section --
+function renderCompSection(m,hubSales){
+  const emps=employees;
+  if(!hubSales&&hubSales!==0){const txns=txnsForMonth(m||document.getElementById('exp-month')?.value||today().slice(0,7));hubSales=txns.reduce((s,x)=>s+x.total,0);}
   const totBase=emps.reduce((s,e)=>s+e.base,0);
   const totComm=emps.reduce((s,e)=>s+Math.round(hubSales*(e.commRate/100)/Math.max(emps.length,1)),0);
   const totNet=emps.reduce((s,e)=>{const comm=Math.round(hubSales*(e.commRate/100)/Math.max(emps.length,1));return s+e.base+comm+(e.bonus||0)-(e.deductions||0);},0);
-
-  document.getElementById('comp-summary').innerHTML=`
-    <div class="kpi o"><div class="kpi-lbl">Total Base Pay</div><div class="kpi-val">${php(totBase)}</div><div class="kpi-sub">Lechon Hub \u2014 All Staff</div></div>
+  document.getElementById('comp-kpi').innerHTML=`
+    <div class="kpi o"><div class="kpi-lbl">Total Base Pay</div><div class="kpi-val">${php(totBase)}</div><div class="kpi-sub">All staff</div></div>
     <div class="kpi g"><div class="kpi-lbl">Total Commission</div><div class="kpi-val">${php(totComm)}</div><div class="kpi-sub">Hub sales: ${php(hubSales)}</div></div>
     <div class="kpi gr"><div class="kpi-lbl">Total Net Pay</div><div class="kpi-val">${php(totNet)}</div><div class="kpi-sub">${emps.length} employees</div></div>`;
-
-  document.getElementById('comp-body').innerHTML=emps.map(e=>{
+  const isAdmin=currentUser?.role==='admin';
+  document.getElementById('comp-body').innerHTML=emps.length?emps.map(e=>{
     const comm=Math.round(hubSales*(e.commRate/100)/Math.max(emps.length,1));
     const net=e.base+comm+(e.bonus||0)-(e.deductions||0);
-    return `<tr><td class="fw6">${e.name}</td><td class="text-muted">${e.role}</td><td>${php(e.base)}</td><td class="txt-grn">${php(comm)}</td><td class="txt-gold">${php(e.bonus||0)}</td><td class="txt-red">${php(e.deductions||0)}</td><td class="fw7 txt-pri">${php(net)}</td><td><span class="st st-paid">Active</span></td></tr>`;
-  }).join('')||'<tr><td colspan="8" style="text-align:center;color:var(--tx3);padding:20px">No employees found</td></tr>';
+    return `<tr><td class="fw6">${e.name}</td><td class="text-muted">${e.role}</td><td>${php(e.base)}</td><td class="txt-grn">${php(comm)}</td><td class="txt-gold">${php(e.bonus||0)}</td><td class="txt-red">${php(e.deductions||0)}</td><td class="fw7 txt-pri">${php(net)}</td>${isAdmin?`<td style="display:flex;gap:4px"><button class="btn btn-out btn-sm" onclick="editEmployee('${e.id}')">\u270F</button><button class="btn btn-red btn-sm" onclick="deleteEmployee('${e.id}')">\uD83D\uDDD1</button></td>`:'<td></td>'}</tr>`;
+  }).join(''):'<tr><td colspan="8" style="text-align:center;color:var(--tx3);padding:20px">No employees. Add one above.</td></tr>';
 }
 
 function openAddEmployee(){
-  document.getElementById('emp-modal-title').textContent='Add Employee';
+  document.getElementById('emp-modal-title').textContent='Add Employee \u2014 Lechon Hub';
   document.getElementById('emp-id').value='';
-  ['em-name','em-role','em-base','em-comm'].forEach(id=>document.getElementById(id).value='');
+  ['em-name','em-role','em-base','em-comm','em-bonus','em-deduct'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('emp-modal').classList.add('open');
+}
+
+function editEmployee(eid){
+  const e=employees.find(x=>x.id===eid);if(!e)return;
+  document.getElementById('emp-modal-title').textContent='Edit Employee';
+  document.getElementById('emp-id').value=e.id;
+  document.getElementById('em-name').value=e.name;
+  document.getElementById('em-role').value=e.role;
+  document.getElementById('em-base').value=e.base;
+  document.getElementById('em-comm').value=e.commRate;
+  document.getElementById('em-bonus').value=e.bonus||0;
+  document.getElementById('em-deduct').value=e.deductions||0;
+  document.getElementById('emp-modal').classList.add('open');
+}
+
+function deleteEmployee(eid){
+  if(!confirm('Remove this employee?'))return;
+  employees=employees.filter(x=>x.id!==eid);
+  sv('lh_emps',employees);renderExpenses();
 }
 
 function saveEmployee(){
   const eid=document.getElementById('emp-id').value;
-  const data={name:document.getElementById('em-name').value,team:document.getElementById('em-team').value,role:document.getElementById('em-role').value,base:parseFloat(document.getElementById('em-base').value)||0,commRate:parseFloat(document.getElementById('em-comm').value)||0,bonus:0,deductions:0};
+  const data={name:document.getElementById('em-name').value,role:document.getElementById('em-role').value,base:parseFloat(document.getElementById('em-base').value)||0,commRate:parseFloat(document.getElementById('em-comm').value)||0,bonus:parseFloat(document.getElementById('em-bonus').value)||0,deductions:parseFloat(document.getElementById('em-deduct').value)||0};
   if(!data.name){alert('Name is required.');return;}
   if(eid){const e=employees.find(x=>x.id===eid);if(e)Object.assign(e,data);}
   else{employees.push({id:'emp-'+Date.now(),...data});}
   sv('lh_emps',employees);
   document.getElementById('emp-modal').classList.remove('open');
-  renderCompensation();
+  renderExpenses();
+}
+
+// -- Marketing Section --
+function renderMarketingSection(m){
+  const rows=marketingExpenses.filter(x=>x.month===m);
+  const tot=rows.reduce((s,x)=>s+(x.amount||0),0);
+  const byType={};rows.forEach(x=>{byType[x.type]=(byType[x.type]||0)+x.amount;});
+  const topType=Object.entries(byType).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('mkt-kpi').innerHTML=`
+    <div class="kpi o"><div class="kpi-lbl">Total Marketing</div><div class="kpi-val">${php(tot)}</div><div class="kpi-sub">${rows.length} entries</div></div>
+    <div class="kpi g"><div class="kpi-lbl">Top Category</div><div class="kpi-val" style="font-size:1rem;padding-top:4px">${topType?topType[0]:'\u2014'}</div><div class="kpi-sub">${topType?php(topType[1]):'No entries yet'}</div></div>`;
+  const isAdmin=currentUser?.role==='admin';
+  document.getElementById('mkt-body').innerHTML=rows.length?rows.map(x=>`<tr>
+    <td>${x.date}</td><td><span class="st st-pend">${x.type}</span></td><td>${x.desc}</td><td class="fw7 txt-pri">${php(x.amount)}</td>
+    ${isAdmin?`<td style="display:flex;gap:4px"><button class="btn btn-out btn-sm" onclick="editMarketing('${x.id}')">\u270F</button><button class="btn btn-red btn-sm" onclick="deleteMarketing('${x.id}')">\uD83D\uDDD1</button></td>`:'<td></td>'}
+  </tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--tx3);padding:20px">No marketing expenses. Click "+ Add" to record one.</td></tr>';
+}
+
+function openAddMarketing(){
+  document.getElementById('mkt-modal-title').textContent='Add Marketing Expense';
+  document.getElementById('mkt-id').value='';
+  document.getElementById('mkt-date').value=today();
+  document.getElementById('mkt-type').value='Ads';
+  document.getElementById('mkt-desc').value='';
+  document.getElementById('mkt-amount').value='';
+  document.getElementById('mkt-modal').classList.add('open');
+}
+
+function editMarketing(mid){
+  const x=marketingExpenses.find(e=>e.id===mid);if(!x)return;
+  document.getElementById('mkt-modal-title').textContent='Edit Marketing Expense';
+  document.getElementById('mkt-id').value=x.id;
+  document.getElementById('mkt-date').value=x.date;
+  document.getElementById('mkt-type').value=x.type;
+  document.getElementById('mkt-desc').value=x.desc;
+  document.getElementById('mkt-amount').value=x.amount;
+  document.getElementById('mkt-modal').classList.add('open');
+}
+
+function saveMarketing(){
+  const mid=document.getElementById('mkt-id').value;
+  const m=document.getElementById('exp-month')?.value||today().slice(0,7);
+  const date=document.getElementById('mkt-date').value;
+  const data={date,month:date.slice(0,7)||m,type:document.getElementById('mkt-type').value,desc:document.getElementById('mkt-desc').value,amount:parseFloat(document.getElementById('mkt-amount').value)||0};
+  if(!data.desc){alert('Description is required.');return;}
+  if(mid){const x=marketingExpenses.find(e=>e.id===mid);if(x)Object.assign(x,data);}
+  else{marketingExpenses.push({id:'mkt-'+Date.now(),...data});}
+  sv('lh_mkt',marketingExpenses);
+  document.getElementById('mkt-modal').classList.remove('open');
+  renderExpenses();
+}
+
+function deleteMarketing(mid){
+  if(!confirm('Delete this marketing expense?'))return;
+  marketingExpenses=marketingExpenses.filter(x=>x.id!==mid);
+  sv('lh_mkt',marketingExpenses);renderExpenses();
+}
+
+// -- Utilities Section --
+function renderUtilitiesSection(m){
+  const rows=utilityExpenses.filter(x=>x.month===m);
+  const totElec=rows.reduce((s,x)=>s+(x.electricity||0),0);
+  const totWater=rows.reduce((s,x)=>s+(x.water||0),0);
+  document.getElementById('util-kpi').innerHTML=`
+    <div class="kpi g"><div class="kpi-lbl">Electricity</div><div class="kpi-val">${php(totElec)}</div><div class="kpi-sub">This month</div></div>
+    <div class="kpi b"><div class="kpi-lbl">Water</div><div class="kpi-val">${php(totWater)}</div><div class="kpi-sub">This month</div></div>
+    <div class="kpi o"><div class="kpi-lbl">Total Utilities</div><div class="kpi-val">${php(totElec+totWater)}</div><div class="kpi-sub">Combined</div></div>`;
+  const isAdmin=currentUser?.role==='admin';
+  document.getElementById('util-body').innerHTML=rows.length?rows.map(x=>`<tr>
+    <td>${x.month}</td><td>${php(x.electricity||0)}</td><td>${php(x.water||0)}</td><td class="fw7 txt-pri">${php((x.electricity||0)+(x.water||0))}</td>
+    ${isAdmin?`<td style="display:flex;gap:4px"><button class="btn btn-out btn-sm" onclick="editUtility('${x.id}')">\u270F</button><button class="btn btn-red btn-sm" onclick="deleteUtility('${x.id}')">\uD83D\uDDD1</button></td>`:'<td></td>'}
+  </tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--tx3);padding:20px">No utility expenses. Click "+ Add" to record one.</td></tr>';
+}
+
+function openAddUtility(){
+  document.getElementById('util-modal-title').textContent='Add Utility Expense';
+  document.getElementById('util-id').value='';
+  document.getElementById('util-month-inp').value=document.getElementById('exp-month')?.value||today().slice(0,7);
+  document.getElementById('util-elec').value='';
+  document.getElementById('util-water').value='';
+  document.getElementById('util-notes').value='';
+  document.getElementById('util-modal').classList.add('open');
+}
+
+function editUtility(uid){
+  const x=utilityExpenses.find(e=>e.id===uid);if(!x)return;
+  document.getElementById('util-modal-title').textContent='Edit Utility Expense';
+  document.getElementById('util-id').value=x.id;
+  document.getElementById('util-month-inp').value=x.month;
+  document.getElementById('util-elec').value=x.electricity||0;
+  document.getElementById('util-water').value=x.water||0;
+  document.getElementById('util-notes').value=x.notes||'';
+  document.getElementById('util-modal').classList.add('open');
+}
+
+function saveUtility(){
+  const uid=document.getElementById('util-id').value;
+  const data={month:document.getElementById('util-month-inp').value,electricity:parseFloat(document.getElementById('util-elec').value)||0,water:parseFloat(document.getElementById('util-water').value)||0,notes:document.getElementById('util-notes').value};
+  if(!data.month){alert('Month is required.');return;}
+  if(uid){const x=utilityExpenses.find(e=>e.id===uid);if(x)Object.assign(x,data);}
+  else{utilityExpenses.push({id:'util-'+Date.now(),...data});}
+  sv('lh_util',utilityExpenses);
+  document.getElementById('util-modal').classList.remove('open');
+  renderExpenses();
+}
+
+function deleteUtility(uid){
+  if(!confirm('Delete this utility record?'))return;
+  utilityExpenses=utilityExpenses.filter(x=>x.id!==uid);
+  sv('lh_util',utilityExpenses);renderExpenses();
+}
+
+// -- Miscellaneous Section --
+function renderMiscSection(m){
+  const rows=miscExpenses.filter(x=>x.month===m);
+  const tot=rows.reduce((s,x)=>s+(x.amount||0),0);
+  document.getElementById('misc-kpi').innerHTML=`
+    <div class="kpi o"><div class="kpi-lbl">Total Miscellaneous</div><div class="kpi-val">${php(tot)}</div><div class="kpi-sub">${rows.length} entries</div></div>
+    <div class="kpi g"><div class="kpi-lbl">Avg per Entry</div><div class="kpi-val">${rows.length?php(Math.round(tot/rows.length)):'\u2014'}</div><div class="kpi-sub">Average amount</div></div>`;
+  const isAdmin=currentUser?.role==='admin';
+  document.getElementById('misc-body').innerHTML=rows.length?rows.map(x=>`<tr>
+    <td>${x.date}</td><td>${x.desc}</td><td class="fw7 txt-pri">${php(x.amount)}</td><td class="text-muted fs-sm">${x.remarks||'\u2014'}</td>
+    ${isAdmin?`<td style="display:flex;gap:4px"><button class="btn btn-out btn-sm" onclick="editMisc('${x.id}')">\u270F</button><button class="btn btn-red btn-sm" onclick="deleteMisc('${x.id}')">\uD83D\uDDD1</button></td>`:'<td></td>'}
+  </tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--tx3);padding:20px">No miscellaneous expenses. Click "+ Add" to record one.</td></tr>';
+}
+
+function openAddMisc(){
+  document.getElementById('misc-modal-title').textContent='Add Miscellaneous Expense';
+  document.getElementById('misc-id').value='';
+  document.getElementById('misc-date').value=today();
+  document.getElementById('misc-desc').value='';
+  document.getElementById('misc-amount').value='';
+  document.getElementById('misc-remarks').value='';
+  document.getElementById('misc-modal').classList.add('open');
+}
+
+function editMisc(mid){
+  const x=miscExpenses.find(e=>e.id===mid);if(!x)return;
+  document.getElementById('misc-modal-title').textContent='Edit Miscellaneous Expense';
+  document.getElementById('misc-id').value=x.id;
+  document.getElementById('misc-date').value=x.date;
+  document.getElementById('misc-desc').value=x.desc;
+  document.getElementById('misc-amount').value=x.amount;
+  document.getElementById('misc-remarks').value=x.remarks||'';
+  document.getElementById('misc-modal').classList.add('open');
+}
+
+function saveMisc(){
+  const mid=document.getElementById('misc-id').value;
+  const date=document.getElementById('misc-date').value;
+  const data={date,month:date.slice(0,7),desc:document.getElementById('misc-desc').value,amount:parseFloat(document.getElementById('misc-amount').value)||0,remarks:document.getElementById('misc-remarks').value};
+  if(!data.desc){alert('Description is required.');return;}
+  if(mid){const x=miscExpenses.find(e=>e.id===mid);if(x)Object.assign(x,data);}
+  else{miscExpenses.push({id:'misc-'+Date.now(),...data});}
+  sv('lh_misc',miscExpenses);
+  document.getElementById('misc-modal').classList.remove('open');
+  renderExpenses();
+}
+
+function deleteMisc(mid){
+  if(!confirm('Delete this expense?'))return;
+  miscExpenses=miscExpenses.filter(x=>x.id!==mid);
+  sv('lh_misc',miscExpenses);renderExpenses();
+}
+
+// -- Other Expenses Section --
+function renderOtherSection(m){
+  const rows=otherExpenses.filter(x=>x.month===m);
+  const tot=rows.reduce((s,x)=>s+(x.amount||0),0);
+  document.getElementById('other-kpi').innerHTML=`
+    <div class="kpi o"><div class="kpi-lbl">Total Other Expenses</div><div class="kpi-val">${php(tot)}</div><div class="kpi-sub">${rows.length} entries</div></div>
+    <div class="kpi g"><div class="kpi-lbl">Avg per Entry</div><div class="kpi-val">${rows.length?php(Math.round(tot/rows.length)):'\u2014'}</div><div class="kpi-sub">Average amount</div></div>`;
+  const isAdmin=currentUser?.role==='admin';
+  document.getElementById('other-body').innerHTML=rows.length?rows.map(x=>`<tr>
+    <td>${x.date}</td><td>${x.desc}</td><td class="fw7 txt-pri">${php(x.amount)}</td><td class="text-muted fs-sm">${x.remarks||'\u2014'}</td>
+    ${isAdmin?`<td style="display:flex;gap:4px"><button class="btn btn-out btn-sm" onclick="editOther('${x.id}')">\u270F</button><button class="btn btn-red btn-sm" onclick="deleteOther('${x.id}')">\uD83D\uDDD1</button></td>`:'<td></td>'}
+  </tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--tx3);padding:20px">No other expenses. Click "+ Add" to record one.</td></tr>';
+}
+
+function openAddOther(){
+  document.getElementById('other-modal-title').textContent='Add Other Expense';
+  document.getElementById('other-id').value='';
+  document.getElementById('other-date').value=today();
+  document.getElementById('other-desc').value='';
+  document.getElementById('other-amount').value='';
+  document.getElementById('other-remarks').value='';
+  document.getElementById('other-modal').classList.add('open');
+}
+
+function editOther(oid){
+  const x=otherExpenses.find(e=>e.id===oid);if(!x)return;
+  document.getElementById('other-modal-title').textContent='Edit Other Expense';
+  document.getElementById('other-id').value=x.id;
+  document.getElementById('other-date').value=x.date;
+  document.getElementById('other-desc').value=x.desc;
+  document.getElementById('other-amount').value=x.amount;
+  document.getElementById('other-remarks').value=x.remarks||'';
+  document.getElementById('other-modal').classList.add('open');
+}
+
+function saveOther(){
+  const oid=document.getElementById('other-id').value;
+  const date=document.getElementById('other-date').value;
+  const data={date,month:date.slice(0,7),desc:document.getElementById('other-desc').value,amount:parseFloat(document.getElementById('other-amount').value)||0,remarks:document.getElementById('other-remarks').value};
+  if(!data.desc){alert('Description is required.');return;}
+  if(oid){const x=otherExpenses.find(e=>e.id===oid);if(x)Object.assign(x,data);}
+  else{otherExpenses.push({id:'other-'+Date.now(),...data});}
+  sv('lh_other',otherExpenses);
+  document.getElementById('other-modal').classList.remove('open');
+  renderExpenses();
+}
+
+function deleteOther(oid){
+  if(!confirm('Delete this expense?'))return;
+  otherExpenses=otherExpenses.filter(x=>x.id!==oid);
+  sv('lh_other',otherExpenses);renderExpenses();
 }
 
 // ============================================================
@@ -1656,10 +2175,123 @@ function saveIncRates(){
 }
 
 // ============================================================
-//  EXPORT
+//  TRANSACTION EDIT / DELETE
 // ============================================================
+function openEditTxn(tid){
+  const t=transactions.find(x=>x.id===tid);if(!t)return;
+  document.getElementById('edit-txn-id').value=t.id;
+  document.getElementById('edit-txn-date').value=t.date;
+  document.getElementById('edit-txn-time').value=t.time;
+  document.getElementById('edit-txn-customer').value=t.customer||'';
+  document.getElementById('edit-txn-team').value=t.team||'lipachon';
+  document.getElementById('edit-txn-payment').value=t.payment||'cash';
+  document.getElementById('edit-txn-status').value=t.status||'paid';
+  document.getElementById('edit-txn-modal').classList.add('open');
+}
+
+function saveEditTxn(){
+  const tid=document.getElementById('edit-txn-id').value;
+  const t=transactions.find(x=>x.id===tid);if(!t)return;
+  t.date=document.getElementById('edit-txn-date').value;
+  t.time=document.getElementById('edit-txn-time').value;
+  t.customer=document.getElementById('edit-txn-customer').value||'Walk-in';
+  t.team=document.getElementById('edit-txn-team').value;
+  t.payment=document.getElementById('edit-txn-payment').value;
+  t.status=document.getElementById('edit-txn-status').value;
+  sv('lh_txns',transactions);
+  if(fbDb) fbDb.ref('lh_transactions/'+t.id).update({date:t.date,time:t.time,customer:t.customer,team:t.team,payment:t.payment,status:t.status});
+  document.getElementById('edit-txn-modal').classList.remove('open');
+  refreshCurrentView();
+}
+
+function deleteTxn(tid){
+  if(!confirm('Delete this transaction? This cannot be undone.'))return;
+  transactions=transactions.filter(x=>x.id!==tid);
+  sv('lh_txns',transactions);
+  if(fbDb) fbDb.ref('lh_transactions/'+tid).remove();
+  updateBadge();
+  refreshCurrentView();
+}
+
+// ============================================================
+//  EXPORT & PRINT
+// ============================================================
+function csvDownload(filename,rows){
+  const blob=new Blob([rows.map(r=>r.map(c=>'"'+String(c||'').replace(/"/g,'""')+'"').join(',')).join('\n')],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();
+}
+
 function exportReport(type){
-  alert('Export feature: In a production environment, this would generate a PDF or Excel file of the '+type+' report.');
+  const m=document.getElementById(type==='expenses'?'exp-month':type==='daily'?'rpt-date':type==='weekly'?'rpt-week':'rpt-month')?.value||today().slice(0,7);
+  if(type==='daily'){
+    const d=document.getElementById('rpt-date')?.value||today();
+    const txns=txnsForDate(d);
+    csvDownload('daily-report-'+d+'.csv',[['#','Date','Time','Customer','Team','Items','Total','Payment','Status'],...txns.map((t,i)=>[i+1,t.date,t.time,t.customer||'Walk-in',getTeam(t.team).name,t.items.length,t.total,t.payment,t.status])]);
+  } else if(type==='weekly'){
+    const wr=document.getElementById('rpt-week')?.value;
+    const wc=parseInt(document.getElementById('rpt-weeks-count')?.value||'1');
+    const allTxns=[];
+    for(let i=wc-1;i>=0;i--){const wDate=weekStartDate(wr,-i);const wKey=dateToWeekStr(wDate);allTxns.push(...txnsForWeek(wKey));}
+    csvDownload('weekly-report-'+wr+'.csv',[['Date','Time','Customer','Team','Items','Total','Payment'],...allTxns.map(t=>[t.date,t.time,t.customer||'Walk-in',getTeam(t.team).name,t.items.length,t.total,t.payment])]);
+  } else if(type==='monthly'){
+    const mo=document.getElementById('rpt-month')?.value||today().slice(0,7);
+    const txns=txnsForMonth(mo);
+    csvDownload('monthly-report-'+mo+'.csv',[['Date','Time','Customer','Team','Items','Total','Payment','Status'],...txns.map(t=>[t.date,t.time,t.customer||'Walk-in',getTeam(t.team).name,t.items.length,t.total,t.payment,t.status])]);
+  } else if(type==='expenses'){
+    const mo=document.getElementById('exp-month')?.value||today().slice(0,7);
+    const txns=txnsForMonth(mo);const hubSales=txns.reduce((s,x)=>s+x.total,0);
+    const rows=[['EXPENSES REPORT \u2014 '+mo],[''],['CATEGORY','DESCRIPTION','AMOUNT'],
+      ['Compensation','',''],
+      ...employees.map(e=>{const comm=Math.round(hubSales*(e.commRate/100)/Math.max(employees.length,1));return ['',e.name+' ('+e.role+')',e.base+comm+(e.bonus||0)-(e.deductions||0)];}),
+      ['Marketing','',''],
+      ...marketingExpenses.filter(x=>x.month===mo).map(x=>['',x.type+': '+x.desc,x.amount]),
+      ['Utilities','',''],
+      ...utilityExpenses.filter(x=>x.month===mo).map(x=>['','Electricity: '+x.electricity+' / Water: '+x.water,(x.electricity||0)+(x.water||0)]),
+      ['Miscellaneous','',''],
+      ...miscExpenses.filter(x=>x.month===mo).map(x=>['',x.desc+(x.remarks?' ('+x.remarks+')':''),x.amount]),
+      ['Other Expenses','',''],
+      ...otherExpenses.filter(x=>x.month===mo).map(x=>['',x.desc+(x.remarks?' ('+x.remarks+')':''),x.amount]),
+    ];
+    csvDownload('expenses-'+mo+'.csv',rows);
+  } else if(type==='teams'){
+    const mo=document.getElementById('team-month')?.value||today().slice(0,7);
+    const txns=txnsForMonth(mo);
+    csvDownload('team-sales-'+mo+'.csv',[['Team','Orders','Total Sales'],...TEAMS.map(t=>[t.name,txns.filter(x=>x.team===t.id).length,txns.filter(x=>x.team===t.id).reduce((s,x)=>s+x.total,0)])]);
+  }
+}
+
+function printReport(type){
+  const m=type==='expenses'?document.getElementById('exp-month')?.value:type==='daily'?document.getElementById('rpt-date')?.value:type==='weekly'?document.getElementById('rpt-week')?.value:document.getElementById('rpt-month')?.value;
+  const pTitle={daily:'Daily Sales Report',weekly:'Weekly Sales Report',monthly:'Monthly Sales Report',expenses:'Expenses Report',teams:'Team Sales Report'}[type]||'Report';
+  let bodyHtml='';
+  if(type==='daily'){
+    const txns=txnsForDate(m||today());
+    const total=txns.reduce((s,t)=>s+t.total,0);
+    bodyHtml=`<h2>Date: ${m}</h2><p>Total Sales: <strong>${php(total)}</strong> | Orders: ${txns.length}</p><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;font-size:.85rem"><tr><th>#</th><th>Time</th><th>Customer</th><th>Team</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th></tr>${txns.map((t,i)=>`<tr><td>${i+1}</td><td>${t.time}</td><td>${t.customer||'Walk-in'}</td><td>${getTeam(t.team).name}</td><td>${t.items.length}</td><td>${php(t.total)}</td><td>${t.payment}</td><td>${t.status}</td></tr>`).join('')}</table>`;
+  } else if(type==='expenses'){
+    const mo=document.getElementById('exp-month')?.value||today().slice(0,7);
+    const txns=txnsForMonth(mo);const hubSales=txns.reduce((s,x)=>s+x.total,0);
+    const mktM=marketingExpenses.filter(x=>x.month===mo);const utilM=utilityExpenses.filter(x=>x.month===mo);
+    const miscM=miscExpenses.filter(x=>x.month===mo);const otherM=otherExpenses.filter(x=>x.month===mo);
+    const totComp=employees.reduce((s,e)=>{const c=Math.round(hubSales*(e.commRate/100)/Math.max(employees.length,1));return s+e.base+c+(e.bonus||0)-(e.deductions||0);},0);
+    const totMkt=mktM.reduce((s,x)=>s+x.amount,0),totUtil=utilM.reduce((s,x)=>s+(x.electricity||0)+(x.water||0),0),totMisc=miscM.reduce((s,x)=>s+x.amount,0),totOther=otherM.reduce((s,x)=>s+x.amount,0);
+    bodyHtml=`<h2>Month: ${mo}</h2><p><strong>Grand Total: ${php(totComp+totMkt+totUtil+totMisc+totOther)}</strong></p>
+    <table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr style="background:#eee"><th colspan="3">Summary</th></tr><tr><td>Compensation</td><td></td><td>${php(totComp)}</td></tr><tr><td>Marketing</td><td></td><td>${php(totMkt)}</td></tr><tr><td>Utilities</td><td></td><td>${php(totUtil)}</td></tr><tr><td>Miscellaneous</td><td></td><td>${php(totMisc)}</td></tr><tr><td>Other Expenses</td><td></td><td>${php(totOther)}</td></tr></table>
+    <h3>Compensation \u2014 Lechon Hub Employees</h3><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr><th>Name</th><th>Role</th><th>Base</th><th>Commission</th><th>Bonus</th><th>Deductions</th><th>Net</th></tr>${employees.map(e=>{const c=Math.round(hubSales*(e.commRate/100)/Math.max(employees.length,1));return `<tr><td>${e.name}</td><td>${e.role}</td><td>${php(e.base)}</td><td>${php(c)}</td><td>${php(e.bonus||0)}</td><td>${php(e.deductions||0)}</td><td><strong>${php(e.base+c+(e.bonus||0)-(e.deductions||0))}</strong></td></tr>`;}).join('')}</table>
+    <h3>Marketing</h3><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr><th>Date</th><th>Type</th><th>Description</th><th>Amount</th></tr>${mktM.map(x=>`<tr><td>${x.date}</td><td>${x.type}</td><td>${x.desc}</td><td>${php(x.amount)}</td></tr>`).join('')||'<tr><td colspan="4">No entries</td></tr>'}</table>
+    <h3>Utilities</h3><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr><th>Month</th><th>Electricity</th><th>Water</th><th>Total</th></tr>${utilM.map(x=>`<tr><td>${x.month}</td><td>${php(x.electricity||0)}</td><td>${php(x.water||0)}</td><td>${php((x.electricity||0)+(x.water||0))}</td></tr>`).join('')||'<tr><td colspan="4">No entries</td></tr>'}</table>
+    <h3>Miscellaneous</h3><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr><th>Date</th><th>Description</th><th>Amount</th><th>Remarks</th></tr>${miscM.map(x=>`<tr><td>${x.date}</td><td>${x.desc}</td><td>${php(x.amount)}</td><td>${x.remarks||'\u2014'}</td></tr>`).join('')||'<tr><td colspan="4">No entries</td></tr>'}</table>
+    <h3>Other Expenses</h3><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr><th>Date</th><th>Description</th><th>Amount</th><th>Remarks</th></tr>${otherM.map(x=>`<tr><td>${x.date}</td><td>${x.desc}</td><td>${php(x.amount)}</td><td>${x.remarks||'\u2014'}</td></tr>`).join('')||'<tr><td colspan="4">No entries</td></tr>'}</table>`;
+  } else if(type==='monthly'){
+    const mo=document.getElementById('rpt-month')?.value||today().slice(0,7);
+    const txns=txnsForMonth(mo);const total=txns.reduce((s,t)=>s+t.total,0);
+    bodyHtml=`<h2>Month: ${mo}</h2><p>Total Sales: <strong>${php(total)}</strong> | Orders: ${txns.length}</p><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;font-size:.85rem"><tr><th>Date</th><th>Time</th><th>Customer</th><th>Team</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th></tr>${txns.map(t=>`<tr><td>${t.date}</td><td>${t.time}</td><td>${t.customer||'Walk-in'}</td><td>${getTeam(t.team).name}</td><td>${t.items.length}</td><td>${php(t.total)}</td><td>${t.payment}</td><td>${t.status}</td></tr>`).join('')}</table>`;
+  } else {
+    bodyHtml='<p>Report data not available for this type in print preview.</p>';
+  }
+  const win=window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><title>${pTitle}</title><style>body{font-family:sans-serif;padding:24px;color:#111}h1{color:#CC0000}h2,h3{margin-top:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:6px 10px;text-align:left}th{background:#f5f5f5}@media print{button{display:none}}</style></head><body><h1>\uD83D\uDD25 Lechon Hub \u2014 ${pTitle}</h1>${bodyHtml}<br><button onclick="window.print()" style="padding:8px 18px;background:#CC0000;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.9rem">\uD83D\uDDA8 Print / Save PDF</button></body></html>`);
+  win.document.close();
 }
 
 // ============================================================
@@ -1869,7 +2501,7 @@ function refreshCurrentView(){
     else renderMonthlyReport();
   }
   else if(currentPage==='teams') renderTeams();
-  else if(currentPage==='compensation') renderCompensation();
+  else if(currentPage==='expenses') renderExpenses();
   else if(currentPage==='purchase-orders') renderPOs();
   else if(currentPage==='incentives') renderIncentives();
 }
@@ -1893,7 +2525,7 @@ function bootApp(){
   document.getElementById('rpt-date').value=today();
   document.getElementById('rpt-month').value=today().slice(0,7);
   document.getElementById('team-month').value=today().slice(0,7);
-  document.getElementById('comp-month').value=today().slice(0,7);
+  document.getElementById('exp-month').value=today().slice(0,7);
   document.getElementById('inc-month').value=today().slice(0,7);
   // Clock
   updateClock();setInterval(updateClock,30000);
