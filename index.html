@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lechon Hub &#x2014; POS System</title>
+<title>Lechon Hub &#8212; POS System</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -222,15 +222,15 @@ select option{background:var(--surf)}
 <div class="login-screen" id="login-screen">
   <div class="login-card">
     <div class="login-brand">
-      <span class="lb-flame">&#x1F525;</span>
+      <span class="lb-flame">&#128293;</span>
       <h1>LECHON HUB</h1>
       <p>POINT OF SALE SYSTEM</p>
     </div>
     <h2>Sign In to Continue</h2>
-    <div class="login-err" id="login-err">&#x26A0; Invalid username or password. Please try again.</div>
+    <div class="login-err" id="login-err">&#9888; Invalid username or password. Please try again.</div>
     <div class="login-fg"><label>Username</label><input class="login-inp" id="l-user" placeholder="Enter username" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <div class="login-fg"><label>Password</label><input class="login-inp" id="l-pass" type="password" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"></div>
-    <button class="login-btn" onclick="doLogin()">&#x1F510; Sign In</button>
+    <button class="login-btn" onclick="doLogin()">&#128272; Sign In</button>
 
   </div>
 </div>
@@ -239,30 +239,31 @@ select option{background:var(--surf)}
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sb-logo">
-    <span class="flame">&#x1F525;</span>
+    <span class="flame">&#128293;</span>
     <h2>LECHON HUB</h2>
     <p>POINT OF SALE SYSTEM</p>
   </div>
   <nav class="sb-nav">
     <div class="nav-section">Main</div>
-    <div class="nav-item active" onclick="nav('dashboard')"><span class="ni">&#x1F4CA;</span> Dashboard</div>
-    <div class="nav-item" onclick="nav('pos')"><span class="ni">&#x1F6D2;</span> POS Terminal</div>
+    <div class="nav-item active" onclick="nav('dashboard')"><span class="ni">&#128202;</span> Dashboard</div>
+    <div class="nav-item" onclick="nav('pos')"><span class="ni">&#128722;</span> POS Terminal</div>
     <div class="nav-section">Management</div>
-    <div class="nav-item" onclick="nav('inventory')"><span class="ni">&#x1F4E6;</span> Inventory</div>
-    <div class="nav-item" onclick="nav('reports')"><span class="ni">&#x1F4C8;</span> Reports</div>
-    <div class="nav-item" onclick="nav('teams')"><span class="ni">&#x1F465;</span> Team Sales</div>
-    <div class="nav-item" onclick="nav('expenses')"><span class="ni">&#x1F4B8;</span> Expenses</div>
-    <div class="nav-item" onclick="nav('purchase-orders')"><span class="ni">&#x1F4CB;</span> Purchase Orders</div>
-    <div class="nav-item" onclick="nav('incentives')"><span class="ni">&#x1F3C6;</span> Incentives</div>
+    <div class="nav-item" onclick="nav('inventory')"><span class="ni">&#128230;</span> Inventory</div>
+    <div class="nav-item" onclick="nav('reports')"><span class="ni">&#128200;</span> Reports</div>
+    <div class="nav-item" onclick="nav('teams')"><span class="ni">&#128101;</span> Team Sales</div>
+    <div class="nav-item" onclick="nav('expenses')"><span class="ni">&#128184;</span> Expenses</div>
+    <div class="nav-item" onclick="nav('reservations')"><span class="ni">&#128197;</span> Reservations</div>
+    <div class="nav-item" onclick="nav('purchase-orders')"><span class="ni">&#128203;</span> Purchase Orders</div>
+    <div class="nav-item" onclick="nav('incentives')"><span class="ni">&#127942;</span> Incentives</div>
     <div class="nav-section admin-only">Settings</div>
-    <div class="nav-item admin-only" onclick="nav('settings')"><span class="ni">&#x2699;&#xFE0F;</span> Settings</div>
+    <div class="nav-item admin-only" onclick="nav('settings')"><span class="ni">&#9881;&#65039;</span> Settings</div>
   </nav>
   <div class="sb-foot">
     <div class="sb-user">
       <div class="sb-av" id="sb-av-initials">LH</div>
       <div class="sb-ud"><h4 id="sb-user-name">Admin</h4><p id="sb-user-role">Lechon Hub</p></div>
     </div>
-    <button class="btn btn-out btn-sm" onclick="doLogout()" style="width:100%;margin-top:8px;border-color:#FFCCCC;color:#CC0000;font-size:.75rem">&#x1F6AA; Sign Out</button>
+    <button class="btn btn-out btn-sm" onclick="doLogout()" style="width:100%;margin-top:8px;border-color:#FFCCCC;color:#CC0000;font-size:.75rem">&#128682; Sign Out</button>
   </div>
 </aside>
 
@@ -276,32 +277,36 @@ select option{background:var(--surf)}
     </div>
     <div class="tb-right">
       <div class="sync-badge" onclick="nav('settings')" title="Sync status"><span class="sync-dot" id="sync-dot"></span><span id="sync-label">Local</span></div>
-      <div class="tb-clock" id="clock">&#x2014;</div>
-      <span class="tb-badge" id="low-stock-badge" style="display:none" onclick="nav('inventory')">&#x26A0; Low Stock</span>
+      <div class="tb-clock" id="clock">&#8212;</div>
+      <span class="tb-badge" id="low-stock-badge" style="display:none" onclick="nav('inventory')">&#9888; Low Stock</span>
     </div>
   </div>
 
   <div class="pages">
     <!-- ====== DASHBOARD ====== -->
     <div class="page active" id="page-dashboard">
-      <div class="kpi-grid" id="kpi-grid"></div>
+      <div class="kpi-grid" id="kpi-grid" style="grid-template-columns:repeat(5,1fr)"></div>
       <div class="g2 mb20">
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">&#x1F4C5; Weekly Sales (Last 7 Days)</span></div>
+          <div class="card-hdr"><span class="card-ttl">&#128197; Weekly Sales (Last 7 Days)</span></div>
           <div class="ch-wrap"><canvas id="ch-weekly"></canvas></div>
         </div>
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">&#x1F465; Team Performance This Month</span></div>
+          <div class="card-hdr"><span class="card-ttl">&#128101; Team Performance This Month</span></div>
           <div class="ch-wrap"><canvas id="ch-teams-dash"></canvas></div>
         </div>
       </div>
+      <div class="card mb20">
+        <div class="card-hdr"><span class="card-ttl">&#128197; Upcoming Reservations</span><button class="btn btn-out btn-sm" onclick="nav('reservations')">View All</button></div>
+        <div class="tbl-wrap" id="dash-reservations"></div>
+      </div>
       <div class="g2">
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">&#x1F9FE; Recent Transactions</span><button class="btn btn-out btn-sm" onclick="nav('reports')">View All</button></div>
+          <div class="card-hdr"><span class="card-ttl">&#129534; Recent Transactions</span><button class="btn btn-out btn-sm" onclick="nav('reports')">View All</button></div>
           <div class="tbl-wrap" id="recent-txns"></div>
         </div>
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">&#x26A0;&#xFE0F; Inventory Alerts</span></div>
+          <div class="card-hdr"><span class="card-ttl">&#9888;&#65039; Inventory Alerts</span></div>
           <div id="inv-alerts"></div>
         </div>
       </div>
@@ -313,13 +318,13 @@ select option{background:var(--surf)}
         <div class="pos-menu-panel">
           <div class="flex-between gap8" style="flex-wrap:wrap">
             <div class="cat-bar" id="cat-bar"></div>
-            <input id="prod-search" style="width:180px;font-size:.78rem;padding:5px 10px" placeholder="&#x1F50D; Search product..." oninput="filterProds()">
+            <input id="prod-search" style="width:180px;font-size:.78rem;padding:5px 10px" placeholder="&#128269; Search product..." oninput="filterProds()">
           </div>
           <div class="prod-grid" id="prod-grid"></div>
         </div>
         <div class="pos-cart-panel">
           <div class="cart-hdr">
-            <h3>&#x1F6D2; Order</h3>
+            <h3>&#128722; Order</h3>
             <div class="cart-meta">
               <input id="cart-customer" placeholder="Customer name" style="flex:1">
               <select id="cart-team" style="flex:1">
@@ -331,14 +336,14 @@ select option{background:var(--surf)}
             </div>
           </div>
           <div class="cart-items" id="cart-items">
-            <div class="empty-cart"><span class="ec-ico">&#x1F6D2;</span>Cart is empty.<br>Tap a product to add.</div>
+            <div class="empty-cart"><span class="ec-ico">&#128722;</span>Cart is empty.<br>Tap a product to add.</div>
           </div>
           <div class="cart-foot">
-            <div class="cart-row"><span>Subtotal</span><span id="cart-sub">&#x20B1;0</span></div>
-            <div class="cart-row tot"><span>TOTAL</span><span id="cart-tot">&#x20B1;0</span></div>
+            <div class="cart-row"><span>Subtotal</span><span id="cart-sub">&#8369;0</span></div>
+            <div class="cart-row tot"><span>TOTAL</span><span id="cart-tot">&#8369;0</span></div>
             <div style="display:flex;gap:8px;margin-top:10px">
-              <button class="btn btn-out btn-sm" onclick="clearCart()" style="flex:.4">&#x1F5D1; Clear</button>
-              <button class="btn btn-gold btn-lg" onclick="openPayModal()" style="flex:1" id="pay-btn">&#x1F4B3; Pay</button>
+              <button class="btn btn-out btn-sm" onclick="clearCart()" style="flex:.4">&#128465; Clear</button>
+              <button class="btn btn-gold btn-lg" onclick="openPayModal()" style="flex:1" id="pay-btn">&#128179; Pay</button>
             </div>
           </div>
         </div>
@@ -349,7 +354,7 @@ select option{background:var(--surf)}
     <div class="page" id="page-inventory">
       <div class="flex-between mb20">
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <input id="inv-search" placeholder="&#x1F50D; Search..." style="width:200px" oninput="renderInventory()">
+          <input id="inv-search" placeholder="&#128269; Search..." style="width:200px" oninput="renderInventory()">
           <select id="inv-cat-filter" onchange="renderInventory()" style="width:160px">
             <option value="">All Categories</option>
             <option>Whole Lechon</option><option>Lechon Ulo</option><option>Lechon Belly</option>
@@ -381,8 +386,8 @@ select option{background:var(--surf)}
         <div class="flex-between mb14">
           <input type="date" id="rpt-date" onchange="renderDailyReport()">
           <div style="display:flex;gap:8px">
-            <button class="btn btn-out btn-sm" onclick="printReport('daily')">&#x1F5A8; Print</button>
-            <button class="btn btn-out btn-sm" onclick="exportReport('daily')">&#x1F4E5; Export CSV</button>
+            <button class="btn btn-out btn-sm" onclick="printReport('daily')">&#128424; Print</button>
+            <button class="btn btn-out btn-sm" onclick="exportReport('daily')">&#128229; Export CSV</button>
           </div>
         </div>
         <div class="kpi-grid" id="rpt-d-kpi" style="grid-template-columns:repeat(3,1fr)"></div>
@@ -410,13 +415,13 @@ select option{background:var(--surf)}
             </select>
           </div>
           <div style="display:flex;gap:8px">
-            <button class="btn btn-out btn-sm" onclick="printReport('weekly')">&#x1F5A8; Print</button>
-            <button class="btn btn-out btn-sm" onclick="exportReport('weekly')">&#x1F4E5; Export CSV</button>
+            <button class="btn btn-out btn-sm" onclick="printReport('weekly')">&#128424; Print</button>
+            <button class="btn btn-out btn-sm" onclick="exportReport('weekly')">&#128229; Export CSV</button>
           </div>
         </div>
         <div class="kpi-grid" id="rpt-w-kpi" style="grid-template-columns:repeat(3,1fr)"></div>
         <div class="card mb14">
-          <div class="card-hdr"><span class="card-ttl" id="rpt-w-chart-ttl">&#x1F4C8; Weekly Sales Line Graph</span></div>
+          <div class="card-hdr"><span class="card-ttl" id="rpt-w-chart-ttl">&#128200; Weekly Sales Line Graph</span></div>
           <div class="ch-wrap"><canvas id="ch-weekly-rpt"></canvas></div>
         </div>
         <div class="card">
@@ -428,13 +433,13 @@ select option{background:var(--surf)}
         <div class="flex-between mb14">
           <input type="month" id="rpt-month" onchange="renderMonthlyReport()">
           <div style="display:flex;gap:8px">
-            <button class="btn btn-out btn-sm" onclick="printReport('monthly')">&#x1F5A8; Print</button>
-            <button class="btn btn-out btn-sm" onclick="exportReport('monthly')">&#x1F4E5; Export CSV</button>
+            <button class="btn btn-out btn-sm" onclick="printReport('monthly')">&#128424; Print</button>
+            <button class="btn btn-out btn-sm" onclick="exportReport('monthly')">&#128229; Export CSV</button>
           </div>
         </div>
         <div class="kpi-grid" id="rpt-m-kpi" style="grid-template-columns:repeat(3,1fr)"></div>
         <div class="card mb14">
-          <div class="card-hdr"><span class="card-ttl">&#x1F4C8; Monthly Sales Line Graph</span></div>
+          <div class="card-hdr"><span class="card-ttl">&#128200; Monthly Sales Line Graph</span></div>
           <div class="ch-wrap"><canvas id="ch-monthly-rpt"></canvas></div>
         </div>
         <div class="card mb14">
@@ -455,16 +460,16 @@ select option{background:var(--surf)}
           <label class="text-muted fs-sm">Period:</label>
           <input type="month" id="team-month" onchange="renderTeams()">
         </div>
-        <button class="btn btn-out btn-sm" onclick="exportReport('teams')">&#x1F4E5; Export</button>
+        <button class="btn btn-out btn-sm" onclick="exportReport('teams')">&#128229; Export</button>
       </div>
       <div class="team-grid" id="team-cards"></div>
       <div class="g2 mb20">
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">&#x1F4CA; Team Sales Comparison</span></div>
+          <div class="card-hdr"><span class="card-ttl">&#128202; Team Sales Comparison</span></div>
           <div class="ch-wrap"><canvas id="ch-team-bar"></canvas></div>
         </div>
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">&#x1F4C8; Weekly Trend (All Teams)</span></div>
+          <div class="card-hdr"><span class="card-ttl">&#128200; Weekly Trend (All Teams)</span></div>
           <div class="ch-wrap"><canvas id="ch-team-line"></canvas></div>
         </div>
       </div>
@@ -482,8 +487,8 @@ select option{background:var(--surf)}
           <input type="month" id="exp-month" onchange="renderExpenses()">
         </div>
         <div style="display:flex;gap:8px">
-          <button class="btn btn-out btn-sm" onclick="printReport('expenses')">&#x1F5A8; Print</button>
-          <button class="btn btn-out btn-sm admin-only" onclick="exportReport('expenses')">&#x1F4E5; Export CSV</button>
+          <button class="btn btn-out btn-sm" onclick="printReport('expenses')">&#128424; Print</button>
+          <button class="btn btn-out btn-sm admin-only" onclick="exportReport('expenses')">&#128229; Export CSV</button>
         </div>
       </div>
       <!-- Grand Total Summary -->
@@ -492,7 +497,7 @@ select option{background:var(--surf)}
       <!-- 1. COMPENSATION -->
       <div class="card mb14">
         <div class="card-hdr">
-          <span class="card-ttl">&#x1F4B0; Compensation &#x2014; Lechon Hub Employees</span>
+          <span class="card-ttl">&#128176; Compensation &#8212; Lechon Hub Employees</span>
           <button class="btn btn-pri btn-sm admin-only" onclick="openAddEmployee()">+ Add Employee</button>
         </div>
         <div id="comp-kpi" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px"></div>
@@ -502,7 +507,7 @@ select option{background:var(--surf)}
       <!-- 2. MARKETING -->
       <div class="card mb14">
         <div class="card-hdr">
-          <span class="card-ttl">&#x1F4E2; Marketing &#x2014; Ads &amp; Boosting</span>
+          <span class="card-ttl">&#128226; Marketing &#8212; Ads &amp; Boosting</span>
           <button class="btn btn-pri btn-sm admin-only" onclick="openAddMarketing()">+ Add</button>
         </div>
         <div id="mkt-kpi" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px"></div>
@@ -512,17 +517,17 @@ select option{background:var(--surf)}
       <!-- 3. UTILITIES -->
       <div class="card mb14">
         <div class="card-hdr">
-          <span class="card-ttl">&#x26A1; Utilities &#x2014; Electricity &amp; Water</span>
+          <span class="card-ttl">&#9889; Utilities &#8212; Electricity &amp; Water</span>
           <button class="btn btn-pri btn-sm admin-only" onclick="openAddUtility()">+ Add</button>
         </div>
         <div id="util-kpi" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px"></div>
-        <div class="tbl-wrap"><table><thead><tr><th>Month</th><th>Electricity (&#x20B1;)</th><th>Water (&#x20B1;)</th><th>Total</th><th class="admin-only">Actions</th></tr></thead><tbody id="util-body"></tbody></table></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Month</th><th>Electricity (&#8369;)</th><th>Water (&#8369;)</th><th>Total</th><th class="admin-only">Actions</th></tr></thead><tbody id="util-body"></tbody></table></div>
       </div>
 
       <!-- 4. MISCELLANEOUS -->
       <div class="card mb14">
         <div class="card-hdr">
-          <span class="card-ttl">&#x1F4CE; Miscellaneous</span>
+          <span class="card-ttl">&#128206; Miscellaneous</span>
           <button class="btn btn-pri btn-sm admin-only" onclick="openAddMisc()">+ Add</button>
         </div>
         <div id="misc-kpi" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px"></div>
@@ -532,7 +537,7 @@ select option{background:var(--surf)}
       <!-- 5. OTHER EXPENSES -->
       <div class="card">
         <div class="card-hdr">
-          <span class="card-ttl">&#x1F4C2; Other Expenses</span>
+          <span class="card-ttl">&#128194; Other Expenses</span>
           <button class="btn btn-pri btn-sm admin-only" onclick="openAddOther()">+ Add</button>
         </div>
         <div id="other-kpi" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px"></div>
@@ -544,7 +549,7 @@ select option{background:var(--surf)}
     <div class="page" id="page-purchase-orders">
       <div class="flex-between mb14">
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <input id="po-search" placeholder="&#x1F50D; Search supplier..." style="width:200px" oninput="renderPOs()">
+          <input id="po-search" placeholder="&#128269; Search supplier..." style="width:200px" oninput="renderPOs()">
           <select id="po-status-filter" onchange="renderPOs()" style="width:150px">
             <option value="">All Status</option>
             <option value="pending">Pending</option>
@@ -563,6 +568,35 @@ select option{background:var(--surf)}
       </div>
     </div>
 
+    <!-- ====== RESERVATIONS ====== -->
+    <div class="page" id="page-reservations">
+      <div class="flex-between mb14">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <input id="res-search" placeholder="&#128269; Search customer..." style="width:180px" oninput="renderReservations()">
+          <select id="res-status-filter" onchange="renderReservations()" style="width:140px">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="fulfilled">Fulfilled</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <input type="month" id="res-month-filter" onchange="renderReservations()">
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-out btn-sm" onclick="printReport('reservations')">&#128424; Print</button>
+          <button class="btn btn-out btn-sm" onclick="exportReport('reservations')">&#128229; Export CSV</button>
+          <button class="btn btn-pri" onclick="openAddReservation()">+ New Reservation</button>
+        </div>
+      </div>
+      <div id="res-kpi" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px"></div>
+      <div class="card">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Res #</th><th>Event Date</th><th>Customer</th><th>Contact</th><th>Team</th><th>Items</th><th>Total</th><th>Deposit</th><th>Balance</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="res-body"></tbody>
+        </table></div>
+      </div>
+    </div>
+
     <!-- ====== INCENTIVES ====== -->
     <div class="page" id="page-incentives">
       <div class="flex-between mb14">
@@ -570,18 +604,18 @@ select option{background:var(--surf)}
           <label class="text-muted fs-sm">Month:</label>
           <input type="month" id="inc-month" onchange="renderIncentives()">
         </div>
-        <span style="font-size:.75rem;color:#BB6666">Fixed &#x20B1; incentive per product sold</span>
+        <span style="font-size:.75rem;color:#BB6666">Fixed &#8369; incentive per product sold</span>
       </div>
       <div class="kpi-grid" id="inc-totals" style="grid-template-columns:repeat(3,1fr)"></div>
       <div class="card" style="margin-top:14px">
-        <div class="card-hdr"><span class="card-ttl">&#x1F3C6; Team Incentives Breakdown</span></div>
+        <div class="card-hdr"><span class="card-ttl">&#127942; Team Incentives Breakdown</span></div>
         <div class="tbl-wrap"><table>
           <thead><tr><th>Team</th><th>Orders</th><th>Qty Sold</th><th>Total Incentive</th></tr></thead>
           <tbody id="inc-body"></tbody>
         </table></div>
       </div>
       <div class="card admin-only" style="margin-top:14px">
-        <div class="card-hdr"><span class="card-ttl">&#x2699;&#xFE0F; Incentive Rates per Product</span><button class="btn btn-pri btn-sm" onclick="saveIncRates()">&#x1F4BE; Save Rates</button></div>
+        <div class="card-hdr"><span class="card-ttl">&#9881;&#65039; Incentive Rates per Product</span><button class="btn btn-pri btn-sm" onclick="saveIncRates()">&#128190; Save Rates</button></div>
         <div id="inc-rate-editor" style="max-height:400px;overflow-y:auto"></div>
       </div>
     </div>
@@ -590,7 +624,7 @@ select option{background:var(--surf)}
     <div class="page" id="page-settings">
       <div class="g2">
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">&#x1F3EA; Business Info</span></div>
+          <div class="card-hdr"><span class="card-ttl">&#127978; Business Info</span></div>
           <div class="fg"><label>Business Name</label><input value="Lechon Hub" style="width:100%"></div>
           <div class="fg"><label>Address</label><input value="Lipa City, Batangas" style="width:100%"></div>
           <div class="fg"><label>Contact</label><input placeholder="Phone number" style="width:100%"></div>
@@ -598,7 +632,7 @@ select option{background:var(--surf)}
           <button class="btn btn-pri admin-only">Save Settings</button>
         </div>
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">&#x1F4B3; Payment Methods</span></div>
+          <div class="card-hdr"><span class="card-ttl">&#128179; Payment Methods</span></div>
           <div style="display:flex;flex-direction:column;gap:10px">
             <label style="display:flex;align-items:center;gap:8px;font-size:.85rem"><input type="checkbox" checked> Cash</label>
             <label style="display:flex;align-items:center;gap:8px;font-size:.85rem"><input type="checkbox" checked> GCash</label>
@@ -606,21 +640,21 @@ select option{background:var(--surf)}
             <label style="display:flex;align-items:center;gap:8px;font-size:.85rem"><input type="checkbox"> Bank Transfer</label>
           </div>
           <sep class="sep"></sep>
-          <div class="card-hdr"><span class="card-ttl">&#x1F5D1; Data Management</span></div>
+          <div class="card-hdr"><span class="card-ttl">&#128465; Data Management</span></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-red btn-sm admin-only" onclick="if(confirm('Clear all transactions? This cannot be undone.')){clearAllTransactions()}">&#x1F5D1; Clear All Transactions</button>
+            <button class="btn btn-red btn-sm admin-only" onclick="if(confirm('Clear all transactions? This cannot be undone.')){clearAllTransactions()}">&#128465; Clear All Transactions</button>
           </div>
         </div>
       </div>
       <!-- FIREBASE SETUP CARD -->
       <div class="card" style="margin-top:14px;border-color:#FFAAAA">
-        <div class="card-hdr"><span class="card-ttl">&#x1F525; Firebase Real-Time Sync</span><span id="fb-status-badge" class="st" style="font-size:.7rem">Not Connected</span></div>
-        <div class="alert alert-w" style="margin-bottom:14px">&#x26A1; Connect Firebase so ALL teams share the same live data across devices. Without it, each device has its own local data.</div>
+        <div class="card-hdr"><span class="card-ttl">&#128293; Firebase Real-Time Sync</span><span id="fb-status-badge" class="st" style="font-size:.7rem">Not Connected</span></div>
+        <div class="alert alert-w" style="margin-bottom:14px">&#9889; Connect Firebase so ALL teams share the same live data across devices. Without it, each device has its own local data.</div>
         <div style="font-size:.78rem;color:#7A0000;margin-bottom:12px;line-height:1.7">
           <strong>5-minute setup:</strong><br>
-          1. Go to <strong>console.firebase.google.com</strong> &#x2192; Create project (free)<br>
-          2. Build &#x2192; Realtime Database &#x2192; Create database &#x2192; Start in <em>test mode</em><br>
-          3. Project Settings &#x2699; &#x2192; Your apps &#x2192; Add Web App &#x2192; Copy config<br>
+          1. Go to <strong>console.firebase.google.com</strong> &#8594; Create project (free)<br>
+          2. Build &#8594; Realtime Database &#8594; Create database &#8594; Start in <em>test mode</em><br>
+          3. Project Settings &#9881; &#8594; Your apps &#8594; Add Web App &#8594; Copy config<br>
           4. Paste the values below and click Connect
         </div>
         <div class="g2">
@@ -630,18 +664,18 @@ select option{background:var(--surf)}
           <div class="fg"><label>App ID</label><input id="fb-appId" placeholder="1:123456:web:abc..." style="width:100%;font-size:.78rem"></div>
         </div>
         <div style="display:flex;gap:8px;margin-top:4px">
-          <button class="btn btn-pri admin-only" onclick="saveFirebaseConfig()">&#x1F517; Connect Firebase</button>
+          <button class="btn btn-pri admin-only" onclick="saveFirebaseConfig()">&#128279; Connect Firebase</button>
           <button class="btn btn-out btn-sm admin-only" onclick="clearFirebaseConfig()">Disconnect</button>
         </div>
         <sep class="sep"></sep>
-        <div class="card-hdr" style="margin-bottom:8px"><span class="card-ttl">&#x1F310; Get a Shareable HTTPS Link</span></div>
+        <div class="card-hdr" style="margin-bottom:8px"><span class="card-ttl">&#127760; Get a Shareable HTTPS Link</span></div>
         <div style="font-size:.78rem;color:#7A0000;line-height:1.8">
           <strong>Share this app with your teams in 60 seconds:</strong><br>
           1. Save this HTML file to your computer<br>
           2. Go to <strong style="color:#CC0000">drop.netlify.com</strong> in your browser<br>
           3. Drag and drop the <strong>LechonHub_POS.html</strong> file onto the page<br>
           4. Netlify gives you a free <strong>https://yourapp.netlify.app</strong> link instantly<br>
-          5. Share that link with all 4 teams &#x2014; they open it on any device, any browser<br>
+          5. Share that link with all 4 teams &#8212; they open it on any device, any browser<br>
           <em style="color:#BB6666">(Set up Firebase above first so all devices share the same data in real-time)</em>
         </div>
       </div>
@@ -653,22 +687,22 @@ select option{background:var(--surf)}
 <!-- PAYMENT MODAL -->
 <div class="modal-ov" id="pay-modal">
   <div class="modal">
-    <h2>&#x1F4B3; Payment</h2>
+    <h2>&#128179; Payment</h2>
     <div id="pay-order-summary" style="background:var(--surf);border-radius:8px;padding:12px;margin-bottom:14px;font-size:.82rem"></div>
     <div class="fg"><label>Payment Method</label>
       <div class="pay-opts">
-        <div class="pay-opt sel" onclick="selPayMethod('cash',this)"><span class="po-ico">&#x1F4B5;</span><span class="po-lbl">Cash</span></div>
-        <div class="pay-opt" onclick="selPayMethod('gcash',this)"><span class="po-ico">&#x1F4F1;</span><span class="po-lbl">GCash</span></div>
-        <div class="pay-opt" onclick="selPayMethod('maya',this)"><span class="po-ico">&#x1F4B3;</span><span class="po-lbl">Maya</span></div>
+        <div class="pay-opt sel" onclick="selPayMethod('cash',this)"><span class="po-ico">&#128181;</span><span class="po-lbl">Cash</span></div>
+        <div class="pay-opt" onclick="selPayMethod('gcash',this)"><span class="po-ico">&#128241;</span><span class="po-lbl">GCash</span></div>
+        <div class="pay-opt" onclick="selPayMethod('maya',this)"><span class="po-ico">&#128179;</span><span class="po-lbl">Maya</span></div>
       </div>
     </div>
     <div id="cash-section">
       <div class="fg"><label>Amount Tendered</label><input id="tendered" type="number" placeholder="Enter amount" oninput="calcChange()" style="width:100%"></div>
-      <div class="fg" id="change-row" style="display:none"><label>Change</label><div style="font-size:1.2rem;font-weight:700;color:var(--grn)" id="change-val">&#x20B1;0</div></div>
+      <div class="fg" id="change-row" style="display:none"><label>Change</label><div style="font-size:1.2rem;font-weight:700;color:var(--grn)" id="change-val">&#8369;0</div></div>
     </div>
     <div class="modal-acts">
       <button class="btn btn-out" onclick="closePayModal()" style="flex:.4">Cancel</button>
-      <button class="btn btn-gold btn-lg" onclick="completeOrder()" style="flex:1">&#x2705; Confirm Payment</button>
+      <button class="btn btn-gold btn-lg" onclick="completeOrder()" style="flex:1">&#9989; Confirm Payment</button>
     </div>
   </div>
 </div>
@@ -676,11 +710,11 @@ select option{background:var(--surf)}
 <!-- RECEIPT MODAL -->
 <div class="modal-ov" id="receipt-modal">
   <div class="modal">
-    <h2>&#x1F9FE; Receipt</h2>
+    <h2>&#129534; Receipt</h2>
     <div id="receipt-content"></div>
     <div class="modal-acts">
       <button class="btn btn-out" onclick="document.getElementById('receipt-modal').classList.remove('open')">Close</button>
-      <button class="btn btn-pri" onclick="window.print()">&#x1F5A8; Print</button>
+      <button class="btn btn-pri" onclick="window.print()">&#128424; Print</button>
     </div>
   </div>
 </div>
@@ -697,7 +731,7 @@ select option{background:var(--surf)}
         <option>Lechon Rolls</option><option>Lechon Manok</option><option>Cochinillo</option><option>Sulit Combo</option>
       </select>
     </div>
-    <div class="fg"><label>Price (&#x20B1;)</label><input id="pm-price" type="number" style="width:100%"></div>
+    <div class="fg"><label>Price (&#8369;)</label><input id="pm-price" type="number" style="width:100%"></div>
     <div class="fg"><label>Description / Size Info</label><input id="pm-desc" style="width:100%"></div>
     <div class="fg"><label>Stock Quantity</label><input id="pm-stock" type="number" style="width:100%"></div>
     <div class="modal-acts">
@@ -712,16 +746,16 @@ select option{background:var(--surf)}
   <div class="modal">
     <h2 id="emp-modal-title">Add Employee</h2>
     <input type="hidden" id="emp-id">
-    <div style="background:#FFF5F5;border:1px solid #FFCCCC;border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:.75rem;color:#7A0000">Lechon Hub &#x2014; All employees are part of the main hub staff.</div>
+    <div style="background:#FFF5F5;border:1px solid #FFCCCC;border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:.75rem;color:#7A0000">Lechon Hub &#8212; All employees are part of the main hub staff.</div>
     <div class="fg"><label>Full Name</label><input id="em-name" style="width:100%"></div>
     <div class="fg"><label>Role</label><input id="em-role" placeholder="e.g. Team Leader, Rider, Cashier" style="width:100%"></div>
     <div class="g2">
-      <div class="fg"><label>Base Pay (&#x20B1;/month)</label><input id="em-base" type="number" style="width:100%" placeholder="0"></div>
+      <div class="fg"><label>Base Pay (&#8369;/month)</label><input id="em-base" type="number" style="width:100%" placeholder="0"></div>
       <div class="fg"><label>Commission Rate (%)</label><input id="em-comm" type="number" style="width:100%" placeholder="e.g. 2"></div>
     </div>
     <div class="g2">
-      <div class="fg"><label>Bonus (&#x20B1;)</label><input id="em-bonus" type="number" style="width:100%" placeholder="0"></div>
-      <div class="fg"><label>Deductions (&#x20B1;)</label><input id="em-deduct" type="number" style="width:100%" placeholder="0"></div>
+      <div class="fg"><label>Bonus (&#8369;)</label><input id="em-bonus" type="number" style="width:100%" placeholder="0"></div>
+      <div class="fg"><label>Deductions (&#8369;)</label><input id="em-deduct" type="number" style="width:100%" placeholder="0"></div>
     </div>
     <div class="modal-acts">
       <button class="btn btn-out" onclick="document.getElementById('emp-modal').classList.remove('open')" style="flex:.4">Cancel</button>
@@ -747,7 +781,7 @@ select option{background:var(--surf)}
       </select>
     </div>
     <div class="fg"><label>Description</label><input id="mkt-desc" style="width:100%" placeholder="e.g. Facebook Ads - May campaign"></div>
-    <div class="fg"><label>Amount (&#x20B1;)</label><input id="mkt-amount" type="number" style="width:100%" placeholder="0"></div>
+    <div class="fg"><label>Amount (&#8369;)</label><input id="mkt-amount" type="number" style="width:100%" placeholder="0"></div>
     <div class="modal-acts">
       <button class="btn btn-out" onclick="document.getElementById('mkt-modal').classList.remove('open')" style="flex:.4">Cancel</button>
       <button class="btn btn-pri" onclick="saveMarketing()" style="flex:1">Save</button>
@@ -762,8 +796,8 @@ select option{background:var(--surf)}
     <input type="hidden" id="util-id">
     <div class="fg"><label>Month</label><input id="util-month-inp" type="month" style="width:100%"></div>
     <div class="g2">
-      <div class="fg"><label>Electricity (&#x20B1;)</label><input id="util-elec" type="number" style="width:100%" placeholder="0"></div>
-      <div class="fg"><label>Water (&#x20B1;)</label><input id="util-water" type="number" style="width:100%" placeholder="0"></div>
+      <div class="fg"><label>Electricity (&#8369;)</label><input id="util-elec" type="number" style="width:100%" placeholder="0"></div>
+      <div class="fg"><label>Water (&#8369;)</label><input id="util-water" type="number" style="width:100%" placeholder="0"></div>
     </div>
     <div class="fg"><label>Remarks (optional)</label><input id="util-notes" style="width:100%" placeholder="Additional notes..."></div>
     <div class="modal-acts">
@@ -780,7 +814,7 @@ select option{background:var(--surf)}
     <input type="hidden" id="misc-id">
     <div class="fg"><label>Date</label><input id="misc-date" type="date" style="width:100%"></div>
     <div class="fg"><label>Description</label><input id="misc-desc" style="width:100%" placeholder="e.g. Office supplies, cleaning materials..."></div>
-    <div class="fg"><label>Amount (&#x20B1;)</label><input id="misc-amount" type="number" style="width:100%" placeholder="0"></div>
+    <div class="fg"><label>Amount (&#8369;)</label><input id="misc-amount" type="number" style="width:100%" placeholder="0"></div>
     <div class="fg"><label>Remarks / Notes</label><textarea id="misc-remarks" style="width:100%;height:70px;resize:vertical" placeholder="Optional notes..."></textarea></div>
     <div class="modal-acts">
       <button class="btn btn-out" onclick="document.getElementById('misc-modal').classList.remove('open')" style="flex:.4">Cancel</button>
@@ -796,11 +830,53 @@ select option{background:var(--surf)}
     <input type="hidden" id="other-id">
     <div class="fg"><label>Date</label><input id="other-date" type="date" style="width:100%"></div>
     <div class="fg"><label>Description</label><input id="other-desc" style="width:100%" placeholder="e.g. Equipment repair, logistics..."></div>
-    <div class="fg"><label>Amount (&#x20B1;)</label><input id="other-amount" type="number" style="width:100%" placeholder="0"></div>
+    <div class="fg"><label>Amount (&#8369;)</label><input id="other-amount" type="number" style="width:100%" placeholder="0"></div>
     <div class="fg"><label>Remarks / Notes</label><textarea id="other-remarks" style="width:100%;height:70px;resize:vertical" placeholder="Optional notes..."></textarea></div>
     <div class="modal-acts">
       <button class="btn btn-out" onclick="document.getElementById('other-modal').classList.remove('open')" style="flex:.4">Cancel</button>
       <button class="btn btn-pri" onclick="saveOther()" style="flex:1">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESERVATION MODAL -->
+<div class="modal-ov" id="res-modal">
+  <div class="modal" style="max-width:560px">
+    <h2 id="res-modal-title">New Reservation</h2>
+    <input type="hidden" id="res-id">
+    <div class="g2">
+      <div class="fg"><label>Customer Name</label><input id="res-customer" style="width:100%" placeholder="e.g. Juan Santos"></div>
+      <div class="fg"><label>Contact Number</label><input id="res-contact" style="width:100%" placeholder="e.g. 09171234567"></div>
+    </div>
+    <div class="g2">
+      <div class="fg"><label>Event Date</label><input id="res-event-date" type="date" style="width:100%"></div>
+      <div class="fg"><label>Team</label>
+        <select id="res-team" style="width:100%">
+          <option value="lipachon">Lipachon</option>
+          <option value="montys">Monty's Batangas</option>
+          <option value="sammies">Sammie's Lechon</option>
+          <option value="kuyas">Kuya's Lechon</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label>Items / Order Details</label><textarea id="res-items" style="width:100%;height:70px;resize:vertical" placeholder="e.g. Whole Lechon x2, Lechon Belly x1, Liempo x3..."></textarea></div>
+    <div class="g2">
+      <div class="fg"><label>Total Amount (&#8369;)</label><input id="res-total" type="number" style="width:100%" placeholder="0" oninput="updateResBalance()"></div>
+      <div class="fg"><label>Deposit Paid (&#8369;)</label><input id="res-deposit" type="number" style="width:100%" placeholder="0" oninput="updateResBalance()"></div>
+    </div>
+    <div class="fg"><label>Remaining Balance (&#8369;)</label><input id="res-balance" type="number" style="width:100%;background:#FFF5F5;font-weight:700;color:#CC0000" readonly></div>
+    <div class="fg"><label>Notes / Remarks</label><textarea id="res-notes" style="width:100%;height:55px;resize:vertical" placeholder="e.g. Birthday party, 100 pax, delivery to Lipa City..."></textarea></div>
+    <div class="fg"><label>Status</label>
+      <select id="res-status" style="width:100%">
+        <option value="pending">Pending</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="fulfilled">Fulfilled</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-out" onclick="document.getElementById('res-modal').classList.remove('open')" style="flex:.4">Cancel</button>
+      <button class="btn btn-pri" onclick="saveReservation()" style="flex:1">Save Reservation</button>
     </div>
   </div>
 </div>
@@ -854,7 +930,7 @@ select option{background:var(--surf)}
     <div class="fg"><label>Items Ordered</label><input id="po-items" style="width:100%" placeholder="e.g. Whole Lechon, Lechon Belly..."></div>
     <div class="g2">
       <div class="fg"><label>Quantity</label><input id="po-qty" type="number" style="width:100%" placeholder="0"></div>
-      <div class="fg"><label>Total Cost (&#x20B1;)</label><input id="po-cost" type="number" style="width:100%" placeholder="0"></div>
+      <div class="fg"><label>Total Cost (&#8369;)</label><input id="po-cost" type="number" style="width:100%" placeholder="0"></div>
     </div>
     <div class="g2">
       <div class="fg"><label>Order Date</label><input id="po-date" type="date" style="width:100%"></div>
@@ -990,6 +1066,7 @@ let products = ld('lh_products', MENU_ITEMS.map(p=>({...p})));
 let transactions = ld('lh_txns', []);
 let employees = ld('lh_emps', defaultEmployees());
 let purchaseOrders = ld('lh_pos', []);
+let reservations = ld('lh_reservations', []);
 let marketingExpenses = ld('lh_mkt', []);
 let utilityExpenses = ld('lh_util', []);
 let miscExpenses = ld('lh_misc', []);
@@ -1066,6 +1143,7 @@ const PAGE_META={
   reports:{title:'Reports',sub:'Daily, Weekly and Monthly analytics'},
   teams:{title:'Team Sales',sub:'Compare performance across all teams'},
   expenses:{title:'Expenses',sub:'Compensation, Marketing, Utilities & More \u2014 Lechon Hub'},
+  reservations:{title:'Reservation Orders',sub:'Manage customer reservations and event orders'},
   'purchase-orders':{title:'Purchase Orders',sub:'Track supplier orders for Lechon Hub'},
   incentives:{title:'Incentives & Commission',sub:'Auto-calculated team incentives from sales'},
   settings:{title:'Settings',sub:'Configure your POS system'},
@@ -1088,6 +1166,7 @@ function nav(page){
   else if(page==='reports') renderReports();
   else if(page==='teams') renderTeams();
   else if(page==='expenses') renderExpenses();
+  else if(page==='reservations') renderReservations();
   else if(page==='purchase-orders') renderPOs();
   else if(page==='incentives') renderIncentives();
 }
@@ -1155,11 +1234,17 @@ function renderDashboard(){
   const topTeamId=Object.entries(teamSales).sort((a,b)=>b[1]-a[1])[0]?.[0]||'\u2014';
   const topTeam=getTeam(topTeamId);
 
+  // Reservation stats
+  const activeRes=reservations.filter(r=>r.status==='pending'||r.status==='confirmed');
+  const totalResAmt=activeRes.reduce((s,r)=>s+(r.totalAmount||0),0);
+  const totalResBal=activeRes.reduce((s,r)=>s+(r.balance||0),0);
+
   document.getElementById('kpi-grid').innerHTML=`
     <div class="kpi o"><div class="kpi-ico">\uD83D\uDCB0</div><div class="kpi-lbl">Today's Sales</div><div class="kpi-val">${php(todSales)}</div><div class="kpi-sub">${todOrders} orders today</div></div>
     <div class="kpi g"><div class="kpi-ico">\uD83E\uDDFE</div><div class="kpi-lbl">Month Sales</div><div class="kpi-val">${php(monSales)}</div><div class="kpi-sub">${monTxns.length} orders this month</div></div>
     <div class="kpi gr"><div class="kpi-ico">\uD83D\uDCCA</div><div class="kpi-lbl">Avg Order Value</div><div class="kpi-val">${php(avgOV)}</div><div class="kpi-sub">Today's average</div></div>
     <div class="kpi r"><div class="kpi-ico">\uD83C\uDFC6</div><div class="kpi-lbl">Top Team (Month)</div><div class="kpi-val" style="font-size:1rem">${topTeam.name}</div><div class="kpi-sub">${php(teamSales[topTeamId]||0)}</div></div>
+    <div class="kpi b" style="cursor:pointer" onclick="nav('reservations')"><div class="kpi-ico">\uD83D\uDCC5</div><div class="kpi-lbl">Active Reservations</div><div class="kpi-val">${php(totalResAmt)}</div><div class="kpi-sub">${activeRes.length} orders \u00B7 ${php(totalResBal)} balance due</div></div>
   `;
 
   // Weekly chart
@@ -1183,6 +1268,16 @@ function renderDashboard(){
   document.getElementById('recent-txns').innerHTML=`<table><thead><tr><th>ID</th><th>Date</th><th>Customer</th><th>Team</th><th>Total</th><th>Payment</th><th>Status</th></tr></thead><tbody>
   ${recent.map(x=>`<tr><td class="txt-pri fw6">${x.id}</td><td>${x.date} ${x.time}</td><td>${x.customer||'Walk-in'}</td><td><span style="color:${t(x.team).color}">${t(x.team).name.split(' ')[0]}</span></td><td class="fw7">${php(x.total)}</td><td>${x.payment?.toUpperCase()}</td><td><span class="st st-${x.status==='paid'?'paid':x.status==='void'?'void':'pend'}">${x.status}</span></td></tr>`).join('')}
   </tbody></table>`;
+
+  // Upcoming reservations (next 30 days, pending/confirmed)
+  const upcoming=[...reservations]
+    .filter(r=>(r.status==='pending'||r.status==='confirmed')&&r.eventDate>=tod)
+    .sort((a,b)=>a.eventDate.localeCompare(b.eventDate))
+    .slice(0,8);
+  const stCls={pending:'st-pend',confirmed:'st-paid',fulfilled:'st-void',cancelled:'st-void'};
+  document.getElementById('dash-reservations').innerHTML=upcoming.length?`<table><thead><tr><th>Res #</th><th>Event Date</th><th>Customer</th><th>Contact</th><th>Team</th><th>Items</th><th>Total</th><th>Deposit</th><th>Balance</th><th>Status</th></tr></thead><tbody>
+  ${upcoming.map(r=>`<tr><td class="txt-pri fw6">${r.id}</td><td class="fw6">${r.eventDate}</td><td>${r.customer}</td><td>${r.contact||'\u2014'}</td><td style="color:${getTeam(r.team).color}">${getTeam(r.team).name.split(' ')[0]}</td><td class="text-muted fs-sm">${r.items||'\u2014'}</td><td class="fw7">${php(r.totalAmount||0)}</td><td class="txt-grn">${php(r.deposit||0)}</td><td class="txt-red fw7">${php(r.balance||0)}</td><td><span class="st ${stCls[r.status]||'st-pend'}">${r.status}</span></td></tr>`).join('')}
+  </tbody></table>`:'<div style="text-align:center;padding:20px;color:var(--tx3);font-size:.82rem">No upcoming reservations</div>';
 
   // Inventory alerts
   const lowProds=products.filter(p=>p.stock<=3&&p.stock>0);
@@ -2172,6 +2267,131 @@ function saveIncRates(){
   sv('lh_inc_rates',productIncRates);
   renderIncentives();
   alert('Incentive rates saved!');
+}
+
+// ============================================================
+//  RESERVATIONS
+// ============================================================
+function renderReservations(){
+  const q=(document.getElementById('res-search')?.value||'').toLowerCase();
+  const sf=document.getElementById('res-status-filter')?.value||'';
+  const mf=document.getElementById('res-month-filter')?.value||'';
+  let rows=[...reservations].sort((a,b)=>a.eventDate.localeCompare(b.eventDate));
+  if(q) rows=rows.filter(r=>r.customer.toLowerCase().includes(q)||(r.contact||'').includes(q)||(r.items||'').toLowerCase().includes(q));
+  if(sf) rows=rows.filter(r=>r.status===sf);
+  if(mf) rows=rows.filter(r=>r.eventDate.startsWith(mf));
+
+  const active=reservations.filter(r=>r.status==='pending'||r.status==='confirmed');
+  const totAmt=active.reduce((s,r)=>s+(r.totalAmount||0),0);
+  const totDep=active.reduce((s,r)=>s+(r.deposit||0),0);
+  const totBal=active.reduce((s,r)=>s+(r.balance||0),0);
+  const pending=reservations.filter(r=>r.status==='pending').length;
+  const confirmed=reservations.filter(r=>r.status==='confirmed').length;
+
+  document.getElementById('res-kpi').innerHTML=`
+    <div class="kpi b"><div class="kpi-lbl">Total Reservation Amount</div><div class="kpi-val">${php(totAmt)}</div><div class="kpi-sub">${active.length} active orders</div></div>
+    <div class="kpi g"><div class="kpi-lbl">Total Deposits Collected</div><div class="kpi-val">${php(totDep)}</div><div class="kpi-sub">Paid so far</div></div>
+    <div class="kpi r"><div class="kpi-lbl">Total Balance Due</div><div class="kpi-val">${php(totBal)}</div><div class="kpi-sub">Still to collect</div></div>
+    <div class="kpi o"><div class="kpi-lbl">Pending</div><div class="kpi-val">${pending}</div><div class="kpi-sub">Awaiting confirmation</div></div>
+    <div class="kpi gr"><div class="kpi-lbl">Confirmed</div><div class="kpi-val">${confirmed}</div><div class="kpi-sub">Ready to fulfill</div></div>`;
+
+  const isAdmin=currentUser?.role==='admin';
+  const stCls={pending:'st-pend',confirmed:'st-paid',fulfilled:'st-void',cancelled:'st-void'};
+  const stColors={pending:'#E08000',confirmed:'#2EA84A',fulfilled:'#7A7A7A',cancelled:'#CC0000'};
+  document.getElementById('res-body').innerHTML=rows.length?rows.map(r=>`<tr>
+    <td class="fw6 txt-pri">${r.id}</td>
+    <td class="fw6">${r.eventDate}</td>
+    <td class="fw6">${r.customer}</td>
+    <td class="text-muted">${r.contact||'\u2014'}</td>
+    <td style="color:${getTeam(r.team).color}">${getTeam(r.team).name.split(' ')[0]}</td>
+    <td class="text-muted fs-sm" style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${r.items||''}">${r.items||'\u2014'}</td>
+    <td class="fw7">${php(r.totalAmount||0)}</td>
+    <td class="txt-grn">${php(r.deposit||0)}</td>
+    <td class="fw7 txt-red">${php(r.balance||0)}</td>
+    <td><span class="st ${stCls[r.status]||'st-pend'}" style="color:${stColors[r.status]||'#E08000'}">${r.status.charAt(0).toUpperCase()+r.status.slice(1)}</span></td>
+    <td style="display:flex;gap:4px">
+      <button class="btn btn-out btn-sm" onclick="editReservation('${r.id}')">\u270F</button>
+      ${isAdmin?`<button class="btn btn-red btn-sm" onclick="deleteReservation('${r.id}')">\uD83D\uDDD1</button>`:''}
+    </td>
+  </tr>`).join(''):'<tr><td colspan="11" style="text-align:center;color:var(--tx3);padding:30px">No reservations found. Click "+ New Reservation" to add one.</td></tr>';
+}
+
+function updateResBalance(){
+  const total=parseFloat(document.getElementById('res-total')?.value)||0;
+  const deposit=parseFloat(document.getElementById('res-deposit')?.value)||0;
+  const bal=document.getElementById('res-balance');
+  if(bal) bal.value=Math.max(0,total-deposit);
+}
+
+function openAddReservation(){
+  document.getElementById('res-modal-title').textContent='New Reservation';
+  document.getElementById('res-id').value='';
+  document.getElementById('res-customer').value='';
+  document.getElementById('res-contact').value='';
+  document.getElementById('res-event-date').value='';
+  document.getElementById('res-team').value='lipachon';
+  document.getElementById('res-items').value='';
+  document.getElementById('res-total').value='';
+  document.getElementById('res-deposit').value='';
+  document.getElementById('res-balance').value='';
+  document.getElementById('res-notes').value='';
+  document.getElementById('res-status').value='pending';
+  document.getElementById('res-modal').classList.add('open');
+}
+
+function editReservation(rid){
+  const r=reservations.find(x=>x.id===rid);if(!r)return;
+  document.getElementById('res-modal-title').textContent='Edit Reservation';
+  document.getElementById('res-id').value=r.id;
+  document.getElementById('res-customer').value=r.customer;
+  document.getElementById('res-contact').value=r.contact||'';
+  document.getElementById('res-event-date').value=r.eventDate;
+  document.getElementById('res-team').value=r.team||'lipachon';
+  document.getElementById('res-items').value=r.items||'';
+  document.getElementById('res-total').value=r.totalAmount||0;
+  document.getElementById('res-deposit').value=r.deposit||0;
+  document.getElementById('res-balance').value=r.balance||0;
+  document.getElementById('res-notes').value=r.notes||'';
+  document.getElementById('res-status').value=r.status||'pending';
+  document.getElementById('res-modal').classList.add('open');
+}
+
+function saveReservation(){
+  const rid=document.getElementById('res-id').value;
+  const total=parseFloat(document.getElementById('res-total').value)||0;
+  const deposit=parseFloat(document.getElementById('res-deposit').value)||0;
+  const data={
+    customer:document.getElementById('res-customer').value.trim(),
+    contact:document.getElementById('res-contact').value.trim(),
+    eventDate:document.getElementById('res-event-date').value,
+    team:document.getElementById('res-team').value,
+    items:document.getElementById('res-items').value.trim(),
+    totalAmount:total,
+    deposit:deposit,
+    balance:Math.max(0,total-deposit),
+    notes:document.getElementById('res-notes').value.trim(),
+    status:document.getElementById('res-status').value,
+    createdDate:today()
+  };
+  if(!data.customer){alert('Customer name is required.');return;}
+  if(!data.eventDate){alert('Event date is required.');return;}
+  if(rid){
+    const r=reservations.find(x=>x.id===rid);
+    if(r)Object.assign(r,data);
+  } else {
+    const num=String(reservations.length+1).padStart(4,'0');
+    reservations.push({id:'RES-'+num,...data});
+  }
+  sv('lh_reservations',reservations);
+  document.getElementById('res-modal').classList.remove('open');
+  renderReservations();
+}
+
+function deleteReservation(rid){
+  if(!confirm('Delete this reservation? This cannot be undone.'))return;
+  reservations=reservations.filter(x=>x.id!==rid);
+  sv('lh_reservations',reservations);
+  renderReservations();
 }
 
 // ============================================================
