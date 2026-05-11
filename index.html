@@ -589,6 +589,7 @@ select option{background:var(--surf)}
         </div>
       </div>
       <div id="res-kpi" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px"></div>
+      <div id="res-team-summary" style="margin-bottom:20px"></div>
       <div class="card">
         <div class="tbl-wrap"><table>
           <thead><tr><th>Res #</th><th>Event Date</th><th>Customer</th><th>Contact</th><th>Team</th><th>Items</th><th>Total</th><th>Deposit</th><th>Balance</th><th>Status</th><th>Actions</th></tr></thead>
@@ -2294,6 +2295,62 @@ function renderReservations(){
     <div class="kpi r"><div class="kpi-lbl">Total Balance Due</div><div class="kpi-val">${php(totBal)}</div><div class="kpi-sub">Still to collect</div></div>
     <div class="kpi o"><div class="kpi-lbl">Pending</div><div class="kpi-val">${pending}</div><div class="kpi-sub">Awaiting confirmation</div></div>
     <div class="kpi gr"><div class="kpi-lbl">Confirmed</div><div class="kpi-val">${confirmed}</div><div class="kpi-sub">Ready to fulfill</div></div>`;
+
+  // --- Per-team summary (uses same month + status filters as main table) ---
+  const filteredForTeams = reservations.filter(r=>{
+    if(sf && r.status!==sf) return false;
+    if(mf && !r.eventDate.startsWith(mf)) return false;
+    return true;
+  });
+  const teamRows = TEAMS.map(t=>{
+    const tr=filteredForTeams.filter(r=>r.team===t.id);
+    const tAmt=tr.reduce((s,r)=>s+(r.totalAmount||0),0);
+    const tDep=tr.reduce((s,r)=>s+(r.deposit||0),0);
+    const tBal=tr.reduce((s,r)=>s+(r.balance||0),0);
+    const tPend=tr.filter(r=>r.status==='pending').length;
+    const tConf=tr.filter(r=>r.status==='confirmed').length;
+    const tFulf=tr.filter(r=>r.status==='fulfilled').length;
+    const tCanc=tr.filter(r=>r.status==='cancelled').length;
+    return {t,tr,tAmt,tDep,tBal,tPend,tConf,tFulf,tCanc};
+  });
+  document.getElementById('res-team-summary').innerHTML=`
+    <div class="card" style="padding:16px">
+      <div style="font-weight:700;font-size:.92rem;margin-bottom:12px;color:var(--tx)">\uD83D\uDCCA Team Reservation Summary</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        ${teamRows.map(({t,tr,tAmt,tDep,tBal,tPend,tConf,tFulf,tCanc})=>`
+        <div style="border:1.5px solid ${t.color}30;border-radius:12px;padding:14px;background:${t.color}08">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+            <span style="width:12px;height:12px;border-radius:50%;background:${t.color};flex-shrink:0"></span>
+            <span style="font-weight:700;font-size:.9rem;color:${t.color}">${t.name}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:.78rem">
+            <div style="background:#fff;border-radius:7px;padding:7px 10px">
+              <div style="color:var(--tx3);margin-bottom:2px">Total Amount</div>
+              <div style="font-weight:700;color:var(--tx)">${php(tAmt)}</div>
+            </div>
+            <div style="background:#fff;border-radius:7px;padding:7px 10px">
+              <div style="color:var(--tx3);margin-bottom:2px">Orders</div>
+              <div style="font-weight:700;color:var(--tx)">${tr.length}</div>
+            </div>
+            <div style="background:#fff;border-radius:7px;padding:7px 10px">
+              <div style="color:var(--tx3);margin-bottom:2px">Deposits</div>
+              <div style="font-weight:700;color:var(--grn)">${php(tDep)}</div>
+            </div>
+            <div style="background:#fff;border-radius:7px;padding:7px 10px">
+              <div style="color:var(--tx3);margin-bottom:2px">Balance Due</div>
+              <div style="font-weight:700;color:var(--red)">${php(tBal)}</div>
+            </div>
+          </div>
+          <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;font-size:.72rem">
+            ${tPend?`<span style="background:#E0800020;color:#E08000;padding:2px 8px;border-radius:10px">${tPend} Pending</span>`:''}
+            ${tConf?`<span style="background:#2EA84A20;color:#2EA84A;padding:2px 8px;border-radius:10px">${tConf} Confirmed</span>`:''}
+            ${tFulf?`<span style="background:#7A7A7A20;color:#7A7A7A;padding:2px 8px;border-radius:10px">${tFulf} Fulfilled</span>`:''}
+            ${tCanc?`<span style="background:#CC000020;color:#CC0000;padding:2px 8px;border-radius:10px">${tCanc} Cancelled</span>`:''}
+            ${tr.length===0?`<span style="color:var(--tx3)">No reservations</span>`:''}
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
 
   const isAdmin=currentUser?.role==='admin';
   const stCls={pending:'st-pend',confirmed:'st-paid',fulfilled:'st-void',cancelled:'st-void'};
