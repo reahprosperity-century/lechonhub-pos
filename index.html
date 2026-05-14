@@ -340,6 +340,10 @@ select option{background:var(--surf)}
           </div>
           <div class="cart-foot">
             <div class="cart-row"><span>Subtotal</span><span id="cart-sub">&#8369;0</span></div>
+            <div class="cart-row" id="cart-delivery-row" style="display:none;align-items:center">
+              <span style="display:flex;align-items:center;gap:4px;font-size:.8rem;color:var(--tx2)">&#128666; Delivery Fee</span>
+              <input id="cart-delivery" type="number" min="0" placeholder="0" style="width:90px;text-align:right;padding:3px 8px;font-size:.82rem;border:1.5px solid var(--bdr);border-radius:7px;background:#fff" oninput="updateDeliveryTotal()">
+            </div>
             <div class="cart-row tot"><span>TOTAL</span><span id="cart-tot">&#8369;0</span></div>
             <div style="display:flex;gap:8px;margin-top:10px">
               <button class="btn btn-out btn-sm" onclick="clearCart()" style="flex:.4">&#128465; Clear</button>
@@ -572,14 +576,23 @@ select option{background:var(--surf)}
     <div class="page" id="page-reservations">
       <div class="flex-between mb14">
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <input id="res-search" placeholder="&#128269; Search customer..." style="width:180px" oninput="renderReservations()">
-          <select id="res-status-filter" onchange="renderReservations()" style="width:140px">
+          <input id="res-search" placeholder="&#128269; Search customer..." style="width:160px" oninput="renderReservations()">
+          <select id="res-status-filter" onchange="renderReservations()" style="width:130px">
             <option value="">All Status</option>
             <option value="pending">Pending</option>
             <option value="confirmed">Confirmed</option>
             <option value="fulfilled">Fulfilled</option>
             <option value="cancelled">Cancelled</option>
           </select>
+          <select id="res-team-filter" onchange="renderReservations()" style="width:140px">
+            <option value="">All Teams</option>
+            <option value="lipachon">Lipachon</option>
+            <option value="montys">Monty's Batangas</option>
+            <option value="sammies">Sammie's Lechon</option>
+          </select>
+          <input id="res-item-filter" placeholder="&#128269; Filter items..." style="width:140px" oninput="renderReservations()">
+          <input type="date" id="res-date-from" onchange="renderReservations()" title="Event Date From" style="width:140px">
+          <input type="date" id="res-date-to" onchange="renderReservations()" title="Event Date To" style="width:140px">
           <input type="month" id="res-month-filter" onchange="renderReservations()">
         </div>
         <div style="display:flex;gap:8px">
@@ -1355,11 +1368,28 @@ function removeFromCart(pid){cart=cart.filter(c=>c.id!==pid);renderCartUI();}
 
 function clearCart(){cart=[];renderCartUI();}
 
+function getDeliveryFee(){
+  const row=document.getElementById('cart-delivery-row');
+  if(!row||row.style.display==='none') return 0;
+  return parseFloat(document.getElementById('cart-delivery')?.value)||0;
+}
+
+function updateDeliveryTotal(){
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const fee=parseFloat(document.getElementById('cart-delivery')?.value)||0;
+  document.getElementById('cart-tot').textContent=php(subtotal+fee);
+}
+
 function renderCartUI(){
   const el=document.getElementById('cart-items');
-  if(!cart.length){el.innerHTML='<div class="empty-cart"><span class="ec-ico">\uD83D\uDED2</span>Cart is empty.<br>Tap a product to add.</div>';
+  const dr=document.getElementById('cart-delivery-row');
+  const di=document.getElementById('cart-delivery');
+  if(!cart.length){
+    el.innerHTML='<div class="empty-cart"><span class="ec-ico">\uD83D\uDED2</span>Cart is empty.<br>Tap a product to add.</div>';
     document.getElementById('cart-sub').textContent='\u20B10';
     document.getElementById('cart-tot').textContent='\u20B10';
+    if(dr) dr.style.display='none';
+    if(di) di.value='';
     return;
   }
   const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
@@ -1373,16 +1403,24 @@ function renderCartUI(){
     <div class="ci-price">${php(i.price*i.qty)}</div>
     <span class="rm" onclick="removeFromCart('${i.id}')">\u2715</span>
   </div>`).join('');
+  // Show delivery fee row only if Whole Lechon or Cochinillo in cart
+  const needsDelivery=cart.some(i=>i.cat==='Whole Lechon'||i.cat==='Cochinillo');
+  if(dr) dr.style.display=needsDelivery?'flex':'none';
+  if(!needsDelivery&&di) di.value='';
+  const fee=needsDelivery?(parseFloat(di?.value)||0):0;
   document.getElementById('cart-sub').textContent=php(subtotal);
-  document.getElementById('cart-tot').textContent=php(subtotal);
+  document.getElementById('cart-tot').textContent=php(subtotal+fee);
 }
 
 function openPayModal(){
   if(!cart.length){alert('Cart is empty!');return;}
-  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const fee=getDeliveryFee();
+  const total=subtotal+fee;
   document.getElementById('pay-order-summary').innerHTML=`
     <div style="margin-bottom:8px;font-weight:700;color:var(--pri)">Order Summary</div>
     ${cart.map(i=>`<div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>${i.emo} ${i.name} x${i.qty}</span><span>${php(i.price*i.qty)}</span></div>`).join('')}
+    ${fee>0?`<div style="display:flex;justify-content:space-between;margin-bottom:3px;color:var(--tx2)"><span>\uD83D\uDE9A Delivery Fee</span><span>${php(fee)}</span></div>`:''}
     <div style="display:flex;justify-content:space-between;font-weight:700;font-size:1rem;border-top:1px dashed var(--bdr);margin-top:8px;padding-top:8px"><span>TOTAL</span><span style="color:var(--gold)">${php(total)}</span></div>`;
   document.getElementById('tendered').value='';
   document.getElementById('change-row').style.display='none';
@@ -1399,7 +1437,7 @@ function selPayMethod(m,el){
 }
 
 function calcChange(){
-  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const total=cart.reduce((s,i)=>s+i.price*i.qty,0)+getDeliveryFee();
   const tendered=parseFloat(document.getElementById('tendered').value)||0;
   const change=tendered-total;
   document.getElementById('change-row').style.display=tendered>0?'flex':'none';
@@ -1408,8 +1446,10 @@ function calcChange(){
 }
 
 function completeOrder(){
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const fee=getDeliveryFee();
+  const total=subtotal+fee;
   if(payMethod==='cash'){
-    const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
     const tendered=parseFloat(document.getElementById('tendered').value)||0;
     if(tendered<total){alert('Insufficient amount! Total is '+php(total));return;}
   }
@@ -1421,7 +1461,9 @@ function completeOrder(){
     customer:document.getElementById('cart-customer').value||'Walk-in',
     team:document.getElementById('cart-team').value,
     items:[...cart],
-    total:cart.reduce((s,i)=>s+i.price*i.qty,0),
+    subtotal:subtotal,
+    deliveryFee:fee,
+    total:total,
     payment:payMethod,
     status:'paid'
   };
@@ -1452,6 +1494,7 @@ function showReceipt(txn){
     <div style="display:flex;justify-content:space-between"><span>Customer:</span><span>${txn.customer}</span></div>
     <div class="receipt-div"></div>
     ${txn.items.map(i=>`<div style="display:flex;justify-content:space-between;margin-bottom:3px"><span>${i.name} x${i.qty}</span><span>\u20B1${(i.price*i.qty).toLocaleString()}</span></div>`).join('')}
+    ${txn.deliveryFee>0?`<div style="display:flex;justify-content:space-between;margin-bottom:3px;color:#666"><span>\uD83D\uDE9A Delivery Fee</span><span>\u20B1${txn.deliveryFee.toLocaleString()}</span></div>`:''}
     <div class="receipt-div"></div>
     <div style="display:flex;justify-content:space-between;font-weight:800;font-size:1rem"><span>TOTAL</span><span>\u20B1${txn.total.toLocaleString()}</span></div>
     <div style="display:flex;justify-content:space-between"><span>Payment:</span><span>${txn.payment?.toUpperCase()}</span></div>
@@ -2276,10 +2319,18 @@ function saveIncRates(){
 function renderReservations(){
   const q=(document.getElementById('res-search')?.value||'').toLowerCase();
   const sf=document.getElementById('res-status-filter')?.value||'';
+  const tf=document.getElementById('res-team-filter')?.value||'';
+  const itemF=(document.getElementById('res-item-filter')?.value||'').toLowerCase();
+  const dateFrom=document.getElementById('res-date-from')?.value||'';
+  const dateTo=document.getElementById('res-date-to')?.value||'';
   const mf=document.getElementById('res-month-filter')?.value||'';
   let rows=[...reservations].sort((a,b)=>a.eventDate.localeCompare(b.eventDate));
   if(q) rows=rows.filter(r=>r.customer.toLowerCase().includes(q)||(r.contact||'').includes(q)||(r.items||'').toLowerCase().includes(q));
   if(sf) rows=rows.filter(r=>r.status===sf);
+  if(tf) rows=rows.filter(r=>r.team===tf);
+  if(itemF) rows=rows.filter(r=>(r.items||'').toLowerCase().includes(itemF));
+  if(dateFrom) rows=rows.filter(r=>r.eventDate>=dateFrom);
+  if(dateTo) rows=rows.filter(r=>r.eventDate<=dateTo);
   if(mf) rows=rows.filter(r=>r.eventDate.startsWith(mf));
 
   const active=reservations.filter(r=>r.status==='pending'||r.status==='confirmed');
@@ -2296,10 +2347,12 @@ function renderReservations(){
     <div class="kpi o"><div class="kpi-lbl">Pending</div><div class="kpi-val">${pending}</div><div class="kpi-sub">Awaiting confirmation</div></div>
     <div class="kpi gr"><div class="kpi-lbl">Confirmed</div><div class="kpi-val">${confirmed}</div><div class="kpi-sub">Ready to fulfill</div></div>`;
 
-  // --- Per-team summary (uses same month + status filters as main table) ---
+  // --- Per-team summary (uses same filters as main table) ---
   const filteredForTeams = reservations.filter(r=>{
     if(sf && r.status!==sf) return false;
     if(mf && !r.eventDate.startsWith(mf)) return false;
+    if(dateFrom && r.eventDate<dateFrom) return false;
+    if(dateTo && r.eventDate>dateTo) return false;
     return true;
   });
   const teamRows = TEAMS.map(t=>{
