@@ -610,8 +610,8 @@ select option{background:var(--surf)}
             <input id="res-item-filter" placeholder="&#128269; e.g. Whole Lechon..." style="width:100%" oninput="renderReservations()">
           </div>
           <div>
-            <div style="font-size:.72rem;color:var(--tx3);margin-bottom:4px">Event Month</div>
-            <input type="month" id="res-month-filter" onchange="renderReservations()" style="width:100%">
+            <div style="font-size:.72rem;color:var(--tx3);margin-bottom:4px">Event Date</div>
+            <input type="date" id="res-month-filter" onchange="renderReservations()" style="width:100%">
           </div>
           <div style="display:flex;align-items:flex-end;gap:6px">
             <button class="btn btn-out btn-sm" onclick="clearResFilters()" style="width:100%">&#10005; Clear Filters</button>
@@ -2354,7 +2354,7 @@ function renderReservations(){
   if(sf) rows=rows.filter(r=>r.status===sf);
   if(tf) rows=rows.filter(r=>r.team===tf);
   if(itemF) rows=rows.filter(r=>(r.items||'').toLowerCase().includes(itemF));
-  if(mf) rows=rows.filter(r=>r.eventDate.startsWith(mf));
+  if(mf) rows=rows.filter(r=>r.eventDate===mf);
 
   const active=reservations.filter(r=>r.status==='pending'||r.status==='confirmed');
   const totAmt=active.reduce((s,r)=>s+(r.totalAmount||0),0);
@@ -2374,7 +2374,7 @@ function renderReservations(){
   const filteredForTeams = reservations.filter(r=>{
     if(sf && r.status!==sf) return false;
     if(tf && r.team!==tf) return false;
-    if(mf && !r.eventDate.startsWith(mf)) return false;
+    if(mf && r.eventDate!==mf) return false;
     return true;
   });
   const teamRows = TEAMS.map(t=>{
