@@ -297,6 +297,10 @@ select option{background:var(--surf)}
         </div>
       </div>
       <div class="card mb20">
+        <div class="card-hdr"><span class="card-ttl">&#127942; Team Incentives This Month</span><button class="btn btn-out btn-sm" onclick="nav('incentives')">View Full Report</button></div>
+        <div class="ch-wrap"><canvas id="ch-dash-incentives"></canvas></div>
+      </div>
+      <div class="card mb20">
         <div class="card-hdr"><span class="card-ttl">&#128197; Upcoming Reservations</span><button class="btn btn-out btn-sm" onclick="nav('reservations')">View All</button></div>
         <div class="tbl-wrap" id="dash-reservations"></div>
       </div>
@@ -639,19 +643,29 @@ select option{background:var(--surf)}
           <label class="text-muted fs-sm">Month:</label>
           <input type="month" id="inc-month" onchange="renderIncentives()">
         </div>
-        <span style="font-size:.75rem;color:#BB6666">Fixed &#8369; incentive per product sold</span>
+        <span style="font-size:.75rem;color:#BB6666">&#8369; incentive per unit sold &#183; auto-calculated from actual orders</span>
       </div>
-      <div class="kpi-grid" id="inc-totals" style="grid-template-columns:repeat(3,1fr)"></div>
-      <div class="card" style="margin-top:14px">
-        <div class="card-hdr"><span class="card-ttl">&#127942; Team Incentives Breakdown</span></div>
+      <!-- Grand KPI Summary -->
+      <div class="kpi-grid" id="inc-totals" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px"></div>
+      <!-- Per-Team Cards -->
+      <div id="inc-team-cards" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px"></div>
+      <!-- 6-Month Trend Chart -->
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-hdr"><span class="card-ttl">&#128200; Team Incentives Trend (Last 6 Months)</span></div>
+        <div class="ch-wrap"><canvas id="ch-inc-trend"></canvas></div>
+      </div>
+      <!-- Combined Summary Table -->
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-hdr"><span class="card-ttl">&#127942; Combined Team Summary</span></div>
         <div class="tbl-wrap"><table>
-          <thead><tr><th>Team</th><th>Orders</th><th>Qty Sold</th><th>Total Incentive</th></tr></thead>
+          <thead><tr><th>Team</th><th>Orders</th><th>Units Sold</th><th>Total Incentive</th><th>Share</th></tr></thead>
           <tbody id="inc-body"></tbody>
         </table></div>
       </div>
-      <div class="card admin-only" style="margin-top:14px">
+      <!-- Rate Editor (Admin only) -->
+      <div class="card admin-only">
         <div class="card-hdr"><span class="card-ttl">&#9881;&#65039; Incentive Rates per Product</span><button class="btn btn-pri btn-sm" onclick="saveIncRates()">&#128190; Save Rates</button></div>
-        <div id="inc-rate-editor" style="max-height:400px;overflow-y:auto"></div>
+        <div id="inc-rate-editor" style="max-height:500px;overflow-y:auto;padding:4px"></div>
       </div>
     </div>
 
@@ -1292,10 +1306,16 @@ function renderDashboard(){
   }
   buildChart('ch-weekly','line',labels,[{label:'Sales (\u20B1)',data:wkData,borderColor:'#CC0000',backgroundColor:'rgba(204,0,0,.08)',tension:.4,fill:true,pointBackgroundColor:'#CC0000',borderWidth:2}]);
 
-  // Teams chart
+  // Teams sales chart
   const tLabels=TEAMS.map(t=>t.name.split(' ')[0]);
   const tData=TEAMS.map(t=>teamSales[t.id]||0);
   buildChart('ch-teams-dash','bar',tLabels,[{label:'Sales',data:tData,backgroundColor:TEAMS.map(t=>t.colorA),borderColor:TEAMS.map(t=>t.color),borderWidth:2,borderRadius:6}]);
+
+  // Teams incentives chart (last 7 days trend per team)
+  const incLabels=[];const incDays=[];
+  for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const ds=d.toISOString().split('T')[0];incLabels.push(d.toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'}));incDays.push(ds);}
+  const incDatasets=TEAMS.map(t=>({label:t.name.split(' ')[0],data:incDays.map(ds=>txnsForDate(ds).filter(x=>x.team===t.id).reduce((s,x)=>s+calcTxnIncentive(x),0)),borderColor:t.color,backgroundColor:t.colorA.replace('.7','.08'),tension:.4,fill:false,pointBackgroundColor:t.color,borderWidth:2,pointRadius:4}));
+  buildChart('ch-dash-incentives','line',incLabels,incDatasets,{});
 
   // Recent txns
   const recent=[...transactions].sort((a,b)=>b.date.localeCompare(a.date)||b.time.localeCompare(a.time)).slice(0,8);
@@ -2248,41 +2268,50 @@ function savePO(){
 // ============================================================
 //  INCENTIVES & COMMISSION
 // ============================================================
-// Product incentive rates (\u20B1 per unit sold) \u2014 based on LH Incentive Rates sheet
+// Product incentive rates (\u20B1 per unit sold) \u2014 keyed to exact POS product names
 const DEFAULT_PRODUCT_INC_RATES={
-  // LECHON BELLY
-  'Belly - 1kg':100,'Belly - 2kg':200,'Belly - 3kg':200,'Belly - 3.5kg':300,
-  'Belly - 4kg':300,'Belly - 5kg':400,'Belly - 6kg':400,'Belly - 7kg':500,'Belly - 8kg':500,
-  'Belly 2kg + 1 Manok':200,'Belly 3kg + 1 Manok':200,'Belly 4kg + 1 Manok':300,
-  'Belly 5kg + 1 Manok':400,'Belly 6kg + 1 Manok':500,'Belly 7kg + 1 Manok':500,'Belly 8kg + 1 Manok':500,
-  'Belly 2kg + 1 Manok + 1 Roll':200,'Belly 3kg + 1 Manok + 1 Roll':200,'Belly 4kg + 1 Manok + 1 Roll':300,
-  'Belly 5kg + 1 Manok + 1 Roll':400,'Belly 6kg + 1 Manok + 1 Roll':400,
-  'Belly 7kg + 1 Manok + 1 Roll':500,'Belly 8kg + 1 Manok + 1 Roll':500,
+  // WHOLE LECHON
+  'Whole Lechon \u2013 Small':300,'Whole Lechon \u2013 Medium':400,'Whole Lechon \u2013 Large':500,
+  'Whole Lechon \u2013 Extra Large':600,'Whole Lechon \u2013 Jumbo':700,'Whole Lechon \u2013 Mega':800,
+  'Whole Lechon \u2013 Extra Mega':900,'Whole Lechon \u2013 Queen':1000,
+  'Whole Lechon \u2013 King':1100,'Whole Lechon \u2013 Fiesta':1200,
   // LECHON ULO
-  'Lechon Ulo - Small':100,'Lechon Ulo - Medium':100,'Lechon Ulo - Large':200,'Lechon Ulo - Jumbo':200,
-  'Lechon Ulo - 2pcs Large 6kg - Promo':300,'Lechon Ulo 6kg + 2pcs Manok - Promo':200,
-  'Lechon Ulo 6kg + 2pcs Roll - Promo':200,'Lechon Ulo 6kg + 1 Roll + 1 Manok - Promo':200,
-  'Lechon Ulo 6kg + 3pcs Roll - Promo':200,'Lechon Ulo 6kg + 4pcs Roll - Promo':300,
-  'Lechon Ulo 6kg + 5pcs Roll - Promo':300,'Lechon Ulo 6kg + 3kg Belly - Promo':300,
-  'Lechon Ulo 6kg + 4kg Belly - Promo':300,'Lechon Ulo 6kg + 5kg Belly - Promo':400,
-  'Lechon Ulo 6kg + 6kg Belly - Promo':400,'Lechon Ulo 6kg + 7kg Belly - Promo':500,
-  'Lechon Ulo 6kg + 8kg Belly - Promo':500,'Lechon Ulo 6kg + Manok':200,
-  'Lechon Ulo Set A - Lechon Ulo 6kg + Belly 3kg + 2 Manok + Coke':500,
-  // LECHON ROLLS & MANOK
-  'Lechon Roll - 2pcs':100,'Lechon Roll - 3pcs':100,'Lechon Roll - 4pcs':100,'Lechon Roll - 5pcs':100,
-  'Lechon Roll + Manok':100,'Lechon Roll - 2pcs +1 Manok':100,'Lechon Roll - 3pcs +1 Manok':100,
-  'Lechon Roll - 4pcs +1 Manok':100,'Lechon Roll - 5pcs +1 Manok':100,
-  'Lechon Manok - 2pcs':100,'Lechon Manok - 3pcs':100,
-  'Lechon Manok - 2pcs + 1 Roll':100,'Lechon Manok - 3pcs + 1 Roll':100,
-  'Lechon Manok - 4pcs + 1 Roll':100,'Lechon Manok - 5pcs + 1 Roll':100,
+  'Lechon Ulo \u2013 Small':100,'Lechon Ulo \u2013 Medium':100,
+  'Lechon Ulo \u2013 Large':200,'Lechon Ulo \u2013 Jumbo':200,
+  // LECHON BELLY
+  'Lechon Belly 1kg':100,'Lechon Belly 2kg':200,'Lechon Belly 3kg':200,
+  'Lechon Belly 3.5kg':300,'Lechon Belly 4kg':300,'Lechon Belly 5kg':400,
+  'Lechon Belly 6kg':400,'Lechon Belly 7kg':500,'Lechon Belly 8kg':500,
+  // LECHON ROLLS
+  '2 Lechon Rolls':100,'3 Lechon Rolls':100,'4 Lechon Rolls':100,'5 Lechon Rolls':100,
+  // LECHON MANOK
+  '2 Lechon Manok':100,'3 Lechon Manok':100,
   // COCHINILLO
-  'Cochinillo - Small 3-4kg':200,'Cochinillo - Medium 4-5kg':300,
-  'Cochinillo - Large 5-6kg':400,'Cochinillo - Jumbo 6-7kg':500,
-  // WHOLE LECHON (defaults)
-  'Whole Lechon - Small':300,'Whole Lechon - Medium':400,
-  'Whole Lechon - Large':500,'Whole Lechon - Jumbo':600,
-  // SULIT COMBO (defaults)
-  'Sulit Combo A':200,'Sulit Combo B':300,'Sulit Combo C':300
+  'Cochinillo \u2013 Medium':300,'Cochinillo \u2013 Large':400,'Cochinillo \u2013 Jumbo':500,
+  // SULIT: ULO + BELLY
+  'Sulit: 6kg Ulo + 2kg Belly':200,'Sulit: 6kg Ulo + 3kg Belly':300,
+  'Sulit: 6kg Ulo + 4kg Belly':300,'Sulit: 6kg Ulo + 5kg Belly':400,
+  'Sulit: 6kg Ulo + 6kg Belly':400,'Sulit: 6kg Ulo + 7kg Belly':500,'Sulit: 6kg Ulo + 8kg Belly':500,
+  // SULIT: ROLLS + MANOK
+  'Sulit: 2 Rolls + 1 Manok':100,'Sulit: 3 Rolls + 1 Manok':100,
+  'Sulit: 4 Rolls + 1 Manok':100,'Sulit: 5 Rolls + 1 Manok':100,
+  // SULIT: MANOK + ROLL
+  'Sulit: 1 Manok + 1 Roll':100,'Sulit: 2 Manok + 1 Roll':100,
+  'Sulit: 3 Manok + 1 Roll':100,'Sulit: 4 Manok + 1 Roll':100,'Sulit: 5 Manok + 1 Roll':100,
+  // SULIT: BELLY + MANOK
+  'Sulit: 2kg Belly + Manok':200,'Sulit: 3kg Belly + Manok':200,'Sulit: 4kg Belly + Manok':300,
+  'Sulit: 5kg Belly + Manok':400,'Sulit: 6kg Belly + Manok':500,
+  'Sulit: 7kg Belly + Manok':500,'Sulit: 8kg Belly + Manok':500,
+  // FEAST: BELLY + MANOK + ROLL
+  'Feast: 2kg Belly + Manok + 1 Roll':200,'Feast: 3kg Belly + Manok + 1 Roll':200,
+  'Feast: 4kg Belly + Manok + 1 Roll':300,'Feast: 5kg Belly + Manok + 1 Roll':400,
+  'Feast: 6kg Belly + Manok + 1 Roll':400,'Feast: 7kg Belly + Manok + 1 Roll':500,
+  'Feast: 8kg Belly + Manok + 1 Roll':500,
+  // SPECIAL: ULO + ROLLS/MANOK
+  'Special: 6kg Ulo + 2 Rolls':200,'Special: 6kg Ulo + 2 Manok':200,
+  'Special: 6kg Ulo + 1 Roll + 1 Manok':200,
+  // SUPREME
+  'Supreme: 6kg Ulo + 3kg Belly + 2 Manok + Sarsa + Coke':500,
 };
 let productIncRates=ld('lh_inc_rates',DEFAULT_PRODUCT_INC_RATES);
 
@@ -2302,65 +2331,79 @@ function calcTxnIncentive(txn){
 function renderIncentives(){
   const m=document.getElementById('inc-month')?.value||today().slice(0,7);
   const txns=txnsForMonth(m);
-  const teams=['lipachon','montys','sammies','kuyas'];
+  const teamIds=['lipachon','montys','sammies','kuyas'];
   let grandInc=0,grandOrders=0,grandQty=0;
 
-  const rows=teams.map(tid=>{
+  const teamData=teamIds.map(tid=>{
     const t=getTeam(tid);
     const tTxns=txns.filter(x=>x.team===tid);
-    if(!tTxns.length) return '';
-    const qty=tTxns.reduce((s,x)=>(x.items||[]).reduce((a,i)=>a+i.qty,s),0);
+    const qty=tTxns.reduce((s,x)=>(x.items||[]).reduce((a,ci)=>a+ci.qty,s),0);
     const inc=tTxns.reduce((s,x)=>s+calcTxnIncentive(x),0);
-    grandInc+=inc; grandOrders+=tTxns.length; grandQty+=qty;
-    // Build per-product breakdown
     const prodMap={};
-    tTxns.forEach(x=>(x.items||[]).forEach(i=>{
-      if(!prodMap[i.name]) prodMap[i.name]={qty:0,rate:getIncRate(i.name),inc:0};
-      prodMap[i.name].qty+=i.qty;
-      prodMap[i.name].inc+=getIncRate(i.name)*i.qty;
+    tTxns.forEach(x=>(x.items||[]).forEach(ci=>{
+      if(!prodMap[ci.name]) prodMap[ci.name]={qty:0,rate:getIncRate(ci.name),inc:0};
+      prodMap[ci.name].qty+=ci.qty;
+      prodMap[ci.name].inc+=getIncRate(ci.name)*ci.qty;
     }));
-    const prodRows=Object.entries(prodMap).map(([name,p])=>`
-      <tr style="background:#FFFAFA">
-        <td style="padding-left:28px;font-size:.78rem;color:var(--tx2)">\u21B3 ${name}</td>
-        <td style="text-align:center;font-size:.78rem;color:var(--tx3)">\u2014</td>
-        <td style="text-align:center;font-size:.78rem">${p.qty} unit${p.qty!==1?'s':''}</td>
-        <td style="font-size:.78rem;color:var(--grn)">\u20B1${p.rate}/unit \u2192 ${php(p.inc)}</td>
-      </tr>`).join('');
-    return `<tr style="background:#FFF5F5">
-      <td style="color:${t.color};font-weight:700">${t.name}</td>
-      <td style="text-align:center;font-weight:600">${tTxns.length}</td>
-      <td style="text-align:center;font-weight:600">${qty}</td>
-      <td class="fw7 txt-grn">${php(inc)}</td>
-    </tr>${prodRows}`;
-  }).join('');
+    grandInc+=inc; grandOrders+=tTxns.length; grandQty+=qty;
+    return {t,tTxns,qty,inc,prodMap};
+  });
 
+  const topTeam=teamData.reduce((a,b)=>b.inc>a.inc?b:a,teamData[0]);
   document.getElementById('inc-totals').innerHTML=`
-    <div class="kpi gr"><div class="kpi-lbl">Total Incentives</div><div class="kpi-val">${php(grandInc)}</div><div class="kpi-sub">All teams combined</div></div>
-    <div class="kpi o"><div class="kpi-lbl">Total Orders</div><div class="kpi-val">${grandOrders}</div><div class="kpi-sub">This month</div></div>
-    <div class="kpi g"><div class="kpi-lbl">Total Qty Sold</div><div class="kpi-val">${grandQty}</div><div class="kpi-sub">Units across all products</div></div>`;
+    <div class="kpi gr"><div class="kpi-ico">&#127942;</div><div class="kpi-lbl">Total Incentives</div><div class="kpi-val">${php(grandInc)}</div><div class="kpi-sub">All teams \u00B7 ${m}</div></div>
+    <div class="kpi o"><div class="kpi-ico">&#129999;</div><div class="kpi-lbl">Total Orders</div><div class="kpi-val">${grandOrders}</div><div class="kpi-sub">This month</div></div>
+    <div class="kpi g"><div class="kpi-ico">&#128230;</div><div class="kpi-lbl">Total Units Sold</div><div class="kpi-val">${grandQty}</div><div class="kpi-sub">Across all products</div></div>
+    <div class="kpi b"><div class="kpi-ico">&#129351;</div><div class="kpi-lbl">Top Earning Team</div><div class="kpi-val" style="font-size:1rem;color:${topTeam.t.color}">${grandInc>0?topTeam.t.name.split(' ')[0]:'--'}</div><div class="kpi-sub">${grandInc>0?php(topTeam.inc):''}</div></div>`;
 
-  document.getElementById('inc-body').innerHTML=(rows||'<tr><td colspan="4" style="text-align:center;color:var(--tx3);padding:20px">No transactions this month</td></tr>')+
-    (grandOrders?`<tr style="border-top:2px solid var(--bdr);font-weight:800;background:#FFF5F5">
-      <td>GRAND TOTAL</td>
-      <td style="text-align:center">${grandOrders}</td>
-      <td style="text-align:center">${grandQty}</td>
-      <td class="txt-grn">${php(grandInc)}</td>
-    </tr>`:``);
+  const teamCards=teamData.map(({t,tTxns,qty,inc,prodMap})=>{
+    if(!tTxns.length) return '<div style="border:1.5px solid '+t.color+'20;border-radius:14px;padding:18px;background:#FAFAFA;opacity:.6"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="width:14px;height:14px;border-radius:50%;background:'+t.color+'"></span><span style="font-weight:700;color:'+t.color+'">'+t.name+'</span></div><div style="font-size:.8rem;color:var(--tx3);text-align:center;padding:10px">No orders this month</div></div>';
+    const prods=Object.entries(prodMap).sort((a,b)=>b[1].inc-a[1].inc);
+    const pct=grandInc>0?Math.round(inc/grandInc*100):0;
+    const prodRowsHtml=prods.map(([name,p])=>'<tr style="border-bottom:1px solid #FFF0F0"><td style="padding:4px 6px;color:var(--tx)">'+name+'</td><td style="padding:4px 6px;text-align:center;color:var(--tx2)">'+p.qty+'</td><td style="padding:4px 6px;text-align:right;color:var(--tx3)">&#8369;'+p.rate+'</td><td style="padding:4px 6px;text-align:right;font-weight:700;color:var(--grn)">'+php(p.inc)+'</td></tr>').join('');
+    return '<div style="border:2px solid '+t.color+'40;border-radius:14px;padding:18px;background:#fff;box-shadow:0 2px 12px '+t.color+'15">'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">'
+      +'<div style="display:flex;align-items:center;gap:8px"><span style="width:14px;height:14px;border-radius:50%;background:'+t.color+'"></span><span style="font-weight:800;color:'+t.color+';font-size:.95rem">'+t.name+'</span></div>'
+      +'<span style="background:'+t.color+'15;color:'+t.color+';padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700">'+pct+'% of total</span></div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">'
+      +'<div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:.68rem;color:var(--tx3)">INCENTIVES</div><div style="font-size:1rem;font-weight:800;color:var(--grn)">'+php(inc)+'</div></div>'
+      +'<div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:.68rem;color:var(--tx3)">ORDERS</div><div style="font-size:1rem;font-weight:800;color:var(--tx)">'+tTxns.length+'</div></div>'
+      +'<div style="background:var(--bg);border-radius:8px;padding:8px;text-align:center"><div style="font-size:.68rem;color:var(--tx3)">UNITS SOLD</div><div style="font-size:1rem;font-weight:800;color:var(--tx)">'+qty+'</div></div>'
+      +'</div><div style="font-size:.7rem;font-weight:700;color:var(--tx3);margin-bottom:6px;letter-spacing:.5px">PRODUCT BREAKDOWN</div>'
+      +'<div style="max-height:200px;overflow-y:auto"><table style="width:100%;font-size:.76rem;border-collapse:collapse">'
+      +'<thead><tr style="border-bottom:1px solid var(--bdr)"><th style="text-align:left;padding:4px 6px;color:var(--tx3)">Product</th><th style="text-align:center;padding:4px 6px;color:var(--tx3)">Qty</th><th style="text-align:right;padding:4px 6px;color:var(--tx3)">Rate</th><th style="text-align:right;padding:4px 6px;color:var(--tx3)">Incentive</th></tr></thead>'
+      +'<tbody>'+prodRowsHtml
+      +'<tr style="border-top:2px solid var(--bdr);background:var(--bg)"><td colspan="3" style="padding:5px 6px;font-weight:700">TOTAL</td><td style="padding:5px 6px;text-align:right;font-weight:800;color:var(--grn)">'+php(inc)+'</td></tr>'
+      +'</tbody></table></div></div>';
+  }).join('');
+  document.getElementById('inc-team-cards').innerHTML=teamCards;
 
+  document.getElementById('inc-body').innerHTML=teamData.filter(d=>d.tTxns.length).map(({t,tTxns,qty,inc})=>{
+    const pct=grandInc>0?Math.round(inc/grandInc*100):0;
+    return '<tr><td style="color:'+t.color+';font-weight:700">'+t.name+'</td><td style="text-align:center">'+tTxns.length+'</td><td style="text-align:center">'+qty+'</td><td class="fw7 txt-grn">'+php(inc)+'</td>'
+      +'<td><div style="background:#eee;border-radius:10px;height:8px;overflow:hidden;margin-bottom:2px"><div style="background:'+t.color+';height:100%;width:'+pct+'%;border-radius:10px"></div></div><span style="font-size:.7rem;color:'+t.color+'">'+pct+'%</span></td></tr>';
+  }).join('')+(grandOrders?'<tr style="border-top:2px solid var(--bdr);font-weight:800;background:#FFF5F5"><td>GRAND TOTAL</td><td style="text-align:center">'+grandOrders+'</td><td style="text-align:center">'+grandQty+'</td><td class="txt-grn">'+php(grandInc)+'</td><td></td></tr>':'')
+  ||'<tr><td colspan="5" style="text-align:center;color:var(--tx3);padding:24px">No transactions this month</td></tr>';
 
-  // Render rate editor for admin
+  const months=[];const mLabels=[];
+  for(let i=5;i>=0;i--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);const key=d.toISOString().slice(0,7);months.push(key);mLabels.push(d.toLocaleDateString('en-PH',{month:'short',year:'2-digit'}));}
+  const trendDatasets=TEAMS.map(t=>({label:t.name.split(' ')[0],data:months.map(mo=>txnsForMonth(mo).filter(x=>x.team===t.id).reduce((s,x)=>s+calcTxnIncentive(x),0)),borderColor:t.color,backgroundColor:t.colorA.replace('.7','.1'),tension:.4,fill:false,pointBackgroundColor:t.color,borderWidth:2,pointRadius:4}));
+  buildChart('ch-inc-trend','line',mLabels,trendDatasets,{});
+
   const editor=document.getElementById('inc-rate-editor');
   if(editor){
-    editor.innerHTML=Object.entries(productIncRates).map(([name,rate])=>`
-      <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--bdr)">
-        <span style="flex:1;font-size:.82rem">${name}</span>
-        <span style="font-size:.75rem;color:var(--tx3)">\u20B1</span>
-        <input type="number" value="${rate}" min="0" step="50" data-pname="${name.replace(/"/g,'&quot;')}"
-          style="width:90px;text-align:right" onchange="productIncRates[this.dataset.pname]=parseFloat(this.value)||0">
-      </div>`).join('');
+    const cats={'Whole Lechon':[],'Lechon Ulo':[],'Lechon Belly':[],'Rolls & Manok':[],'Cochinillo':[],'Combos':[]};
+    Object.entries(productIncRates).forEach(([name,rate])=>{
+      if(name.includes('Whole Lechon')) cats['Whole Lechon'].push([name,rate]);
+      else if(name.startsWith('Lechon Ulo')) cats['Lechon Ulo'].push([name,rate]);
+      else if(name.startsWith('Lechon Belly')) cats['Lechon Belly'].push([name,rate]);
+      else if(name.includes('Lechon Roll')||name.includes('Lechon Manok')) cats['Rolls & Manok'].push([name,rate]);
+      else if(name.includes('Cochinillo')) cats['Cochinillo'].push([name,rate]);
+      else cats['Combos'].push([name,rate]);
+    });
+    editor.innerHTML=Object.entries(cats).map(([cat,items])=>items.length?'<div style="margin-bottom:14px"><div style="font-size:.7rem;font-weight:700;color:var(--tx2);letter-spacing:.5px;margin-bottom:6px;padding:4px 8px;background:var(--bg);border-radius:6px">'+cat+'</div>'+items.map(([name,rate])=>'<div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--bdr)"><span style="flex:1;font-size:.8rem">'+name+'</span><span style="font-size:.75rem;color:var(--tx3)">&#8369;</span><input type="number" value="'+rate+'" min="0" step="50" data-pname="'+name.replace(/"/g,'&quot;')+'" style="width:80px;text-align:right" onchange="productIncRates[this.dataset.pname]=parseFloat(this.value)||0"></div>').join('')+'</div>':'').join('');
   }
 }
-
 function saveIncRates(){
   sv('lh_inc_rates',productIncRates);
   renderIncentives();
