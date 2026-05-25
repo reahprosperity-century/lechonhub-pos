@@ -2315,11 +2315,23 @@ const DEFAULT_PRODUCT_INC_RATES={
 };
 let productIncRates=ld('lh_inc_rates',DEFAULT_PRODUCT_INC_RATES);
 
+// Normalize: convert em-dash/en-dash to hyphen, trim, lowercase
+function normName(s){ return (s||'').replace(/[\u2013\u2014]/g,'-').toLowerCase().trim(); }
+
 function getIncRate(name){
-  if(productIncRates[name]!==undefined) return productIncRates[name];
-  // fuzzy: check if product name contains key
+  const nn=normName(name);
+  // 1. Exact match (normalized)
   for(const k of Object.keys(productIncRates)){
-    if(name.toLowerCase().includes(k.toLowerCase())||k.toLowerCase().includes(name.toLowerCase())) return productIncRates[k];
+    if(normName(k)===nn) return productIncRates[k];
+  }
+  // 2. Exact match in DEFAULT (covers products missing from localStorage)
+  for(const k of Object.keys(DEFAULT_PRODUCT_INC_RATES)){
+    if(normName(k)===nn) return DEFAULT_PRODUCT_INC_RATES[k];
+  }
+  // 3. Fuzzy: partial match (normalized)
+  for(const k of Object.keys(productIncRates)){
+    const nk=normName(k);
+    if(nn.includes(nk)||nk.includes(nn)) return productIncRates[k];
   }
   return 0;
 }
@@ -2392,16 +2404,19 @@ function renderIncentives(){
 
   const editor=document.getElementById('inc-rate-editor');
   if(editor){
+    // Build from MENU_ITEMS (source of truth), look up rate via normName
+    const catOrder=['Whole Lechon','Lechon Ulo','Lechon Belly','Rolls & Manok','Cochinillo','Combos'];
     const cats={'Whole Lechon':[],'Lechon Ulo':[],'Lechon Belly':[],'Rolls & Manok':[],'Cochinillo':[],'Combos':[]};
-    Object.entries(productIncRates).forEach(([name,rate])=>{
-      if(name.includes('Whole Lechon')) cats['Whole Lechon'].push([name,rate]);
-      else if(name.startsWith('Lechon Ulo')) cats['Lechon Ulo'].push([name,rate]);
-      else if(name.startsWith('Lechon Belly')) cats['Lechon Belly'].push([name,rate]);
-      else if(name.includes('Lechon Roll')||name.includes('Lechon Manok')) cats['Rolls & Manok'].push([name,rate]);
-      else if(name.includes('Cochinillo')) cats['Cochinillo'].push([name,rate]);
-      else cats['Combos'].push([name,rate]);
+    MENU_ITEMS.forEach(item=>{
+      const rate=getIncRate(item.name);
+      if(item.cat==='Whole Lechon') cats['Whole Lechon'].push([item.name,rate]);
+      else if(item.cat==='Lechon Ulo') cats['Lechon Ulo'].push([item.name,rate]);
+      else if(item.cat==='Lechon Belly') cats['Lechon Belly'].push([item.name,rate]);
+      else if(item.cat==='Lechon Rolls'||item.cat==='Lechon Manok') cats['Rolls & Manok'].push([item.name,rate]);
+      else if(item.cat==='Cochinillo') cats['Cochinillo'].push([item.name,rate]);
+      else cats['Combos'].push([item.name,rate]);
     });
-    editor.innerHTML=Object.entries(cats).map(([cat,items])=>items.length?'<div style="margin-bottom:14px"><div style="font-size:.7rem;font-weight:700;color:var(--tx2);letter-spacing:.5px;margin-bottom:6px;padding:4px 8px;background:var(--bg);border-radius:6px">'+cat+'</div>'+items.map(([name,rate])=>'<div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--bdr)"><span style="flex:1;font-size:.8rem">'+name+'</span><span style="font-size:.75rem;color:var(--tx3)">&#8369;</span><input type="number" value="'+rate+'" min="0" step="50" data-pname="'+name.replace(/"/g,'&quot;')+'" style="width:80px;text-align:right" onchange="productIncRates[this.dataset.pname]=parseFloat(this.value)||0"></div>').join('')+'</div>':'').join('');
+    editor.innerHTML=catOrder.map(cat=>cats[cat].length?'<div style="margin-bottom:14px"><div style="font-size:.7rem;font-weight:700;color:var(--tx2);letter-spacing:.5px;margin-bottom:6px;padding:4px 8px;background:var(--bg);border-radius:6px">'+cat+'</div>'+cats[cat].map(([name,rate])=>'<div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--bdr)"><span style="flex:1;font-size:.8rem">'+name+'</span><span style="font-size:.75rem;color:var(--tx3)">&#8369;</span><input type="number" value="'+rate+'" min="0" step="50" data-pname="'+name.replace(/"/g,'&quot;')+'" style="width:80px;text-align:right" onchange="productIncRates[this.dataset.pname]=parseFloat(this.value)||0"></div>').join('')+'</div>':'').join('');
   }
 }
 function saveIncRates(){
