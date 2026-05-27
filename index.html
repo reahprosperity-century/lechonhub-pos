@@ -389,6 +389,7 @@ select option{background:var(--surf)}
         <div class="rpt-tab active" onclick="switchReport('daily',this)">Daily</div>
         <div class="rpt-tab" onclick="switchReport('weekly',this)">Weekly</div>
         <div class="rpt-tab" onclick="switchReport('monthly',this)">Monthly</div>
+        <div class="rpt-tab" onclick="switchReport('cancelled',this)" style="color:#CC0000">&#10006; Cancelled</div>
       </div>
       <div id="rpt-daily">
         <div class="flex-between mb14">
@@ -457,6 +458,26 @@ select option{background:var(--surf)}
         <div class="card">
           <div class="card-hdr"><span class="card-ttl">All Transactions This Month</span></div>
           <div class="tbl-wrap"><table><thead><tr><th>Date & Time</th><th>Customer</th><th>Team</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Actions</th></tr></thead><tbody id="rpt-m-body"></tbody></table></div>
+        </div>
+      </div>
+      <div id="rpt-cancelled" style="display:none">
+        <div class="flex-between mb14">
+          <div style="display:flex;gap:8px;align-items:center">
+            <label style="font-size:.8rem;color:var(--tx2)">Team:</label>
+            <select id="rptc-team" onchange="renderCancelledReport()" style="padding:7px 10px;border-radius:8px;border:1.5px solid var(--bdr);background:#FFF5F5;font-size:.82rem">
+              <option value="">All Teams</option>
+              <option value="lipachon">Lipachon</option>
+              <option value="montys">Monty's</option>
+              <option value="sammies">Sammie's</option>
+              <option value="kuyas">Kuya's</option>
+            </select>
+          </div>
+          <button class="btn btn-out btn-sm" onclick="exportReport('cancelled')">&#128229; Export CSV</button>
+        </div>
+        <div class="kpi-grid" id="rpt-c-kpi" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px"></div>
+        <div class="card">
+          <div class="card-hdr"><span class="card-ttl" style="color:#CC0000">&#10006; Cancelled Reservations</span></div>
+          <div class="tbl-wrap"><table><thead><tr><th>Res #</th><th>Event Date</th><th>Customer</th><th>Contact</th><th>Team</th><th>Items</th><th>Total Amount</th><th>Deposit Paid</th><th>Last Updated</th><th>Notes</th></tr></thead><tbody id="rpt-c-body"></tbody></table></div>
         </div>
       </div>
     </div>
@@ -1287,6 +1308,8 @@ function renderDashboard(){
   const activeRes=reservations.filter(r=>r.status==='pending'||r.status==='confirmed');
   const totalResAmt=activeRes.reduce((s,r)=>s+(r.totalAmount||0),0);
   const totalResBal=activeRes.reduce((s,r)=>s+(r.balance||0),0);
+  const cancelledRes=reservations.filter(r=>r.status==='cancelled');
+  const cancelledAmt=cancelledRes.reduce((s,r)=>s+(r.totalAmount||0),0);
 
   document.getElementById('kpi-grid').innerHTML=`
     <div class="kpi o"><div class="kpi-ico">\uD83D\uDCB0</div><div class="kpi-lbl">Today's Sales</div><div class="kpi-val">${php(todSales)}</div><div class="kpi-sub">${todOrders} orders today</div></div>
@@ -1294,6 +1317,7 @@ function renderDashboard(){
     <div class="kpi gr"><div class="kpi-ico">\uD83D\uDCCA</div><div class="kpi-lbl">Avg Order Value</div><div class="kpi-val">${php(avgOV)}</div><div class="kpi-sub">Today's average</div></div>
     <div class="kpi r"><div class="kpi-ico">\uD83C\uDFC6</div><div class="kpi-lbl">Top Team (Month)</div><div class="kpi-val" style="font-size:1rem">${topTeam.name}</div><div class="kpi-sub">${php(teamSales[topTeamId]||0)}</div></div>
     <div class="kpi b" style="cursor:pointer" onclick="nav('reservations')"><div class="kpi-ico">\uD83D\uDCC5</div><div class="kpi-lbl">Active Reservations</div><div class="kpi-val">${php(totalResAmt)}</div><div class="kpi-sub">${activeRes.length} orders \u00B7 ${php(totalResBal)} balance due</div></div>
+    <div class="kpi" style="background:#FFF0F0;border-color:#FFAAAA;cursor:pointer" onclick="nav('reports');setTimeout(()=>{const t=document.querySelector('.rpt-tab:last-child');if(t)t.click();},200)"><div class="kpi-ico" style="font-size:1.2rem">&#10006;</div><div class="kpi-lbl" style="color:#CC0000">Cancelled Reservations</div><div class="kpi-val" style="color:#CC0000">${cancelledRes.length}</div><div class="kpi-sub" style="color:#AA0000">${php(cancelledAmt)} total value \u00B7 tap to view</div></div>
   `;
 
   // Weekly chart
@@ -1643,10 +1667,38 @@ function switchReport(tab,el){
   currentReportTab=tab;
   document.querySelectorAll('.rpt-tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  ['daily','weekly','monthly'].forEach(t=>document.getElementById('rpt-'+t).style.display=t===tab?'block':'none');
+  ['daily','weekly','monthly','cancelled'].forEach(t=>document.getElementById('rpt-'+t).style.display=t===tab?'block':'none');
   if(tab==='daily') renderDailyReport();
   else if(tab==='weekly') renderWeeklyReport();
+  else if(tab==='cancelled') renderCancelledReport();
   else renderMonthlyReport();
+}
+
+function renderCancelledReport(){
+  const tf=document.getElementById('rptc-team')?.value||'';
+  let rows=reservations.filter(r=>r.status==='cancelled');
+  if(tf) rows=rows.filter(r=>r.team===tf);
+  rows.sort((a,b)=>(b.updatedAt||b.createdDate||'').localeCompare(a.updatedAt||a.createdDate||''));
+  const totalAmt=rows.reduce((s,r)=>s+(r.totalAmount||0),0);
+  const totalDep=rows.reduce((s,r)=>s+(r.deposit||0),0);
+  document.getElementById('rpt-c-kpi').innerHTML=
+    '<div class="kpi r"><div class="kpi-lbl">Total Cancelled</div><div class="kpi-val">'+rows.length+'</div><div class="kpi-sub">reservations</div></div>'+
+    '<div class="kpi o"><div class="kpi-lbl">Total Amount Lost</div><div class="kpi-val">'+php(totalAmt)+'</div><div class="kpi-sub">cancelled order value</div></div>'+
+    '<div class="kpi g"><div class="kpi-lbl">Deposits Collected</div><div class="kpi-val">'+php(totalDep)+'</div><div class="kpi-sub">already paid by customers</div></div>';
+  document.getElementById('rpt-c-body').innerHTML=rows.length?rows.map(r=>
+    '<tr>'+
+    '<td class="fw6 txt-pri">'+r.id+'</td>'+
+    '<td class="fw6">'+r.eventDate+'</td>'+
+    '<td class="fw6">'+r.customer+'</td>'+
+    '<td class="text-muted">'+(r.contact||'\u2014')+'</td>'+
+    '<td style="color:'+getTeam(r.team).color+'">'+getTeam(r.team).name.split(' ')[0]+'</td>'+
+    '<td class="text-muted fs-sm" style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+(r.items||'')+'">'+(r.items||'\u2014')+'</td>'+
+    '<td class="fw7 txt-red">'+php(r.totalAmount||0)+'</td>'+
+    '<td class="txt-grn">'+php(r.deposit||0)+'</td>'+
+    '<td style="font-size:.78rem;color:var(--tx3)">'+(r.updatedAt||r.createdDate||'\u2014')+'</td>'+
+    '<td class="text-muted fs-sm">'+(r.notes||'\u2014')+'</td>'+
+    '</tr>'
+  ).join(''):'<tr><td colspan="10" style="text-align:center;color:var(--tx3);padding:30px">No cancelled reservations found.</td></tr>';
 }
 
 function renderReports(){
@@ -2524,7 +2576,7 @@ function renderReservations(){
   document.getElementById('res-body').innerHTML=rows.length?rows.map(r=>`<tr>
     <td class="fw6 txt-pri">${r.id}</td>
     <td class="fw6">${r.eventDate}</td>
-    <td class="fw6">${r.customer}</td>
+    <td><div class="fw6">${r.customer}</div>${r.updatedAt?`<div style="font-size:.68rem;color:var(--tx3);margin-top:2px">&#9998; Updated: ${r.updatedAt}</div>`:''}</td>
     <td class="text-muted">${r.contact||'\u2014'}</td>
     <td style="color:${getTeam(r.team).color}">${getTeam(r.team).name.split(' ')[0]}</td>
     <td class="text-muted fs-sm" style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${r.items||''}">${r.items||'\u2014'}</td>
@@ -2533,8 +2585,8 @@ function renderReservations(){
     <td class="fw7 txt-red">${php(r.balance||0)}</td>
     <td><span class="st ${stCls[r.status]||'st-pend'}" style="color:${stColors[r.status]||'#E08000'}">${r.status.charAt(0).toUpperCase()+r.status.slice(1)}</span></td>
     <td style="display:flex;gap:4px">
-      <button class="btn btn-out btn-sm" onclick="editReservation('${r.id}')">\u270F</button>
-      ${isAdmin?`<button class="btn btn-red btn-sm" onclick="deleteReservation('${r.id}')">\uD83D\uDDD1</button>`:''}
+      <button class="btn btn-out btn-sm" onclick="editReservation('${r.id}')">&#9998;</button>
+      ${isAdmin?`<button class="btn btn-red btn-sm" onclick="deleteReservation('${r.id}')">&#128465;</button>`:''}
     </td>
   </tr>`).join(''):'<tr><td colspan="11" style="text-align:center;color:var(--tx3);padding:30px">No reservations found. Click "+ New Reservation" to add one.</td></tr>';
 }
@@ -2579,6 +2631,7 @@ function editReservation(rid){
   document.getElementById('res-modal').classList.add('open');
 }
 
+function nowStr(){const n=new Date();return today()+' '+String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}
 function saveReservation(){
   const rid=document.getElementById('res-id').value;
   const total=parseFloat(document.getElementById('res-total').value)||0;
@@ -2594,16 +2647,15 @@ function saveReservation(){
     balance:Math.max(0,total-deposit),
     notes:document.getElementById('res-notes').value.trim(),
     status:document.getElementById('res-status').value,
-    createdDate:today()
   };
   if(!data.customer){alert('Customer name is required.');return;}
   if(!data.eventDate){alert('Event date is required.');return;}
   if(rid){
     const r=reservations.find(x=>x.id===rid);
-    if(r)Object.assign(r,data);
+    if(r){Object.assign(r,data);r.updatedAt=nowStr();}
   } else {
     const num=String(reservations.length+1).padStart(4,'0');
-    reservations.push({id:'RES-'+num,...data});
+    reservations.push({id:'RES-'+num,...data,createdDate:today(),updatedAt:''});
   }
   sv('lh_reservations',reservations);
   document.getElementById('res-modal').classList.remove('open');
