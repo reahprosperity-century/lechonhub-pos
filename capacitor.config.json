@@ -1,0 +1,15 @@
+{
+  "appId": "com.lechonhub.pos",
+  "appName": "LechonHub POS",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": true,
+    "backgroundColor": "#800000"
+  },
+  "ios": {
+    "backgroundColor": "#800000"
+  }
+}
