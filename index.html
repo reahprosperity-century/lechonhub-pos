@@ -538,7 +538,7 @@ select option{background:var(--surf)}
           <select id="inv-cat-filter" onchange="renderInventory()" style="width:160px">
             <option value="">All Categories</option>
             <option>Whole Lechon</option><option>Lechon Ulo</option><option>Lechon Belly</option>
-            <option>Lechon Rolls</option><option>Lechon Manok</option><option>Cochinillo</option><option>Sulit Combo</option>
+            <option>Lechon Rolls</option><option>Lechon Manok</option><option>Cochinillo</option>
           </select>
           <select id="inv-status-filter" onchange="renderInventory()" style="width:130px">
             <option value="">All Status</option>
@@ -549,7 +549,7 @@ select option{background:var(--surf)}
       </div>
       <div class="card">
         <div class="tbl-wrap"><table id="inv-table">
-          <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Product</th><th>Category</th><th>Stock (kg/pcs)</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="inv-body"></tbody>
         </table></div>
       </div>
@@ -1027,7 +1027,7 @@ function doGet(e){
     </div>
     <div class="fg"><label>Price (&#8369;)</label><input id="pm-price" type="number" style="width:100%"></div>
     <div class="fg"><label>Description / Size Info</label><input id="pm-desc" style="width:100%"></div>
-    <div class="fg"><label>Stock Quantity</label><input id="pm-stock" type="number" style="width:100%"></div>
+    <div class="fg"><label>Stock (kg/pcs)</label><input id="pm-stock" type="number" style="width:100%"></div>
     <div class="modal-acts">
       <button class="btn btn-out" onclick="document.getElementById('product-modal').classList.remove('open')" style="flex:.4">Cancel</button>
       <button class="btn btn-pri" onclick="saveProduct()" style="flex:1">Save Product</button>
@@ -1319,6 +1319,62 @@ const TEAMS = [
   {id:'montys',   name:"Monty's Batangas Lechon",color:'#F0B030', colorA:'rgba(240,176,48,.7)'},
 ];
 
+// ============================================================
+//  INVENTORY ITEMS (separate from POS menu — no Sulit/Feast/Supreme)
+// ============================================================
+const INV_ITEMS = [
+  // Whole Lechon
+  {id:'inv-wl-s',  name:'Whole Lechon – Small',       cat:'Whole Lechon', emo:'🐷', unit:'kg'},
+  {id:'inv-wl-m',  name:'Whole Lechon – Medium',      cat:'Whole Lechon', emo:'🐷', unit:'kg'},
+  {id:'inv-wl-l',  name:'Whole Lechon – Large',       cat:'Whole Lechon', emo:'🐷', unit:'kg'},
+  {id:'inv-wl-xl', name:'Whole Lechon – Extra Large', cat:'Whole Lechon', emo:'🐷', unit:'kg'},
+  {id:'inv-wl-j',  name:'Whole Lechon – Jumbo',       cat:'Whole Lechon', emo:'🐷', unit:'kg'},
+  {id:'inv-wl-mg', name:'Whole Lechon – Mega',        cat:'Whole Lechon', emo:'🐷', unit:'kg'},
+  {id:'inv-wl-xm', name:'Whole Lechon – Extra Mega',  cat:'Whole Lechon', emo:'🐷', unit:'kg'},
+  {id:'inv-wl-q',  name:'Whole Lechon – Queen',       cat:'Whole Lechon', emo:'🐷', unit:'kg'},
+  {id:'inv-wl-k',  name:'Whole Lechon – King',        cat:'Whole Lechon', emo:'🐷', unit:'kg'},
+  {id:'inv-wl-f',  name:'Whole Lechon – Fiesta',      cat:'Whole Lechon', emo:'🐷', unit:'kg'},
+  // Lechon Ulo — single inventory item (kg)
+  {id:'inv-ulo',   name:'Lechon Ulo',                      cat:'Lechon Ulo',   emo:'🐗', unit:'kg'},
+  // Lechon Belly — keep size variants (kg)
+  {id:'inv-b-1',   name:'Lechon Belly 1kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
+  {id:'inv-b-2',   name:'Lechon Belly 2kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
+  {id:'inv-b-3',   name:'Lechon Belly 3kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
+  {id:'inv-b-35',  name:'Lechon Belly 3.5kg',              cat:'Lechon Belly', emo:'🥩', unit:'kg'},
+  {id:'inv-b-4',   name:'Lechon Belly 4kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
+  {id:'inv-b-5',   name:'Lechon Belly 5kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
+  {id:'inv-b-6',   name:'Lechon Belly 6kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
+  {id:'inv-b-7',   name:'Lechon Belly 7kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
+  {id:'inv-b-8',   name:'Lechon Belly 8kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
+  // Lechon Rolls — single item (pcs)
+  {id:'inv-rolls', name:'Lechon Rolls',                    cat:'Lechon Rolls', emo:'🌯', unit:'pcs'},
+  // Lechon Manok — single item (pcs)
+  {id:'inv-manok', name:'Lechon Manok',                    cat:'Lechon Manok', emo:'🍗', unit:'pcs'},
+  // Cochinillo — single item (kg)
+  {id:'inv-cc',    name:'Cochinillo',                      cat:'Cochinillo',   emo:'🐽', unit:'kg'},
+];
+
+// Maps POS product IDs → inventory deduction {id, qty}
+const POS_TO_INV = {
+  'wl-s': {id:'inv-wl-s', qty:1}, 'wl-m': {id:'inv-wl-m', qty:1},
+  'wl-l': {id:'inv-wl-l', qty:1}, 'wl-xl':{id:'inv-wl-xl',qty:1},
+  'wl-j': {id:'inv-wl-j', qty:1}, 'wl-mg':{id:'inv-wl-mg',qty:1},
+  'wl-xm':{id:'inv-wl-xm',qty:1},'wl-q': {id:'inv-wl-q', qty:1},
+  'wl-k': {id:'inv-wl-k', qty:1}, 'wl-f': {id:'inv-wl-f', qty:1},
+  'ulo-s':{id:'inv-ulo',  qty:4}, 'ulo-m':{id:'inv-ulo',  qty:5},
+  'ulo-l':{id:'inv-ulo',  qty:6}, 'ulo-j':{id:'inv-ulo',  qty:7},
+  'b-1':  {id:'inv-b-1',  qty:1}, 'b-2':  {id:'inv-b-2',  qty:2},
+  'b-3':  {id:'inv-b-3',  qty:3}, 'b-35': {id:'inv-b-35', qty:3.5},
+  'b-4':  {id:'inv-b-4',  qty:4}, 'b-5':  {id:'inv-b-5',  qty:5},
+  'b-6':  {id:'inv-b-6',  qty:6}, 'b-7':  {id:'inv-b-7',  qty:7},
+  'b-8':  {id:'inv-b-8',  qty:8},
+  'r-2':  {id:'inv-rolls',qty:2}, 'r-3':  {id:'inv-rolls',qty:3},
+  'r-4':  {id:'inv-rolls',qty:4}, 'r-5':  {id:'inv-rolls',qty:5},
+  'lm-2': {id:'inv-manok',qty:2}, 'lm-3': {id:'inv-manok',qty:3},
+  'cc-m': {id:'inv-cc',   qty:5}, 'cc-l': {id:'inv-cc',   qty:6},
+  'cc-j': {id:'inv-cc',   qty:7},
+};
+
 const MENU_ITEMS = [
   // Whole Lechon
   {id:'wl-s',   name:'Whole Lechon \u2013 Small',      cat:'Whole Lechon', price:10500, desc:'15-18kg | 15-20 pax',  emo:'\uD83D\uDC37', stock:10},
@@ -1407,6 +1463,7 @@ function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}ca
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
 let products = ld('lh_products', MENU_ITEMS.map(p=>({...p})));
+let invStock = ld('lh_inv_stock', {});
 let transactions = ld('lh_txns', []);
 let employees = ld('lh_emps', defaultEmployees());
 let purchaseOrders = ld('lh_pos', []);
@@ -1825,6 +1882,18 @@ function calcChange(){
   document.getElementById('change-val').style.color=change<0?'var(--red)':'var(--grn)';
 }
 
+function deductInventory(cartItems){
+  cartItems.forEach(ci=>{
+    const map=POS_TO_INV[ci.id];
+    if(map){
+      const total=map.qty*ci.qty;
+      invStock[map.id]=Math.max(0,(invStock[map.id]||0)-total);
+    }
+  });
+  sv('lh_inv_stock',invStock);
+  updateBadge();
+}
+
 function completeOrder(){
   const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
   const fee=getDeliveryFee();
@@ -1847,8 +1916,8 @@ function completeOrder(){
     payment:payMethod,
     status:'paid'
   };
-  // Deduct stock
-  cart.forEach(ci=>{const p=getProduct(ci.id);if(p){p.stock=Math.max(0,p.stock-ci.qty);fbWriteStock(p.id,p.stock);}});
+  // Deduct from inventory
+  deductInventory(cart);
   sv('lh_products',products);
   transactions.unshift(txn);
   sv('lh_txns',transactions);
@@ -1893,47 +1962,74 @@ function renderInventory(){
   const q=(document.getElementById('inv-search')?.value||'').toLowerCase();
   const cat=document.getElementById('inv-cat-filter')?.value||'';
   const st=document.getElementById('inv-status-filter')?.value||'';
-  let prods=products;
-  if(q) prods=prods.filter(p=>p.name.toLowerCase().includes(q));
-  if(cat) prods=prods.filter(p=>p.cat===cat);
-  if(st==='ok') prods=prods.filter(p=>p.stock>5);
-  else if(st==='low') prods=prods.filter(p=>p.stock>0&&p.stock<=5);
-  else if(st==='out') prods=prods.filter(p=>p.stock===0);
+  let items=INV_ITEMS;
+  if(q) items=items.filter(p=>p.name.toLowerCase().includes(q));
+  if(cat) items=items.filter(p=>p.cat===cat);
   const tbody=document.getElementById('inv-body');
-  tbody.innerHTML=prods.map(p=>{
-    const sc=p.stock===0?'inv-out':p.stock<=3?'inv-low':'inv-ok';
-    const sl=p.stock===0?'Out of Stock':p.stock<=3?'Low Stock':'In Stock';
-    const isAdmin=currentUser?.role==='admin';
-    return `<tr><td><strong>${p.emo} ${p.name}</strong></td><td class="text-muted">${p.cat}</td><td class="fw7">${php(p.price)}</td><td class="fw7">${p.stock}</td><td><span class="inv-st ${sc}">${sl}</span></td><td style="display:flex;gap:6px">
-      ${isAdmin?`<button class="btn btn-out btn-sm" onclick="openStockModal('${p.id}')">\u00B1 Stock</button><button class="btn btn-pri btn-sm" onclick="openEditProduct('${p.id}')">\u270F Edit</button>`:'<span class="text-muted" style="font-size:.75rem">View only</span>'}
-    </td></tr>`;
+  const isAdmin=currentUser?.role==='admin';
+  const rows=items.filter(p=>{
+    const kg=invStock[p.id]||0;
+    if(st==='ok') return kg>5;
+    if(st==='low') return kg>0&&kg<=5;
+    if(st==='out') return kg===0;
+    return true;
+  }).map(p=>{
+    const kg=invStock[p.id]||0;
+    const sc=kg===0?'inv-out':kg<=5?'inv-low':'inv-ok';
+    const sl=kg===0?'Out of Stock':kg<=5?'Low Stock':'In Stock';
+    return `<tr>
+      <td><strong>${p.emo} ${p.name}</strong></td>
+      <td class="text-muted">${p.cat}</td>
+      <td class="fw7">${kg} ${p.unit}</td>
+      <td><span class="inv-st ${sc}">${sl}</span></td>
+      <td style="display:flex;gap:6px">
+        ${isAdmin?`<button class="btn btn-out btn-sm" onclick="openInvStockModal('${p.id}')">\u00B1 Adjust</button>`:'<span class="text-muted" style="font-size:.75rem">View only</span>'}
+      </td>
+    </tr>`;
   }).join('');
+  tbody.innerHTML=rows||'<tr><td colspan="5" style="text-align:center;color:var(--tx3);padding:20px">No items found</td></tr>';
 }
 
+function openInvStockModal(invId){
+  const p=INV_ITEMS.find(x=>x.id===invId);if(!p)return;
+  document.getElementById('stock-prod-id').value=invId;
+  document.getElementById('stock-prod-name').textContent=p.emo+' '+p.name;
+  const cur=invStock[invId]||0;
+  document.getElementById('stock-current').textContent=cur+' '+p.unit;
+  document.getElementById('stock-adj').value='';
+  document.getElementById('stock-modal').classList.add('open');
+}
 function openStockModal(pid){
   const p=getProduct(pid);if(!p)return;
   document.getElementById('stock-prod-id').value=pid;
   document.getElementById('stock-prod-name').textContent=p.emo+' '+p.name;
-  document.getElementById('stock-current').textContent=p.stock+' units';
+  document.getElementById('stock-current').textContent=(invStock[pid]||p.stock)+' kg';
   document.getElementById('stock-adj').value='';
   document.getElementById('stock-modal').classList.add('open');
 }
 
 function updateBadge(){
-  const lowProds=products.filter(p=>p.stock<=3&&p.stock>0);
-  const outProds=products.filter(p=>p.stock===0);
+  const lowCount=INV_ITEMS.filter(p=>{const k=invStock[p.id]||0;return k>0&&k<=5;}).length;
+  const outCount=INV_ITEMS.filter(p=>(invStock[p.id]||0)===0).length;
   const badge=document.getElementById('low-stock-badge');
-  if(badge) badge.style.display=(lowProds.length+outProds.length)>0?'':'none';
+  if(badge) badge.style.display=(lowCount+outCount)>0?'':'none';
 }
 
 function updateStock(){
   const pid=document.getElementById('stock-prod-id').value;
-  const adj=parseInt(document.getElementById('stock-adj').value)||0;
-  const p=getProduct(pid);if(!p)return;
-  p.stock=Math.max(0,p.stock+adj);
-  sv('lh_products',products);
-  fbWriteStock(p.id,p.stock);
-  bcBroadcast('STOCK_UPDATE',{id:p.id,stock:p.stock});
+  const adj=parseFloat(document.getElementById('stock-adj').value)||0;
+  // Check if this is an inventory item
+  const invItem=INV_ITEMS.find(x=>x.id===pid);
+  if(invItem){
+    invStock[pid]=Math.max(0,(invStock[pid]||0)+adj);
+    sv('lh_inv_stock',invStock);
+  } else {
+    const p=getProduct(pid);if(!p)return;
+    p.stock=Math.max(0,p.stock+adj);
+    sv('lh_products',products);
+    fbWriteStock(p.id,p.stock);
+    bcBroadcast('STOCK_UPDATE',{id:p.id,stock:p.stock});
+  }
   document.getElementById('stock-modal').classList.remove('open');
   renderInventory();updateBadge();
 }
