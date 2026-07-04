@@ -508,8 +508,6 @@ select option{background:var(--surf)}
               <select id="cart-team" style="flex:1">
                 <option value="lipachon">Lipachon</option>
                 <option value="montys">Monty's Batangas</option>
-                <option value="sammies">Sammie's Lechon</option>
-                <option value="kuyas">Kuya's Lechon</option>
               </select>
             </div>
           </div>
@@ -642,8 +640,6 @@ select option{background:var(--surf)}
               <option value="">All Teams</option>
               <option value="lipachon">Lipachon</option>
               <option value="montys">Monty's</option>
-              <option value="sammies">Sammie's</option>
-              <option value="kuyas">Kuya's</option>
             </select>
           </div>
           <button class="btn btn-out btn-sm" onclick="exportReport('cancelled')">&#128229; Export CSV</button>
@@ -801,7 +797,6 @@ select option{background:var(--surf)}
               <option value="">All Teams</option>
               <option value="lipachon">Lipachon</option>
               <option value="montys">Monty's Batangas</option>
-              <option value="sammies">Sammie's Lechon</option>
             </select>
           </div>
           <div>
@@ -1153,8 +1148,6 @@ function doGet(e){
         <select id="res-team" style="width:100%">
           <option value="lipachon">Lipachon</option>
           <option value="montys">Monty's Batangas</option>
-          <option value="sammies">Sammie's Lechon</option>
-          <option value="kuyas">Kuya's Lechon</option>
         </select>
       </div>
     </div>
@@ -1195,8 +1188,6 @@ function doGet(e){
       <select id="edit-txn-team" style="width:100%">
         <option value="lipachon">Lipachon</option>
         <option value="montys">Monty's Batangas</option>
-        <option value="sammies">Sammie's Lechon</option>
-        <option value="kuyas">Kuya's Lechon</option>
       </select>
     </div>
     <div class="fg"><label>Payment Method</label>
@@ -1326,8 +1317,6 @@ function doGet(e){
 const TEAMS = [
   {id:'lipachon',  name:'Lipachon',              color:'#E87520', colorA:'rgba(232,117,32,.7)'},
   {id:'montys',   name:"Monty's Batangas Lechon",color:'#F0B030', colorA:'rgba(240,176,48,.7)'},
-  {id:'sammies',  name:"Sammie's Lechon",         color:'#D03020', colorA:'rgba(208,48,32,.7)'},
-  {id:'kuyas',    name:"Kuya's Lechon",            color:'#2EA84A', colorA:'rgba(46,168,74,.7)'},
 ];
 
 const MENU_ITEMS = [
@@ -1450,7 +1439,7 @@ function defaultEmployees(){
 function generateSampleData(){
   const now=new Date();
   const txns=[];
-  const teamIds=['lipachon','montys','sammies','kuyas'];
+  const teamIds=['lipachon','montys'];
   const payMethods=['cash','cash','cash','gcash','maya'];
   const customers=['Maria S.','Juan R.','Ana C.','Carlo D.','Liza F.','Jenny R.','Paolo G.','Beth G.','Andres L.','Rico M.','Amy T.','Bong E.','Carla N.'];
   let txnId=1000;
@@ -2727,7 +2716,7 @@ function calcTxnIncentive(txn){
 function renderIncentives(){
   const m=document.getElementById('inc-month')?.value||today().slice(0,7);
   const txns=txnsForMonth(m);
-  const teamIds=['lipachon','montys','sammies','kuyas'];
+  const teamIds=['lipachon','montys'];
   let grandInc=0,grandOrders=0,grandQty=0;
 
   const teamData=teamIds.map(tid=>{
@@ -3129,8 +3118,6 @@ const USERS=[
   {username:'admin',   password:'lechonhub2024', name:'Administrator',        role:'admin', team:'all'},
   {username:'lipachon',password:'lipa123',        name:'Lipachon Team',        role:'team',  team:'lipachon'},
   {username:'montys',  password:'monty123',       name:"Monty's Batangas",     role:'team',  team:'montys'},
-  {username:'sammies', password:'sammie123',      name:"Sammie's Lechon",      role:'team',  team:'sammies'},
-  {username:'kuyas',   password:'kuya123',        name:"Kuya's Lechon",        role:'team',  team:'kuyas'},
 ];
 let currentUser=null;
 
