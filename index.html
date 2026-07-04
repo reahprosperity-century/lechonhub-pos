@@ -4,15 +4,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>LechonHub POS</title>
+<title>Bahay Lechonan POS</title>
 <!-- PWA Meta Tags -->
-<meta name="application-name" content="LechonHub POS">
-<meta name="apple-mobile-web-app-title" content="LechonHub">
+<meta name="application-name" content="Bahay Lechonan POS">
+<meta name="apple-mobile-web-app-title" content="Bahay Lechonan">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#CC0000">
-<meta name="description" content="LechonHub Point of Sale System">
+<meta name="description" content="Bahay Lechonan Point of Sale System">
 <meta name="msapplication-TileColor" content="#CC0000">
 <meta name="msapplication-TileImage" content="icons/icon-192.png">
 <!-- Manifest -->
@@ -393,7 +393,7 @@ select option{background:var(--surf)}
   <div class="login-card">
     <div class="login-brand">
       <span class="lb-flame">&#128293;</span>
-      <h1>LECHON HUB</h1>
+      <h1>BAHAY LECHONAN</h1>
       <p>POINT OF SALE SYSTEM</p>
     </div>
     <h2>Sign In to Continue</h2>
@@ -410,7 +410,7 @@ select option{background:var(--surf)}
 <aside class="sidebar">
   <div class="sb-logo">
     <span class="flame">&#128293;</span>
-    <h2>LECHON HUB</h2>
+    <h2>BAHAY LECHONAN</h2>
     <p>POINT OF SALE SYSTEM</p>
   </div>
   <nav class="sb-nav">
@@ -430,7 +430,7 @@ select option{background:var(--surf)}
   <div class="sb-foot">
     <div class="sb-user">
       <div class="sb-av" id="sb-av-initials">LH</div>
-      <div class="sb-ud"><h4 id="sb-user-name">Admin</h4><p id="sb-user-role">Lechon Hub</p></div>
+      <div class="sb-ud"><h4 id="sb-user-name">Admin</h4><p id="sb-user-role">Bahay Lechonan</p></div>
     </div>
     <button class="btn btn-out btn-sm" onclick="doLogout()" style="width:100%;margin-top:8px;border-color:#FFCCCC;color:#CC0000;font-size:.75rem">&#128682; Sign Out</button>
   </div>
@@ -641,7 +641,7 @@ select option{background:var(--surf)}
       <!-- 1. COMPENSATION -->
       <div class="card mb14">
         <div class="card-hdr">
-          <span class="card-ttl">&#128176; Compensation &#8212; Lechon Hub Employees</span>
+          <span class="card-ttl">&#128176; Compensation &#8212; Bahay Lechonan Employees</span>
           <button class="btn btn-pri btn-sm admin-only" onclick="openAddEmployee()">+ Add Employee</button>
         </div>
         <div id="comp-kpi" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px"></div>
@@ -821,7 +821,7 @@ select option{background:var(--surf)}
       <div class="g2">
         <div class="card">
           <div class="card-hdr"><span class="card-ttl">&#127978; Business Info</span></div>
-          <div class="fg"><label>Business Name</label><input value="Lechon Hub" style="width:100%"></div>
+          <div class="fg"><label>Business Name</label><input value="Bahay Lechonan" style="width:100%"></div>
           <div class="fg"><label>Address</label><input value="Lipa City, Batangas" style="width:100%"></div>
           <div class="fg"><label>Contact</label><input placeholder="Phone number" style="width:100%"></div>
           <div class="fg"><label>TIN</label><input placeholder="Tax ID Number" style="width:100%"></div>
@@ -997,7 +997,7 @@ function doGet(e){
   <div class="modal">
     <h2 id="emp-modal-title">Add Employee</h2>
     <input type="hidden" id="emp-id">
-    <div style="background:#FFF5F5;border:1px solid #FFCCCC;border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:.75rem;color:#7A0000">Lechon Hub &#8212; All employees are part of the main hub staff.</div>
+    <div style="background:#FFF5F5;border:1px solid #FFCCCC;border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:.75rem;color:#7A0000">Bahay Lechonan &#8212; All employees are part of the main hub staff.</div>
     <div class="fg"><label>Full Name</label><input id="em-name" style="width:100%"></div>
     <div class="fg"><label>Role</label><input id="em-role" placeholder="e.g. Team Leader, Rider, Cashier" style="width:100%"></div>
     <div class="g2">
@@ -1227,7 +1227,7 @@ function doGet(e){
   <div class="mobile-menu-panel" onclick="event.stopPropagation()">
     <div class="mm-drag"></div>
     <div class="mm-header">
-      <span class="mm-header-title">&#128293; LECHON HUB</span>
+      <span class="mm-header-title">&#128293; BAHAY LECHONAN</span>
       <button class="mm-close" onclick="closeMobileMenu()">&#10005;</button>
     </div>
     <div class="mm-items">
@@ -1243,7 +1243,7 @@ function doGet(e){
         <div class="sb-av" id="mm-av">LH</div>
         <div>
           <div style="font-size:.85rem;font-weight:700;color:#1A0000" id="mm-user-name">Admin</div>
-          <div style="font-size:.72rem;color:#BB6666" id="mm-user-role">Lechon Hub</div>
+          <div style="font-size:.72rem;color:#BB6666" id="mm-user-role">Bahay Lechonan</div>
         </div>
       </div>
       <button class="btn btn-out btn-full" onclick="doLogout()" style="border-color:#FFCCCC;color:#CC0000;font-size:.82rem">&#128682; Sign Out</button>
@@ -1492,7 +1492,7 @@ const PAGE_META={
   inventory:{title:'Inventory',sub:'Manage product stock levels'},
   reports:{title:'Reports',sub:'Daily and Monthly analytics'},
   teams:{title:'Team Sales',sub:'Compare performance across all teams'},
-  expenses:{title:'Expenses & Purchase Orders',sub:'Compensation, Marketing, Utilities, POs & More \u2014 Lechon Hub'},
+  expenses:{title:'Expenses & Purchase Orders',sub:'Compensation, Marketing, Utilities, POs & More \u2014 Bahay Lechonan'},
   pl:{title:'P&L Summary',sub:'Total Sales vs Expenses \u2014 Daily & Monthly'},
   reservations:{title:'Reservation Orders',sub:'Manage customer reservations and event orders'},
   incentives:{title:'Incentives & Commission',sub:'Auto-calculated team incentives from sales'},
@@ -1882,7 +1882,7 @@ function completeOrder(){
 function showReceipt(txn){
   const change=payMethod==='cash'?(parseFloat(document.getElementById('tendered')?.value||0)-txn.total):0;
   document.getElementById('receipt-content').innerHTML=`<div class="receipt">
-    <div class="receipt-hdr"><div style="font-size:1.1rem;font-weight:800">\uD83D\uDD25 LECHON HUB</div><div>Lipa City, Batangas</div><div style="font-size:.7rem;margin-top:3px">${getTeam(txn.team).name}</div></div>
+    <div class="receipt-hdr"><div style="font-size:1.1rem;font-weight:800">\uD83D\uDD25 BAHAY LECHONAN</div><div>Lipa City, Batangas</div><div style="font-size:.7rem;margin-top:3px">${getTeam(txn.team).name}</div></div>
     <div class="receipt-div"></div>
     <div style="display:flex;justify-content:space-between"><span>Receipt #:</span><span>${txn.id}</span></div>
     <div style="display:flex;justify-content:space-between"><span>Date:</span><span>${txn.date} ${txn.time}</span></div>
@@ -2379,7 +2379,7 @@ function renderCompSection(m,hubSales){
 }
 
 function openAddEmployee(){
-  document.getElementById('emp-modal-title').textContent='Add Employee \u2014 Lechon Hub';
+  document.getElementById('emp-modal-title').textContent='Add Employee \u2014 Bahay Lechonan';
   document.getElementById('emp-id').value='';
   ['em-name','em-role','em-base','em-comm','em-bonus','em-deduct'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('emp-modal').classList.add('open');
@@ -3182,7 +3182,7 @@ function printReport(type){
     const totMkt=mktM.reduce((s,x)=>s+x.amount,0),totUtil=utilM.reduce((s,x)=>s+(x.electricity||0)+(x.water||0),0),totMisc=miscM.reduce((s,x)=>s+x.amount,0),totOther=otherM.reduce((s,x)=>s+x.amount,0);
     bodyHtml=`<h2>Month: ${mo}</h2><p><strong>Grand Total: ${php(totComp+totMkt+totUtil+totMisc+totOther)}</strong></p>
     <table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr style="background:#eee"><th colspan="3">Summary</th></tr><tr><td>Compensation</td><td></td><td>${php(totComp)}</td></tr><tr><td>Marketing</td><td></td><td>${php(totMkt)}</td></tr><tr><td>Utilities</td><td></td><td>${php(totUtil)}</td></tr><tr><td>Miscellaneous</td><td></td><td>${php(totMisc)}</td></tr><tr><td>Other Expenses</td><td></td><td>${php(totOther)}</td></tr></table>
-    <h3>Compensation \u2014 Lechon Hub Employees</h3><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr><th>Name</th><th>Role</th><th>Base</th><th>Commission</th><th>Bonus</th><th>Deductions</th><th>Net</th></tr>${employees.map(e=>{const c=Math.round(hubSales*(e.commRate/100)/Math.max(employees.length,1));return `<tr><td>${e.name}</td><td>${e.role}</td><td>${php(e.base)}</td><td>${php(c)}</td><td>${php(e.bonus||0)}</td><td>${php(e.deductions||0)}</td><td><strong>${php(e.base+c+(e.bonus||0)-(e.deductions||0))}</strong></td></tr>`;}).join('')}</table>
+    <h3>Compensation \u2014 Bahay Lechonan Employees</h3><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr><th>Name</th><th>Role</th><th>Base</th><th>Commission</th><th>Bonus</th><th>Deductions</th><th>Net</th></tr>${employees.map(e=>{const c=Math.round(hubSales*(e.commRate/100)/Math.max(employees.length,1));return `<tr><td>${e.name}</td><td>${e.role}</td><td>${php(e.base)}</td><td>${php(c)}</td><td>${php(e.bonus||0)}</td><td>${php(e.deductions||0)}</td><td><strong>${php(e.base+c+(e.bonus||0)-(e.deductions||0))}</strong></td></tr>`;}).join('')}</table>
     <h3>Marketing</h3><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr><th>Date</th><th>Type</th><th>Description</th><th>Amount</th></tr>${mktM.map(x=>`<tr><td>${x.date}</td><td>${x.type}</td><td>${x.desc}</td><td>${php(x.amount)}</td></tr>`).join('')||'<tr><td colspan="4">No entries</td></tr>'}</table>
     <h3>Utilities</h3><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr><th>Month</th><th>Electricity</th><th>Water</th><th>Total</th></tr>${utilM.map(x=>`<tr><td>${x.month}</td><td>${php(x.electricity||0)}</td><td>${php(x.water||0)}</td><td>${php((x.electricity||0)+(x.water||0))}</td></tr>`).join('')||'<tr><td colspan="4">No entries</td></tr>'}</table>
     <h3>Miscellaneous</h3><table border="1" cellpadding="6" style="border-collapse:collapse;width:100%;margin-bottom:16px;font-size:.85rem"><tr><th>Date</th><th>Description</th><th>Amount</th><th>Remarks</th></tr>${miscM.map(x=>`<tr><td>${x.date}</td><td>${x.desc}</td><td>${php(x.amount)}</td><td>${x.remarks||'\u2014'}</td></tr>`).join('')||'<tr><td colspan="4">No entries</td></tr>'}</table>
@@ -3195,7 +3195,7 @@ function printReport(type){
     bodyHtml='<p>Report data not available for this type in print preview.</p>';
   }
   const win=window.open('','_blank');
-  win.document.write(`<!DOCTYPE html><html><head><title>${pTitle}</title><style>body{font-family:sans-serif;padding:24px;color:#111}h1{color:#CC0000}h2,h3{margin-top:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:6px 10px;text-align:left}th{background:#f5f5f5}@media print{button{display:none}}</style></head><body><h1>\uD83D\uDD25 Lechon Hub \u2014 ${pTitle}</h1>${bodyHtml}<br><button onclick="window.print()" style="padding:8px 18px;background:#CC0000;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.9rem">\uD83D\uDDA8 Print / Save PDF</button></body></html>`);
+  win.document.write(`<!DOCTYPE html><html><head><title>${pTitle}</title><style>body{font-family:sans-serif;padding:24px;color:#111}h1{color:#CC0000}h2,h3{margin-top:18px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:6px 10px;text-align:left}th{background:#f5f5f5}@media print{button{display:none}}</style></head><body><h1>\uD83D\uDD25 Bahay Lechonan \u2014 ${pTitle}</h1>${bodyHtml}<br><button onclick="window.print()" style="padding:8px 18px;background:#CC0000;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.9rem">\uD83D\uDDA8 Print / Save PDF</button></body></html>`);
   win.document.close();
 }
 
@@ -3203,7 +3203,7 @@ function printReport(type){
 //  LOGIN
 // ============================================================
 const USERS=[
-  {username:'admin',   password:'lechonhub2024', name:'Administrator',        role:'admin', team:'all'},
+  {username:'admin',   password:'BL2026', name:'Administrator',        role:'admin', team:'all'},
   {username:'lipachon',password:'lipa123',        name:'Lipachon Team',        role:'team',  team:'lipachon'},
   {username:'montys',  password:'monty123',       name:"Monty's Batangas",     role:'team',  team:'montys'},
 ];
@@ -3240,7 +3240,7 @@ function doLogin(){
 }
 
 function doLogout(){
-  if(!confirm('Sign out of Lechon Hub?'))return;
+  if(!confirm('Sign out of Bahay Lechonan?'))return;
   sessionStorage.removeItem('lh_session');
   currentUser=null;
   document.body.classList.remove('is-admin');
