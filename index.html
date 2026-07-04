@@ -923,6 +923,61 @@ select option{background:var(--surf)}
           <em style="color:#BB6666">(Set up Firebase above first so all devices share the same data in real-time)</em>
         </div>
       </div>
+      <!-- GOOGLE SHEETS SYNC CARD -->
+      <div class="card" style="margin-top:14px;border-color:#34A853">
+        <div class="card-hdr"><span class="card-ttl">&#128202; Google Sheets Backup</span><span id="sheets-status-badge" class="st" style="font-size:.7rem;background:#E8F5E9;color:#2E7D32">Not Connected</span></div>
+        <div class="alert" style="margin-bottom:14px;background:#E8F5E9;border-color:#A5D6A7;color:#1B5E20">&#128202; All your transactions, reservations, expenses, and purchase orders will automatically sync to your Google Sheet as a backup.</div>
+        <div style="font-size:.78rem;color:#1B5E20;margin-bottom:12px;line-height:1.9">
+          <strong>One-time setup (5 minutes):</strong><br>
+          1. Open <strong>Google Sheets</strong> and create a new spreadsheet<br>
+          2. Click <strong>Extensions &#8594; Apps Script</strong><br>
+          3. Delete all existing code, paste in the <strong>LechonHub Apps Script</strong> code below<br>
+          4. Click <strong>Deploy &#8594; New deployment &#8594; Web app</strong><br>
+          &nbsp;&nbsp;&nbsp;&#8226; Execute as: <strong>Me</strong> &nbsp;|&nbsp; Who has access: <strong>Anyone</strong><br>
+          5. Copy the <strong>Web app URL</strong> and paste it below, then click Connect
+        </div>
+        <details style="margin-bottom:12px">
+          <summary style="font-size:.78rem;font-weight:700;color:#1B5E20;cursor:pointer;padding:6px 0">&#128196; Show Apps Script Code to Copy</summary>
+          <textarea id="apps-script-code" readonly style="width:100%;height:280px;font-size:.68rem;font-family:monospace;border:1px solid #A5D6A7;border-radius:6px;padding:8px;background:#F1F8E9;color:#1B5E20;resize:vertical;margin-top:8px">function doPost(e){
+  try{
+    var ss=SpreadsheetApp.getActiveSpreadsheet();
+    var data=JSON.parse(e.postData.contents);
+    if(data.transactions) syncSheet(ss,'Transactions',data.transactions,['id','date','time','customer','team','itemsSummary','subtotal','deliveryFee','total','payment','status']);
+    if(data.reservations) syncSheet(ss,'Reservations',data.reservations,['id','createdDate','customer','contact','eventDate','team','items','totalAmount','deposit','balance','status','notes']);
+    if(data.purchaseOrders) syncSheet(ss,'Purchase Orders',data.purchaseOrders,['id','date','supplier','items','qty','totalCost','status','notes']);
+    if(data.expenses) syncSheet(ss,'Expenses',data.expenses,['id','date','category','type','desc','amount']);
+    return ContentService.createTextOutput(JSON.stringify({ok:true,synced:new Date().toISOString()})).setMimeType(ContentService.MimeType.JSON);
+  }catch(err){
+    return ContentService.createTextOutput(JSON.stringify({ok:false,error:err.message})).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function syncSheet(ss,name,rows,cols){
+  var sheet=ss.getSheetByName(name);
+  if(!sheet) sheet=ss.insertSheet(name);
+  sheet.clearContents();
+  var hdr=cols.map(function(c){return c.replace(/([A-Z])/g,' $1').replace(/^./,function(s){return s.toUpperCase();});});
+  sheet.getRange(1,1,1,hdr.length).setValues([hdr]).setBackground('#34A853').setFontColor('white').setFontWeight('bold');
+  if(!rows||rows.length===0) return;
+  var dataRows=rows.map(function(row){return cols.map(function(col){var v=row[col];return(v===undefined||v===null)?'':typeof v==='object'?JSON.stringify(v):v;});});
+  sheet.getRange(2,1,dataRows.length,cols.length).setValues(dataRows);
+  sheet.setFrozenRows(1);
+}
+
+function doGet(e){
+  return ContentService.createTextOutput('LechonHub POS Sheets Sync Active').setMimeType(ContentService.MimeType.TEXT);
+}</textarea>
+          <button class="btn btn-out btn-sm" style="margin-top:6px;border-color:#34A853;color:#34A853" onclick="navigator.clipboard.writeText(document.getElementById('apps-script-code').value).then(()=>alert('Copied! Paste it into Apps Script.'))">&#128203; Copy Code</button>
+        </details>
+        <div class="fg"><label>Apps Script Web App URL</label><input id="sheets-url" placeholder="https://script.google.com/macros/s/..." style="width:100%;font-size:.78rem" oninput="updateSheetsConnectBtn()"></div>
+        <div style="display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn btn-pri admin-only" id="sheets-connect-btn" onclick="connectSheets()" style="background:#34A853;border-color:#34A853">&#128202; Connect Sheets</button>
+          <button class="btn btn-out btn-sm admin-only" onclick="syncAllToSheets()" style="border-color:#34A853;color:#34A853">&#128257; Sync All Now</button>
+          <button class="btn btn-out btn-sm admin-only" onclick="disconnectSheets()" style="border-color:#CC0000;color:#CC0000">Disconnect</button>
+          <span id="sheets-sync-time" style="font-size:.72rem;color:#5A5A5A"></span>
+        </div>
+        <div id="sheets-sync-log" style="font-size:.72rem;margin-top:8px;color:#5A5A5A;min-height:18px"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1808,6 +1863,7 @@ function completeOrder(){
   sv('lh_products',products);
   transactions.unshift(txn);
   sv('lh_txns',transactions);
+  syncToSheets(true);
   // Push to Firebase (cross-device sync)
   fbWriteTransaction(txn);
   // Broadcast to other tabs (same-device sync)
@@ -2328,6 +2384,7 @@ function saveMarketing(){
   if(mid){const x=marketingExpenses.find(e=>e.id===mid);if(x)Object.assign(x,data);}
   else{marketingExpenses.push({id:'mkt-'+Date.now(),...data});}
   sv('lh_mkt',marketingExpenses);
+  syncToSheets(true);
   document.getElementById('mkt-modal').classList.remove('open');
   renderExpenses();
 }
@@ -2382,6 +2439,7 @@ function saveUtility(){
   if(uid){const x=utilityExpenses.find(e=>e.id===uid);if(x)Object.assign(x,data);}
   else{utilityExpenses.push({id:'util-'+Date.now(),...data});}
   sv('lh_util',utilityExpenses);
+  syncToSheets(true);
   document.getElementById('util-modal').classList.remove('open');
   renderExpenses();
 }
@@ -2435,6 +2493,7 @@ function saveMisc(){
   if(mid){const x=miscExpenses.find(e=>e.id===mid);if(x)Object.assign(x,data);}
   else{miscExpenses.push({id:'misc-'+Date.now(),...data});}
   sv('lh_misc',miscExpenses);
+  syncToSheets(true);
   document.getElementById('misc-modal').classList.remove('open');
   renderExpenses();
 }
@@ -2488,6 +2547,7 @@ function saveOther(){
   if(oid){const x=otherExpenses.find(e=>e.id===oid);if(x)Object.assign(x,data);}
   else{otherExpenses.push({id:'other-'+Date.now(),...data});}
   sv('lh_other',otherExpenses);
+  syncToSheets(true);
   document.getElementById('other-modal').classList.remove('open');
   renderExpenses();
 }
@@ -2584,6 +2644,7 @@ function savePO(){
     purchaseOrders.unshift({id:'PO-'+Date.now(),...data});
   }
   sv('lh_pos',purchaseOrders);
+  syncToSheets(true);
   document.getElementById('po-modal').classList.remove('open');
   renderPOs();
 }
@@ -2929,6 +2990,7 @@ function saveReservation(){
     reservations.push({id:'RES-'+num,...data,createdDate:today(),updatedAt:''});
   }
   sv('lh_reservations',reservations);
+  syncToSheets(true);
   document.getElementById('res-modal').classList.remove('open');
   renderReservations();
 }
@@ -3305,6 +3367,8 @@ function bootApp(){
   // Firebase (if configured)
   const fbCfg=loadFirebaseConfig();
   if(fbCfg) initFirebase(fbCfg); else updateSyncUI('local');
+  // Load Google Sheets settings
+  setTimeout(loadSheetsSettings, 300);
   // Render dashboard (start fresh \u2014 no sample data)
   nav('dashboard');
   currentCat='All';
@@ -3315,6 +3379,106 @@ document.addEventListener('DOMContentLoaded',()=>{
     // Show login screen, app stays hidden
   }
 });
+
+// ============================================================
+//  GOOGLE SHEETS SYNC
+// ============================================================
+function getSheetsUrl(){return localStorage.getItem('lh_sheets_url')||'';}
+
+function updateSheetsConnectBtn(){
+  const url=document.getElementById('sheets-url')?.value||'';
+  const btn=document.getElementById('sheets-connect-btn');
+  if(btn) btn.disabled=!url.includes('script.google.com');
+}
+
+function connectSheets(){
+  const url=document.getElementById('sheets-url')?.value.trim();
+  if(!url||!url.includes('script.google.com')){alert('Please enter a valid Apps Script Web App URL.');return;}
+  localStorage.setItem('lh_sheets_url',url);
+  updateSheetsBadge('Connecting...','#CC7700','#FFF8E1');
+  syncAllToSheets(true);
+}
+
+function disconnectSheets(){
+  if(!confirm('Disconnect Google Sheets sync?'))return;
+  localStorage.removeItem('lh_sheets_url');
+  localStorage.removeItem('lh_sheets_last_sync');
+  if(document.getElementById('sheets-url')) document.getElementById('sheets-url').value='';
+  updateSheetsBadge('Not Connected','#2E7D32','#E8F5E9');
+  setSheetsLog('');
+}
+
+function updateSheetsBadge(text,color,bg){
+  const b=document.getElementById('sheets-status-badge');
+  if(b){b.textContent=text;b.style.color=color;b.style.background=bg||'#E8F5E9';}
+}
+
+function setSheetsLog(msg){
+  const el=document.getElementById('sheets-sync-log');
+  if(el) el.textContent=msg;
+}
+
+function setSyncTime(ts){
+  const el=document.getElementById('sheets-sync-time');
+  if(el) el.textContent=ts?'Last sync: '+new Date(ts).toLocaleString('en-PH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'';
+}
+
+function buildSheetsPayload(){
+  const allExpenses=[
+    ...(marketingExpenses||[]).map(e=>({...e,category:'Marketing'})),
+    ...(utilityExpenses||[]).map(e=>({...e,category:'Utility',desc:'Elec: '+php(e.electricity||0)+' / Water: '+php(e.water||0)})),
+    ...(miscExpenses||[]).map(e=>({...e,category:'Miscellaneous'})),
+    ...(otherExpenses||[]).map(e=>({...e,category:'Other'}))
+  ];
+  return {
+    transactions:(transactions||[]).map(t=>({
+      ...t,
+      itemsSummary:(t.items||[]).map(i=>i.name+'×'+i.qty).join(', ')
+    })),
+    reservations:reservations||[],
+    purchaseOrders:purchaseOrders||[],
+    expenses:allExpenses
+  };
+}
+
+function syncToSheets(silent){
+  const url=getSheetsUrl();
+  if(!url) return;
+  if(!silent) updateSheetsBadge('Syncing...','#CC7700','#FFF8E1');
+  const payload=buildSheetsPayload();
+  fetch(url,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)})
+    .then(()=>{
+      const ts=new Date().toISOString();
+      localStorage.setItem('lh_sheets_last_sync',ts);
+      updateSheetsBadge('✅ Connected','#1B5E20','#E8F5E9');
+      setSyncTime(ts);
+      if(!silent) setSheetsLog('Sync complete — '+payload.transactions.length+' txns, '+payload.reservations.length+' reservations, '+payload.expenses.length+' expenses');
+    })
+    .catch(()=>{
+      updateSheetsBadge('❌ Sync Failed','#CC0000','#FFEBEE');
+      if(!silent) setSheetsLog('Sync failed — check your Apps Script URL and permissions.');
+    });
+}
+
+function syncAllToSheets(connecting){
+  const url=getSheetsUrl();
+  if(!url){alert('Please connect Google Sheets first in Settings.');return;}
+  setSheetsLog('Syncing all data...');
+  syncToSheets(false);
+}
+
+// Load saved Sheets URL into settings input
+function loadSheetsSettings(){
+  const url=getSheetsUrl();
+  const inp=document.getElementById('sheets-url');
+  if(inp&&url) inp.value=url;
+  const ts=localStorage.getItem('lh_sheets_last_sync');
+  if(url){
+    updateSheetsBadge(ts?'✅ Connected':'Connected','#1B5E20','#E8F5E9');
+    setSyncTime(ts);
+  }
+  updateSheetsConnectBtn();
+}
 </script>
 <script>
 // Register Service Worker for PWA / offline support
