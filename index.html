@@ -534,7 +534,6 @@ select option{background:var(--surf)}
     <div class="page" id="page-reports">
       <div class="rpt-tabs">
         <div class="rpt-tab active" onclick="switchReport('daily',this)">Daily</div>
-        <div class="rpt-tab" onclick="switchReport('weekly',this)">Weekly</div>
         <div class="rpt-tab" onclick="switchReport('monthly',this)">Monthly</div>
         <div class="rpt-tab" onclick="switchReport('cancelled',this)" style="color:#CC0000">&#10006; Cancelled</div>
       </div>
@@ -554,35 +553,6 @@ select option{background:var(--surf)}
         <div class="card">
           <div class="card-hdr"><span class="card-ttl">Transactions</span></div>
           <div class="tbl-wrap"><table><thead><tr><th>#</th><th>Date & Time</th><th>Customer</th><th>Team</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Actions</th></tr></thead><tbody id="rpt-d-body"></tbody></table></div>
-        </div>
-      </div>
-      <div id="rpt-weekly" style="display:none">
-        <div class="flex-between mb14">
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <label style="font-size:.78rem;color:var(--tx2);font-weight:600">Week ending:</label>
-            <input type="week" id="rpt-week" onchange="renderWeeklyReport()">
-            <select id="rpt-weeks-count" onchange="renderWeeklyReport()" style="padding:7px 10px;border-radius:8px;border:1.5px solid var(--bdr);background:#FFF5F5;font-size:.82rem;color:var(--tx)">
-              <option value="1">1 week</option>
-              <option value="2">2 weeks</option>
-              <option value="3">3 weeks</option>
-              <option value="4" selected>4 weeks</option>
-              <option value="8">8 weeks</option>
-              <option value="12">12 weeks</option>
-            </select>
-          </div>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-out btn-sm" onclick="printReport('weekly')">&#128424; Print</button>
-            <button class="btn btn-out btn-sm" onclick="exportReport('weekly')">&#128229; Export CSV</button>
-          </div>
-        </div>
-        <div class="kpi-grid" id="rpt-w-kpi" style="grid-template-columns:repeat(3,1fr)"></div>
-        <div class="card mb14">
-          <div class="card-hdr"><span class="card-ttl" id="rpt-w-chart-ttl">&#128200; Weekly Sales Line Graph</span></div>
-          <div class="ch-wrap"><canvas id="ch-weekly-rpt"></canvas></div>
-        </div>
-        <div class="card">
-          <div class="card-hdr"><span class="card-ttl" id="rpt-w-txn-ttl">Transactions</span></div>
-          <div class="tbl-wrap"><table><thead><tr><th>Date & Time</th><th>Customer</th><th>Team</th><th>Items</th><th>Total</th><th>Payment</th><th>Actions</th></tr></thead><tbody id="rpt-w-body"></tbody></table></div>
         </div>
       </div>
       <div id="rpt-monthly" style="display:none">
@@ -746,7 +716,6 @@ select option{background:var(--surf)}
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:18px;flex-wrap:wrap">
         <div class="rpt-tabs">
           <button class="rpt-tab active" id="pl-tab-daily" onclick="setPLTab('daily')">&#128197; Daily</button>
-          <button class="rpt-tab" id="pl-tab-weekly" onclick="setPLTab('weekly')">&#128198; Weekly</button>
           <button class="rpt-tab" id="pl-tab-monthly" onclick="setPLTab('monthly')">&#128336; Monthly</button>
         </div>
         <input type="date" id="pl-date" style="font-size:.82rem" onchange="renderPL()">
@@ -1521,10 +1490,10 @@ const PAGE_META={
   dashboard:{title:'Dashboard',sub:'Overview of your business today'},
   pos:{title:'POS Terminal',sub:'Process orders and payments'},
   inventory:{title:'Inventory',sub:'Manage product stock levels'},
-  reports:{title:'Reports',sub:'Daily, Weekly and Monthly analytics'},
+  reports:{title:'Reports',sub:'Daily and Monthly analytics'},
   teams:{title:'Team Sales',sub:'Compare performance across all teams'},
   expenses:{title:'Expenses & Purchase Orders',sub:'Compensation, Marketing, Utilities, POs & More \u2014 Lechon Hub'},
-  pl:{title:'P&L Summary',sub:'Total Sales vs Expenses \u2014 Daily, Weekly & Monthly'},
+  pl:{title:'P&L Summary',sub:'Total Sales vs Expenses \u2014 Daily & Monthly'},
   reservations:{title:'Reservation Orders',sub:'Manage customer reservations and event orders'},
   incentives:{title:'Incentives & Commission',sub:'Auto-calculated team incentives from sales'},
   settings:{title:'Settings',sub:'Configure your POS system'},
@@ -1937,7 +1906,7 @@ function showReceipt(txn){
 let currentPLTab='daily';
 function setPLTab(tab){
   currentPLTab=tab;
-  ['daily','weekly','monthly'].forEach(t=>{
+  ['daily','monthly'].forEach(t=>{
     document.getElementById('pl-tab-'+t)?.classList.toggle('active',t===tab);
   });
   const dateEl=document.getElementById('pl-date');
@@ -1963,19 +1932,6 @@ function renderPL(){
     miscTotal=(miscExpenses||[]).filter(x=>x.date===dateVal).reduce((s,x)=>s+(x.amount||0),0);
     otherTotal=(otherExpenses||[]).filter(x=>x.date===dateVal).reduce((s,x)=>s+(x.amount||0),0);
     poTotal=(purchaseOrders||[]).filter(x=>x.date===dateVal&&x.status!=='cancelled').reduce((s,x)=>s+(x.totalCost||0),0);
-  } else if(tab==='weekly'){
-    const d=new Date(dateVal);
-    const day=d.getDay();
-    const mon=new Date(d); mon.setDate(d.getDate()-(day===0?6:day-1));
-    const sun=new Date(mon); sun.setDate(mon.getDate()+6);
-    const ws=mon.toISOString().split('T')[0];
-    const we=sun.toISOString().split('T')[0];
-    label='Week: '+ws+' to '+we;
-    salesTotal=transactions.filter(x=>x.date>=ws&&x.date<=we&&x.status==='paid').reduce((s,x)=>s+x.total,0);
-    mktTotal=(marketingExpenses||[]).filter(x=>x.date>=ws&&x.date<=we).reduce((s,x)=>s+(x.amount||0),0);
-    miscTotal=(miscExpenses||[]).filter(x=>x.date>=ws&&x.date<=we).reduce((s,x)=>s+(x.amount||0),0);
-    otherTotal=(otherExpenses||[]).filter(x=>x.date>=ws&&x.date<=we).reduce((s,x)=>s+(x.amount||0),0);
-    poTotal=(purchaseOrders||[]).filter(x=>x.date>=ws&&x.date<=we&&x.status!=='cancelled').reduce((s,x)=>s+(x.totalCost||0),0);
   } else {
     label='Month: '+monthVal;
     salesTotal=transactions.filter(x=>x.date&&x.date.startsWith(monthVal)&&x.status==='paid').reduce((s,x)=>s+x.total,0);
@@ -2116,9 +2072,8 @@ function switchReport(tab,el){
   currentReportTab=tab;
   document.querySelectorAll('.rpt-tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  ['daily','weekly','monthly','cancelled'].forEach(t=>document.getElementById('rpt-'+t).style.display=t===tab?'block':'none');
+  ['daily','monthly','cancelled'].forEach(t=>document.getElementById('rpt-'+t).style.display=t===tab?'block':'none');
   if(tab==='daily') renderDailyReport();
-  else if(tab==='weekly') renderWeeklyReport();
   else if(tab==='cancelled') renderCancelledReport();
   else renderMonthlyReport();
 }
