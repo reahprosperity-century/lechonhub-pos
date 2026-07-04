@@ -1336,16 +1336,8 @@ const INV_ITEMS = [
   {id:'inv-wl-f',  name:'Whole Lechon – Fiesta',      cat:'Whole Lechon', emo:'🐷', unit:'kg'},
   // Lechon Ulo — single inventory item (kg)
   {id:'inv-ulo',   name:'Lechon Ulo',                      cat:'Lechon Ulo',   emo:'🐗', unit:'kg'},
-  // Lechon Belly — keep size variants (kg)
-  {id:'inv-b-1',   name:'Lechon Belly 1kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
-  {id:'inv-b-2',   name:'Lechon Belly 2kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
-  {id:'inv-b-3',   name:'Lechon Belly 3kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
-  {id:'inv-b-35',  name:'Lechon Belly 3.5kg',              cat:'Lechon Belly', emo:'🥩', unit:'kg'},
-  {id:'inv-b-4',   name:'Lechon Belly 4kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
-  {id:'inv-b-5',   name:'Lechon Belly 5kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
-  {id:'inv-b-6',   name:'Lechon Belly 6kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
-  {id:'inv-b-7',   name:'Lechon Belly 7kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
-  {id:'inv-b-8',   name:'Lechon Belly 8kg',                cat:'Lechon Belly', emo:'🥩', unit:'kg'},
+  // Lechon Belly — single item (kg)
+  {id:'inv-belly', name:'Lechon Belly',                    cat:'Lechon Belly', emo:'🥩', unit:'kg'},
   // Lechon Rolls — single item (pcs)
   {id:'inv-rolls', name:'Lechon Rolls',                    cat:'Lechon Rolls', emo:'🌯', unit:'pcs'},
   // Lechon Manok — single item (pcs)
@@ -1363,11 +1355,11 @@ const POS_TO_INV = {
   'wl-k': {id:'inv-wl-k', qty:1}, 'wl-f': {id:'inv-wl-f', qty:1},
   'ulo-s':{id:'inv-ulo',  qty:4}, 'ulo-m':{id:'inv-ulo',  qty:5},
   'ulo-l':{id:'inv-ulo',  qty:6}, 'ulo-j':{id:'inv-ulo',  qty:7},
-  'b-1':  {id:'inv-b-1',  qty:1}, 'b-2':  {id:'inv-b-2',  qty:2},
-  'b-3':  {id:'inv-b-3',  qty:3}, 'b-35': {id:'inv-b-35', qty:3.5},
-  'b-4':  {id:'inv-b-4',  qty:4}, 'b-5':  {id:'inv-b-5',  qty:5},
-  'b-6':  {id:'inv-b-6',  qty:6}, 'b-7':  {id:'inv-b-7',  qty:7},
-  'b-8':  {id:'inv-b-8',  qty:8},
+  'b-1':  {id:'inv-belly', qty:1}, 'b-2':  {id:'inv-belly', qty:2},
+  'b-3':  {id:'inv-belly', qty:3}, 'b-35': {id:'inv-belly', qty:3.5},
+  'b-4':  {id:'inv-belly', qty:4}, 'b-5':  {id:'inv-belly', qty:5},
+  'b-6':  {id:'inv-belly', qty:6}, 'b-7':  {id:'inv-belly', qty:7},
+  'b-8':  {id:'inv-belly', qty:8},
   'r-2':  {id:'inv-rolls',qty:2}, 'r-3':  {id:'inv-rolls',qty:3},
   'r-4':  {id:'inv-rolls',qty:4}, 'r-5':  {id:'inv-rolls',qty:5},
   'lm-2': {id:'inv-manok',qty:2}, 'lm-3': {id:'inv-manok',qty:3},
