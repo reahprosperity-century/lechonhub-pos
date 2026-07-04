@@ -417,12 +417,11 @@ select option{background:var(--surf)}
     <div class="nav-item active" onclick="nav('dashboard')"><span class="ni">&#128202;</span> Dashboard</div>
     <div class="nav-item" onclick="nav('pos')"><span class="ni">&#128722;</span> POS Terminal</div>
     <div class="nav-section">Management</div>
-    <div class="nav-item" onclick="nav('inventory')"><span class="ni">&#128230;</span> Inventory</div>
     <div class="nav-item" onclick="nav('reports')"><span class="ni">&#128200;</span> Reports</div>
     <div class="nav-item" onclick="nav('teams')"><span class="ni">&#128101;</span> Team Sales</div>
     <div class="nav-item" onclick="nav('expenses')"><span class="ni">&#128184;</span> Expenses</div>
+    <div class="nav-item" onclick="nav('pl')"><span class="ni">&#128181;</span> P&amp;L Summary</div>
     <div class="nav-item" onclick="nav('reservations')"><span class="ni">&#128197;</span> Reservations</div>
-    <div class="nav-item" onclick="nav('purchase-orders')"><span class="ni">&#128203;</span> Purchase Orders</div>
     <div class="nav-item" onclick="nav('incentives')"><span class="ni">&#127942;</span> Incentives</div>
     <div class="nav-section admin-only">Settings</div>
     <div class="nav-item admin-only" onclick="nav('settings')"><span class="ni">&#9881;&#65039;</span> Settings</div>
@@ -447,7 +446,6 @@ select option{background:var(--surf)}
     <div class="tb-right">
       <div class="sync-badge" onclick="nav('settings')" title="Sync status"><span class="sync-dot" id="sync-dot"></span><span id="sync-label">Local</span></div>
       <div class="tb-clock" id="clock">&#8212;</div>
-      <span class="tb-badge" id="low-stock-badge" style="display:none" onclick="nav('inventory')">&#9888; Low Stock</span>
     </div>
   </div>
 
@@ -479,8 +477,8 @@ select option{background:var(--surf)}
           <div class="tbl-wrap" id="recent-txns"></div>
         </div>
         <div class="card">
-          <div class="card-hdr"><span class="card-ttl">&#9888;&#65039; Inventory Alerts</span></div>
-          <div id="inv-alerts"></div>
+          <div class="card-hdr"><span class="card-ttl">&#128181; Quick P&amp;L (This Month)</span><button class="btn btn-out btn-sm" onclick="nav('pl')">Full Report</button></div>
+          <div id="dash-pl"></div>
         </div>
       </div>
     </div>
@@ -530,30 +528,6 @@ select option{background:var(--surf)}
       </div>
     </div>
 
-    <!-- ====== INVENTORY ====== -->
-    <div class="page" id="page-inventory">
-      <div class="flex-between mb20">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <input id="inv-search" placeholder="&#128269; Search..." style="width:200px" oninput="renderInventory()">
-          <select id="inv-cat-filter" onchange="renderInventory()" style="width:160px">
-            <option value="">All Categories</option>
-            <option>Whole Lechon</option><option>Lechon Ulo</option><option>Lechon Belly</option>
-            <option>Lechon Rolls</option><option>Lechon Manok</option><option>Cochinillo</option>
-          </select>
-          <select id="inv-status-filter" onchange="renderInventory()" style="width:130px">
-            <option value="">All Status</option>
-            <option value="ok">In Stock</option><option value="low">Low Stock</option><option value="out">Out of Stock</option>
-          </select>
-        </div>
-        <button class="btn btn-pri admin-only" onclick="openAddProduct()">+ Add Product</button>
-      </div>
-      <div class="card">
-        <div class="tbl-wrap"><table id="inv-table">
-          <thead><tr><th>Product</th><th>Category</th><th>Stock (kg/pcs)</th><th>Status</th><th>Actions</th></tr></thead>
-          <tbody id="inv-body"></tbody>
-        </table></div>
-      </div>
-    </div>
 
     <!-- ====== REPORTS ====== -->
     <div class="page" id="page-reports">
@@ -734,7 +708,7 @@ select option{background:var(--surf)}
       </div>
 
       <!-- 5. OTHER EXPENSES -->
-      <div class="card">
+      <div class="card mb14">
         <div class="card-hdr">
           <span class="card-ttl">&#128194; Other Expenses</span>
           <button class="btn btn-pri btn-sm admin-only" onclick="openAddOther()">+ Add</button>
@@ -742,29 +716,42 @@ select option{background:var(--surf)}
         <div id="other-kpi" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px"></div>
         <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Remarks</th><th class="admin-only">Actions</th></tr></thead><tbody id="other-body"></tbody></table></div>
       </div>
-    </div>
 
-    <!-- ====== PURCHASE ORDERS ====== -->
-    <div class="page" id="page-purchase-orders">
-      <div class="flex-between mb14">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <input id="po-search" placeholder="&#128269; Search supplier..." style="width:200px" oninput="renderPOs()">
-          <select id="po-status-filter" onchange="renderPOs()" style="width:150px">
+      <!-- 6. PURCHASE ORDERS -->
+      <div class="card">
+        <div class="card-hdr">
+          <span class="card-ttl">&#128203; Purchase Orders</span>
+          <button class="btn btn-pri btn-sm admin-only" onclick="openAddPO()">+ New PO</button>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+          <input id="po-search" placeholder="&#128269; Search supplier..." style="width:180px" oninput="renderPOs()">
+          <select id="po-status-filter" onchange="renderPOs()" style="width:130px">
             <option value="">All Status</option>
             <option value="pending">Pending</option>
             <option value="received">Received</option>
             <option value="cancelled">Cancelled</option>
           </select>
         </div>
-        <button class="btn btn-pri admin-only" onclick="openAddPO()">+ New Purchase Order</button>
-      </div>
-      <div class="kpi-grid" id="po-summary" style="grid-template-columns:repeat(3,1fr)"></div>
-      <div class="card" style="margin-top:14px">
+        <div class="kpi-grid" id="po-summary" style="grid-template-columns:repeat(3,1fr);margin-bottom:12px"></div>
         <div class="tbl-wrap"><table>
           <thead><tr><th>PO #</th><th>Date</th><th>Supplier</th><th>Items</th><th>Qty</th><th>Total Cost</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="po-body"></tbody>
         </table></div>
       </div>
+    </div>
+
+    <!-- ====== P&L SUMMARY ====== -->
+    <div class="page" id="page-pl">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:18px;flex-wrap:wrap">
+        <div class="rpt-tabs">
+          <button class="rpt-tab active" id="pl-tab-daily" onclick="setPLTab('daily')">&#128197; Daily</button>
+          <button class="rpt-tab" id="pl-tab-weekly" onclick="setPLTab('weekly')">&#128198; Weekly</button>
+          <button class="rpt-tab" id="pl-tab-monthly" onclick="setPLTab('monthly')">&#128336; Monthly</button>
+        </div>
+        <input type="date" id="pl-date" style="font-size:.82rem" onchange="renderPL()">
+        <input type="month" id="pl-month" style="font-size:.82rem;display:none" onchange="renderPL()">
+      </div>
+      <div id="pl-content"></div>
     </div>
 
     <!-- ====== RESERVATIONS ====== -->
@@ -1250,9 +1237,9 @@ function doGet(e){
       <span class="mn-cart-badge" id="mn-cart-badge"></span>
       <span class="mn-lbl">POS</span>
     </div>
-    <div class="mn-item" data-page="inventory" onclick="nav('inventory')">
-      <span class="mn-ico">&#128230;</span>
-      <span class="mn-lbl">Inventory</span>
+    <div class="mn-item" data-page="pl" onclick="nav('pl')">
+      <span class="mn-ico">&#128181;</span>
+      <span class="mn-lbl">P&amp;L</span>
     </div>
     <div class="mn-item" data-page="reports" onclick="nav('reports')">
       <span class="mn-ico">&#128200;</span>
@@ -1276,8 +1263,8 @@ function doGet(e){
     <div class="mm-items">
       <div class="mm-item" onclick="nav('teams');closeMobileMenu()"><span class="mm-item-ico">&#128101;</span> Team Sales</div>
       <div class="mm-item" onclick="nav('expenses');closeMobileMenu()"><span class="mm-item-ico">&#128184;</span> Expenses</div>
+      <div class="mm-item" onclick="nav('pl');closeMobileMenu()"><span class="mm-item-ico">&#128181;</span> P&amp;L Summary</div>
       <div class="mm-item" onclick="nav('reservations');closeMobileMenu()"><span class="mm-item-ico">&#128197;</span> Reservations</div>
-      <div class="mm-item" onclick="nav('purchase-orders');closeMobileMenu()"><span class="mm-item-ico">&#128203;</span> Purchase Orders</div>
       <div class="mm-item" onclick="nav('incentives');closeMobileMenu()"><span class="mm-item-ico">&#127942;</span> Incentives</div>
       <div class="mm-item admin-only" onclick="nav('settings');closeMobileMenu()"><span class="mm-item-ico">&#9881;&#65039;</span> Settings</div>
     </div>
@@ -1535,9 +1522,9 @@ const PAGE_META={
   inventory:{title:'Inventory',sub:'Manage product stock levels'},
   reports:{title:'Reports',sub:'Daily, Weekly and Monthly analytics'},
   teams:{title:'Team Sales',sub:'Compare performance across all teams'},
-  expenses:{title:'Expenses',sub:'Compensation, Marketing, Utilities & More \u2014 Lechon Hub'},
+  expenses:{title:'Expenses & Purchase Orders',sub:'Compensation, Marketing, Utilities, POs & More \u2014 Lechon Hub'},
+  pl:{title:'P&L Summary',sub:'Total Sales vs Expenses \u2014 Daily, Weekly & Monthly'},
   reservations:{title:'Reservation Orders',sub:'Manage customer reservations and event orders'},
-  'purchase-orders':{title:'Purchase Orders',sub:'Track supplier orders for Lechon Hub'},
   incentives:{title:'Incentives & Commission',sub:'Auto-calculated team incentives from sales'},
   settings:{title:'Settings',sub:'Configure your POS system'},
 };
@@ -1561,12 +1548,11 @@ function nav(page){
   // Reset POS mobile view to menu tab when navigating to POS
   if(page==='pos'){renderPOS();showPOSView('menu');}
   else if(page==='dashboard') renderDashboard();
-  else if(page==='inventory') renderInventory();
   else if(page==='reports') renderReports();
   else if(page==='teams') renderTeams();
-  else if(page==='expenses') renderExpenses();
+  else if(page==='expenses'){renderExpenses();renderPOs();}
+  else if(page==='pl') renderPL();
   else if(page==='reservations') renderReservations();
-  else if(page==='purchase-orders') renderPOs();
   else if(page==='incentives') renderIncentives();
   // Scroll to top on mobile
   if(window.innerWidth<=768) window.scrollTo({top:0,behavior:'smooth'});
@@ -1874,17 +1860,7 @@ function calcChange(){
   document.getElementById('change-val').style.color=change<0?'var(--red)':'var(--grn)';
 }
 
-function deductInventory(cartItems){
-  cartItems.forEach(ci=>{
-    const map=POS_TO_INV[ci.id];
-    if(map){
-      const total=map.qty*ci.qty;
-      invStock[map.id]=Math.max(0,(invStock[map.id]||0)-total);
-    }
-  });
-  sv('lh_inv_stock',invStock);
-  updateBadge();
-}
+function updateBadge(){}
 
 function completeOrder(){
   const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
@@ -1908,8 +1884,6 @@ function completeOrder(){
     payment:payMethod,
     status:'paid'
   };
-  // Deduct from inventory
-  deductInventory(cart);
   sv('lh_products',products);
   transactions.unshift(txn);
   sv('lh_txns',transactions);
@@ -1948,14 +1922,100 @@ function showReceipt(txn){
 }
 
 // ============================================================
-//  INVENTORY
+//  P&L SUMMARY
 // ============================================================
-function renderInventory(){
-  const q=(document.getElementById('inv-search')?.value||'').toLowerCase();
-  const cat=document.getElementById('inv-cat-filter')?.value||'';
-  const st=document.getElementById('inv-status-filter')?.value||'';
-  let items=INV_ITEMS;
-  if(q) items=items.filter(p=>p.name.toLowerCase().includes(q));
+let currentPLTab='daily';
+function setPLTab(tab){
+  currentPLTab=tab;
+  ['daily','weekly','monthly'].forEach(t=>{
+    document.getElementById('pl-tab-'+t)?.classList.toggle('active',t===tab);
+  });
+  const dateEl=document.getElementById('pl-date');
+  const monthEl=document.getElementById('pl-month');
+  if(dateEl) dateEl.style.display=tab==='monthly'?'none':'';
+  if(monthEl) monthEl.style.display=tab==='monthly'?'':'none';
+  renderPL();
+}
+function renderPL(){
+  const tab=currentPLTab;
+  const today=new Date().toISOString().split('T')[0];
+  const thisMonth=today.substring(0,7);
+  let dateVal=document.getElementById('pl-date')?.value||today;
+  let monthVal=document.getElementById('pl-month')?.value||thisMonth;
+
+  let salesTotal=0, mktTotal=0, utilTotal=0, miscTotal=0, otherTotal=0, poTotal=0, compTotal=0;
+  let label='';
+
+  if(tab==='daily'){
+    label='Date: '+dateVal;
+    salesTotal=transactions.filter(x=>x.date===dateVal&&x.status==='paid').reduce((s,x)=>s+x.total,0);
+    mktTotal=(marketingExpenses||[]).filter(x=>x.date===dateVal).reduce((s,x)=>s+(x.amount||0),0);
+    miscTotal=(miscExpenses||[]).filter(x=>x.date===dateVal).reduce((s,x)=>s+(x.amount||0),0);
+    otherTotal=(otherExpenses||[]).filter(x=>x.date===dateVal).reduce((s,x)=>s+(x.amount||0),0);
+    poTotal=(purchaseOrders||[]).filter(x=>x.date===dateVal&&x.status!=='cancelled').reduce((s,x)=>s+(x.totalCost||0),0);
+  } else if(tab==='weekly'){
+    const d=new Date(dateVal);
+    const day=d.getDay();
+    const mon=new Date(d); mon.setDate(d.getDate()-(day===0?6:day-1));
+    const sun=new Date(mon); sun.setDate(mon.getDate()+6);
+    const ws=mon.toISOString().split('T')[0];
+    const we=sun.toISOString().split('T')[0];
+    label='Week: '+ws+' to '+we;
+    salesTotal=transactions.filter(x=>x.date>=ws&&x.date<=we&&x.status==='paid').reduce((s,x)=>s+x.total,0);
+    mktTotal=(marketingExpenses||[]).filter(x=>x.date>=ws&&x.date<=we).reduce((s,x)=>s+(x.amount||0),0);
+    miscTotal=(miscExpenses||[]).filter(x=>x.date>=ws&&x.date<=we).reduce((s,x)=>s+(x.amount||0),0);
+    otherTotal=(otherExpenses||[]).filter(x=>x.date>=ws&&x.date<=we).reduce((s,x)=>s+(x.amount||0),0);
+    poTotal=(purchaseOrders||[]).filter(x=>x.date>=ws&&x.date<=we&&x.status!=='cancelled').reduce((s,x)=>s+(x.totalCost||0),0);
+  } else {
+    label='Month: '+monthVal;
+    salesTotal=transactions.filter(x=>x.date&&x.date.startsWith(monthVal)&&x.status==='paid').reduce((s,x)=>s+x.total,0);
+    mktTotal=(marketingExpenses||[]).filter(x=>x.month===monthVal||(x.date&&x.date.startsWith(monthVal))).reduce((s,x)=>s+(x.amount||0),0);
+    utilTotal=(utilityExpenses||[]).filter(x=>x.month===monthVal).reduce((s,x)=>s+(x.electricity||0)+(x.water||0),0);
+    miscTotal=(miscExpenses||[]).filter(x=>x.date&&x.date.startsWith(monthVal)).reduce((s,x)=>s+(x.amount||0),0);
+    otherTotal=(otherExpenses||[]).filter(x=>x.date&&x.date.startsWith(monthVal)).reduce((s,x)=>s+(x.amount||0),0);
+    poTotal=(purchaseOrders||[]).filter(x=>x.date&&x.date.startsWith(monthVal)&&x.status!=='cancelled').reduce((s,x)=>s+(x.totalCost||0),0);
+    compTotal=(employees||[]).reduce((s,e)=>{
+      const comm=(transactions.filter(x=>x.date&&x.date.startsWith(monthVal)&&x.status==='paid').reduce((ss,x)=>ss+x.total,0))*(e.commRate||0)/100;
+      return s+(e.base||0)+comm+(e.bonus||0)-(e.deductions||0);
+    },0);
+  }
+
+  const totalExp=mktTotal+utilTotal+miscTotal+otherTotal+poTotal+compTotal;
+  const net=salesTotal-totalExp;
+  const isProfit=net>=0;
+  const cl=e=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bdr)">${e}</div>`;
+
+  const html=`
+    <div class="card" style="margin-bottom:14px">
+      <div style="font-size:.78rem;color:var(--tx3);margin-bottom:12px">${label}</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px">
+        <div class="kpi g"><div class="kpi-lbl">Total Sales</div><div class="kpi-val">${php(salesTotal)}</div></div>
+        <div class="kpi r"><div class="kpi-lbl">Total Expenses</div><div class="kpi-val">${php(totalExp)}</div></div>
+        <div class="kpi ${isProfit?'gr':'o'}"><div class="kpi-lbl">${isProfit?'Net Profit':'Net Loss'}</div><div class="kpi-val" style="color:${isProfit?'var(--grn)':'var(--red)'}">${isProfit?'':'-'}${php(Math.abs(net))}</div></div>
+      </div>
+      <div style="font-size:.82rem">
+        ${cl(`<span style="font-weight:700">💰 Total Sales</span><span style="font-weight:700;color:var(--grn)">${php(salesTotal)}</span>`)}
+        <div style="color:var(--tx3);font-size:.75rem;padding:6px 0 4px;font-weight:700">EXPENSES BREAKDOWN</div>
+        ${mktTotal>0?cl(`<span>📣 Marketing</span><span style="color:var(--red)">${php(mktTotal)}</span>`):''}
+        ${utilTotal>0?cl(`<span>⚡ Utilities</span><span style="color:var(--red)">${php(utilTotal)}</span>`):''}
+        ${miscTotal>0?cl(`<span>📎 Miscellaneous</span><span style="color:var(--red)">${php(miscTotal)}</span>`):''}
+        ${otherTotal>0?cl(`<span>📁 Other Expenses</span><span style="color:var(--red)">${php(otherTotal)}</span>`):''}
+        ${poTotal>0?cl(`<span>📋 Purchase Orders</span><span style="color:var(--red)">${php(poTotal)}</span>`):''}
+        ${compTotal>0?cl(`<span>👥 Compensation</span><span style="color:var(--red)">${php(compTotal)}</span>`):''}
+        ${cl(`<span style="font-weight:700">Total Expenses</span><span style="font-weight:700;color:var(--red)">${php(totalExp)}</span>`)}
+        <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:1.1rem;font-weight:800;color:${isProfit?'var(--grn)':'var(--red)'}">
+          <span>${isProfit?'🟢 NET PROFIT':'🔴 NET LOSS'}</span>
+          <span>${isProfit?'':'-'}${php(Math.abs(net))}</span>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('pl-content').innerHTML=html;
+}
+
+// ============================================================
+//  INVENTORY (removed — stub functions kept for Firebase compat)
+// ============================================================
+function renderInventory(){}
   if(cat) items=items.filter(p=>p.cat===cat);
   const tbody=document.getElementById('inv-body');
   const isAdmin=currentUser?.role==='admin';
