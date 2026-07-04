@@ -2016,31 +2016,6 @@ function renderPL(){
 //  INVENTORY (removed — stub functions kept for Firebase compat)
 // ============================================================
 function renderInventory(){}
-  if(cat) items=items.filter(p=>p.cat===cat);
-  const tbody=document.getElementById('inv-body');
-  const isAdmin=currentUser?.role==='admin';
-  const rows=items.filter(p=>{
-    const kg=invStock[p.id]||0;
-    if(st==='ok') return kg>5;
-    if(st==='low') return kg>0&&kg<=5;
-    if(st==='out') return kg===0;
-    return true;
-  }).map(p=>{
-    const kg=invStock[p.id]||0;
-    const sc=kg===0?'inv-out':kg<=5?'inv-low':'inv-ok';
-    const sl=kg===0?'Out of Stock':kg<=5?'Low Stock':'In Stock';
-    return `<tr>
-      <td><strong>${p.emo} ${p.name}</strong></td>
-      <td class="text-muted">${p.cat}</td>
-      <td class="fw7">${kg} ${p.unit}</td>
-      <td><span class="inv-st ${sc}">${sl}</span></td>
-      <td style="display:flex;gap:6px">
-        ${isAdmin?`<button class="btn btn-out btn-sm" onclick="openInvStockModal('${p.id}')">\u00B1 Adjust</button>`:'<span class="text-muted" style="font-size:.75rem">View only</span>'}
-      </td>
-    </tr>`;
-  }).join('');
-  tbody.innerHTML=rows||'<tr><td colspan="5" style="text-align:center;color:var(--tx3);padding:20px">No items found</td></tr>';
-}
 
 function openInvStockModal(invId){
   const p=INV_ITEMS.find(x=>x.id===invId);if(!p)return;
